@@ -100,7 +100,7 @@ const MainLogin = () => {
   };
 
   const handleRegisterClick = () => {
-    navigate("/Register");
+    navigate("/register");
   };
 
   return (

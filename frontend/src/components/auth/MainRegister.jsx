@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
+
 import axios from "axios";
 import { swalCustom } from "../../utils/customSwal";
 
@@ -27,6 +28,7 @@ const MainRegister = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+
     try {
       await axios.post("http://localhost:3000/api/usuarios", formData);
 
@@ -45,6 +47,10 @@ const MainRegister = () => {
         text: "No se pudo registrar el usuario",
       });
     }
+  };
+
+  const handleVolver = () => {
+    navigate("/login");
   };
 
   return (
@@ -146,6 +152,9 @@ const MainRegister = () => {
           <div className="d-grid gap-2">
             <button type="submit" className="btn btn-pink mt-4">
               Registrarme
+            </button>
+            <button type="submit" className="btn btn-pink mt-4" onClick={handleVolver}>
+              Volver
             </button>
           </div>
         </form>

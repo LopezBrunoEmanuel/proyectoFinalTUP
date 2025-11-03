@@ -123,8 +123,8 @@ const AgregarProductoModal = ({ show, onClose }) => {
                         />
                     </Form.Group>
 
-                    <div className="text-end">
-                        <Button variant="secondary" onClick={onClose} className="me-2">
+                    <div className="d-flex justify-content-center mt-3 gap-2">
+                        <Button variant="danger" onClick={onClose} className="me-2">
                             Cancelar
                         </Button>
                         <Button variant="success" type="submit">

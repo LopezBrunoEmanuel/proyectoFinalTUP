@@ -1,0 +1,146 @@
+/* 🌿 CONTENEDOR PRINCIPAL */
+.aside-topbar-container {
+  position: relative;
+  z-index: 10;
+  border-bottom: 1px solid #e6e6e6;
+  padding-bottom: 0.5rem;
+  margin-bottom: 1.5rem;
+}
+
+/* 🧱 BLOQUE DE FILTROS */
+.aside-topbar {
+  border: 1px solid #ebebeb;
+  border-radius: 12px;
+  background-color: #fafafa;
+  padding: 1rem 1.5rem;
+  transition: all 0.3s ease;
+}
+
+.aside-topbar:hover {
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.05);
+}
+
+/* 🧾 INPUTS Y SELECTS */
+.aside-topbar .form-select,
+.aside-topbar .form-control {
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  transition: all 0.2s ease;
+  font-size: 0.95rem;
+}
+
+.aside-topbar .form-control:focus,
+.aside-topbar .form-select:focus {
+  border-color: #e65a9f;
+  box-shadow: 0 0 0 0.15rem rgba(230, 90, 159, 0.25);
+}
+
+/* 🔍 BUSCADOR */
+.buscador-container {
+  position: relative;
+  min-height: 38px;
+}
+
+.buscador-container .form-control {
+  padding-right: 2.6rem;
+  border-radius: 8px !important;
+}
+
+.clear-btn {
+  position: absolute;
+  right: 0.6rem;
+  top: 50%;
+  transform: translateY(-50%);
+  background: transparent;
+  border: none;
+  color: #aaa;
+  font-size: 1.2rem;
+  cursor: pointer;
+  padding: 0;
+  z-index: 999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: color 0.2s ease;
+}
+
+.clear-btn:hover {
+  color: #e65a9f;
+}
+
+/* 🎨 BOTONES APLICAR / LIMPIAR */
+.botones-filtros {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.botones-filtros .btn-filtrar,
+.botones-filtros .btn-limpiar {
+  background-color: #f07fb2 !important; /* rosa suave */
+  color: #fff !important;
+  border: none !important;
+  border-radius: 8px;
+  font-weight: 500;
+  transition: background-color 0.25s ease-in-out;
+  min-width: 120px;
+  padding: 0.5rem 1rem;
+}
+
+/* Hover igual para ambos */
+.botones-filtros .btn-filtrar:hover,
+.botones-filtros .btn-limpiar:hover {
+  background-color: #e65a9f !important; /* rosa más fuerte */
+}
+
+/* Disabled */
+.botones-filtros .btn-filtrar:disabled,
+.botones-filtros .btn-limpiar:disabled {
+  background-color: #f4c6da !important;
+  color: #fff !important;
+  cursor: not-allowed;
+}
+
+/* 🔽 BOTÓN TOGGLE (Mostrar/Ocultar filtros) */
+.aside-topbar-container button.btn {
+  border: 1px solid #e65a9f !important;
+  color: #e65a9f !important;
+  background-color: #fff !important;
+  border-radius: 8px;
+  font-weight: 500;
+  transition: all 0.25s ease-in-out;
+}
+
+.aside-topbar-container button.btn:hover {
+  background-color: rgba(230, 90, 159, 0.1) !important;
+  color: #d94e92 !important;
+}
+
+.aside-topbar-container button.btn:focus {
+  outline: none !important;
+  box-shadow: 0 0 0 0.15rem rgba(230, 90, 159, 0.25);
+}
+
+/* 📱 RESPONSIVE */
+@media (max-width: 768px) {
+  .aside-topbar {
+    border-radius: 10px;
+    padding: 1rem;
+  }
+
+  .botones-filtros {
+    justify-content: center;
+  }
+
+  .botones-filtros .btn-filtrar,
+  .botones-filtros .btn-limpiar {
+    flex: 1 1 100%;
+    max-width: 320px;
+  }
+
+  .aside-topbar-container {
+    margin-bottom: 1rem;
+  }
+}

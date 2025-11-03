@@ -1,8 +1,3 @@
-/* ASIDE */
-/* .aside-bar {
-} */
-
-/* CONTENEDOR DE CARDS / CONTENIDO DE CADA CARD */
 .cards-container {
   margin: auto;
   width: 70%;
@@ -15,19 +10,131 @@
   display: flex;
   justify-content: center;
   margin-bottom: 10px;
+  gap: 5px;
+}
+
+.card-title {
+  display: -webkit-box;
+  line-clamp: 2;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  height: 4rem;
+  transition: all 0.3s ease;
 }
 
 @media (max-width: 992px) {
   .cards-container {
-    margin: auto;
     width: 85%;
     margin-bottom: 20px;
   }
+
+  .card-title {
+    line-clamp: 3;
+    -webkit-line-clamp: 3;
+    height: 5rem;
+  }
 }
 
-/* PAGINADOR */
-.paginador {
+/* 🪴 MENSAJE DE "NO SE ENCONTRARON PRODUCTOS" */
+.no-resultados {
+  text-align: center;
+  padding: 3rem 1rem;
+  color: #666;
+  background-color: #fafafa;
+  border-radius: 12px;
+  border: 1px dashed #ddd;
+  margin-top: 2rem;
+  animation: fadeIn 0.4s ease-in-out;
+}
+
+.no-resultados h5 {
+  color: #ca1c73;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+.no-resultados p {
+  font-size: 0.95rem;
+  color: #555;
+}
+
+/* Animación suave */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* 🔢 Grupo de cantidad */
+.producto-card .btn-group .btn {
+  border-radius: 6px !important;
+  min-width: 32px;
+}
+
+.producto-card .btn-group .btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* 🛒 Botón agregar */
+.producto-card .btn-outline-primary {
+  border-color: #ca1c73;
+  color: #ca1c73;
+  transition: all 0.2s ease-in-out;
+}
+
+.producto-card .btn-outline-primary:hover {
+  background-color: #ca1c73;
+  color: white;
+}
+
+/* 🔢 Contenedor del control de cantidad */
+.cantidad-container {
   display: flex;
+  align-items: center;
   justify-content: center;
-  margin: auto;
+}
+
+/* Input de cantidad */
+.cantidad-input {
+  width: 50px;
+  text-align: center;
+  padding: 0.25rem 0.4rem;
+  font-size: 0.9rem;
+  font-weight: 500;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  transition: all 0.2s ease;
+}
+
+.cantidad-input:focus {
+  outline: none;
+  border-color: #ca1c73;
+  box-shadow: 0 0 0 0.1rem rgba(202, 28, 115, 0.3);
+}
+
+/* Botones de +/- */
+.cantidad-container .btn {
+  min-width: 32px;
+  font-weight: bold;
+  border-radius: 6px;
+  transition: all 0.2s ease;
+}
+
+.cantidad-container .btn:hover {
+  background-color: #ca1c7320;
+  border-color: #ca1c73;
+  color: #ca1c73;
+}
+
+.cantidad-container .btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
 }

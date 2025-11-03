@@ -12,7 +12,7 @@ import AgregarProductoModal from "./modals/AgregarProductoModal.jsx";
 
 const CrudProductos = () => {
     const { productos, fetchProductos, isLoading, error } = useProductosStore();
-    const [showVerModal, setShowVerModal] = useState(false)
+    const [showVerModal, setShowVerModal] = useState(false) // MODIFICAR DESDE EL BACK LO QUE CAMBIE PARA QUE FUNCIONE, SOLO SE TOCA EL USEEFFECT DE SHOW 
     const [showEditModal, setShowEditModal] = useState(false)
     const [showAddModal, setShowAddModal] = useState(false)
 
@@ -33,8 +33,10 @@ const CrudProductos = () => {
 
     return (
         <div>
-            <h2 className="mb-3">Listado de Productos</h2>
-            <AddNewButton onOpenModal={handleOpenAddModal} />
+            <div className="d-flex justify-content-start gap-3">
+                <h2 className="mb-3">Listado de Productos</h2>
+                <AddNewButton onOpenModal={handleOpenAddModal} />
+            </div>
             <AgregarProductoModal show={showAddModal} onClose={handleCloseAddModal} />
             <Table striped bordered hover size="sm">
                 <thead>
@@ -60,21 +62,21 @@ const CrudProductos = () => {
                             <td>{prod.categoriaProducto}</td>
                             <td>{prod.dimensionProducto}</td>
                             <td>
-                                <ViewButton producto={prod} onOpenModal={handleOpenVerModal} />
-                                <EditButton producto={prod} onOpenModal={handleOpenEditModal} />
-                                <DeleteButton idProducto={prod.idProducto} />
+                                <div className="d-flex justify-content-center gap-1">
+                                    <ViewButton producto={prod} onOpenModal={handleOpenVerModal} />
+                                    <EditButton producto={prod} onOpenModal={handleOpenEditModal} />
+                                    <DeleteButton idProducto={prod.idProducto} />
+                                </div>
                             </td>
                         </tr>
                     ))}
                 </tbody>
             </Table>
-            <Paginador />
+            {/* <Paginador /> */}
             <VerProductoModal show={showVerModal} onClose={handleCloseVerModal} />
             <EditarProductoModal show={showEditModal} onClose={handleCloseEditModal} />
         </div>
-
     )
-
 }
 
 export default CrudProductos

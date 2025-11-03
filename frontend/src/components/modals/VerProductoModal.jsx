@@ -34,7 +34,7 @@ const VerProductoModal = ({ show, onClose }) => {
                         </ListGroup>
                     </Card.Body>
                 </Card>
-                <Button variant='secondary' onClick={onClose}>cerrar</Button>
+                <Button variant='secondary' onClick={onClose} style={{ display: "block", margin: "auto" }}>Cerrar</Button>
             </Modal.Body>
         </Modal>
     )

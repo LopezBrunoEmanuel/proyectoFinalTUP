@@ -1,33 +1,73 @@
-// import { useState } from "react"
-import {
-    Button, ButtonGroup, ButtonToolbar
-} from 'react-bootstrap';
-import "../../styles/producto-card.css"
+import { useEffect, useState } from 'react';
+import "../../styles/paginador.css"
+import Pagination from 'react-bootstrap/Pagination';
 
-const Paginador = () => {
-    // const [paginaActual, setPaginaActual] = useState(1);
-    // const productosPorPagina = 10;
-    // const indiceUltimoProducto = paginaActual * productosPorPagina;
-    // const indicePrimerProducto = indiceUltimoProducto - productosPorPagina;
-    // const productosActuales = productosPorPagina.slice(indicePrimerProducto - indiceUltimoProducto);
-    // const totalPaginas = Math.cell(productosActuales.length / productosPorPagina);
+const Paginador = ({ paginaActual, totalPaginas, onChangePagina }) => {
+    const [maxBotones, setMaxBotones] = useState(5)
 
+    const clamp = (n) => Math.min(Math.max(n, 1), totalPaginas)
+    const goTo = (n) => onChangePagina(clamp(n))
+    let inicio = Math.max(1, paginaActual - Math.floor(maxBotones / 2))
+    let fin = inicio + maxBotones - 1
+
+    if (fin > totalPaginas) {
+        fin = totalPaginas
+        inicio = Math.max(1, fin - maxBotones + 1)
+    }
+
+    if (totalPaginas <= maxBotones) {
+        inicio = 1
+        fin = totalPaginas
+    }
+
+    const cantidad = Math.max(0, fin - inicio + 1)
+
+    useEffect(() => {
+        const handleResize = () => {
+            if (window.innerWidth < 768) {
+                setMaxBotones(3)
+            } else if (window.innerWidth < 1200) {
+                setMaxBotones(4);
+            } else {
+                setMaxBotones(5);
+            }
+        }
+        handleResize()
+        window.addEventListener("resize", handleResize)
+        return () => window.removeEventListener("resize", handleResize)
+    }, [])
+
+    if (!totalPaginas || totalPaginas < 2) return null;
 
     return (
-        <div className='cards-container'>
-            <div className="paginador">
-                <ButtonToolbar className="mb-3" aria-label="Toolbar with Button groups">
-                    <ButtonGroup className="me-2" aria-label="First group">
-                        <Button variant="secondary">Prev</Button>
-                        <Button variant="secondary">1</Button>
-                        <Button variant="secondary">2</Button>
-                        <Button variant="secondary">3</Button>
-                        <Button variant="secondary">4</Button>
-                        <Button variant="secondary">5</Button>
-                        <Button variant="secondary">Next</Button>
-                    </ButtonGroup>
-                </ButtonToolbar>
-            </div>
+        <div key={paginaActual} className="paginador transition-fade">
+            <Pagination className="justify-content-center my-3">
+                {/* ir al principio */}
+                {paginaActual > 1 && (<Pagination.First onClick={() => goTo(1)} />)}
+
+                {/* anterior */}
+                <Pagination.Prev disabled={paginaActual === 1} onClick={() => goTo(paginaActual - 1)} />
+
+                {/* botones numericos */}
+                {Array.from({ length: cantidad }, (_, i) => {
+                    const num = inicio + i;
+                    return (
+                        <Pagination.Item
+                            key={num}
+                            active={num === paginaActual}
+                            onClick={() => goTo(num)}
+                        >
+                            {num}
+                        </Pagination.Item>
+                    );
+                })}
+
+                {/* siguiente */}
+                <Pagination.Next disabled={paginaActual === totalPaginas} onClick={() => goTo(paginaActual + 1)} />
+
+                {/* ir a ultima pagina */}
+                {paginaActual < totalPaginas && (<Pagination.Last onClick={() => goTo(totalPaginas)} />)}
+            </Pagination>
         </div>
     )
 }

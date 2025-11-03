@@ -16,13 +16,13 @@ const Admin = () => {
                     </Nav.Link>
                 </Nav.Item>
                 <Nav.Item>
-                    <Nav.Link as={Link} to="/admin/productos" eventKey="/admin/peliculas">
+                    <Nav.Link as={Link} to="/admin/productos" eventKey="/admin/productos">
                         Productos
                     </Nav.Link>
                 </Nav.Item>
                 <Nav.Item>
-                    <Nav.Link as={Link} to="/admin/otros" eventKey="/admin/productos">
-                        Otros
+                    <Nav.Link as={Link} to="/admin/servicios" eventKey="/admin/servicios">
+                        Servicios
                     </Nav.Link>
                 </Nav.Item>
             </Nav>
@@ -31,8 +31,8 @@ const Admin = () => {
                 <CrudProductos />
                 <Routes>
                     <Route path="/" element="" />
-                    <Route path="productos" element="" />
-                    <Route path="" element="" />
+                    <Route path="productos" element={<CrudProductos />} />
+                    <Route path="servicios" element="" />
                     <Route path="" element="" />
                 </Routes>
             </div>
