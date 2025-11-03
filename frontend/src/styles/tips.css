@@ -222,122 +222,25 @@
     padding: 2rem 0;
   }
 }
-/*aqui empieza la otra opcion*/
 
+/* 💻 Vista en pantallas grandes */
+@media (min-width: 1200px) {
+  .card-consejo {
+    max-width: 1100px; /* más ancho */
+    padding: 3rem 4rem; /* más espacio interior */
+  }
 
-/* .consejo-riego {
-  position: relative;
-  min-height: 90vh; */
-  /* Ocupa casi toda la pantalla */
-  /* width: 100%;
-  overflow: hidden;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: #333;
-  font-family: "Poppins", sans-serif;
-} */
+  .card-consejo .contenido {
+    padding: 3rem; /* aumenta el contenido */
+    font-size: 1.05rem; /* texto ligeramente más grande */
+  }
 
-/* 🌸 Fondo con imagen + degradado */
-/* .consejo-riego::before {
-  content: "";
-  background-image: url("https://images.unsplash.com/photo-1501004318641-b39e6451bec6?auto=format&fit=crop&w=1600&q=80");
-  background-size: cover;
-  background-position: center;
-  position: absolute;
-  inset: 0;
-  z-index: 0;
-  filter: brightness(0.6);
-} */
+  .card-consejo h2 {
+    font-size: 2rem;
+  }
 
-/* .consejo-riego .overlay {
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(to bottom right,
-      rgba(202, 28, 115, 0.7),
-      rgba(218, 211, 202, 0.85));
-  z-index: 1;
-} */
-
-/* 🌿 Contenedor del texto */
-/* .consejo-riego .contenido {
-  position: relative;
-  z-index: 2;
-  background: rgba(255, 255, 255, 0.85);
-  border-radius: 20px;
-  padding: 3rem;
-  max-width: 1000px;
-  margin: 2rem;
-  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
-  backdrop-filter: blur(5px);
-} */
-
-/* 🌺 Títulos */
-/* .consejo-riego h1 {
-  color: #ca1c73;
-  text-align: center;
-  font-size: 2.2rem;
-  margin-bottom: 1.5rem;
-} */
-
-/* .consejo-riego h3 {
-  color: #c24382;
-  margin-top: 1.8rem;
-  border-left: 4px solid #ca1c73;
-  padding-left: 10px;
-  font-size: 1.3rem;
-} */
-
-/* ✨ Texto y listas */
-/* .consejo-riego p,
-.consejo-riego li {
-  line-height: 1.7;
-  font-size: 1rem;
+  .card-consejo h3 {
+    font-size: 1.3rem;
+  }
 }
 
-.consejo-riego ul {
-  margin-left: 1.5rem;
-  padding-left: 0.5rem;
-}
-
-.consejo-riego li {
-  margin-bottom: 0.5rem;
-} */
-
-/* 🌸 Bloques */
-/* .consejo-riego .bloque {
-  margin-bottom: 1rem;
-} */
-
-/* 💡 Nota destacada */
-/* .consejo-riego .nota {
-  background: rgba(218, 211, 202, 0.9);
-  border-left: 5px solid #ca1c73;
-  padding: 12px 15px;
-  border-radius: 8px;
-  font-style: italic;
-  margin-top: 1.8rem;
-  color: #4a4a4a;
-  text-align: center;
-  font-weight: 500;
-} */
-
-/* 📱 Responsivo */
-/* @media (max-width: 768px) {
-  .consejo-riego .contenido {
-    padding: 2rem 1.2rem;
-  }
-
-  .consejo-riego h1 {
-    font-size: 1.6rem;
-  }
-
-  .consejo-riego h3 {
-    font-size: 1.1rem;
-  }
-
-  .consejo-riego {
-    min-height: auto;
-    padding: 2rem 0;
-  }
-} */

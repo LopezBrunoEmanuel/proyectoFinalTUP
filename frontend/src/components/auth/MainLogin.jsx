@@ -193,14 +193,14 @@ const MainLogin = () => {
         <h3 className="text-center mb-4 text-dark">Iniciar Sesión</h3>
         <form onSubmit={handleSubmit}>
           <div className="mb-3">
-            <label htmlFor="email" className="form-label text-dark">
+            <label htmlFor="emailUsuario" className="form-label text-dark">
               Email
             </label>
             <input
-              type="email"
+              type="text"
               className="form-control"
-              id="email"
-              name="email"
+              id="emailUsuario"
+              name="emailUsuario"
               value={formData.emailUsuario}
               onChange={handleChange}
               placeholder="Ingresá tu email"
@@ -208,14 +208,14 @@ const MainLogin = () => {
             />
           </div>
           <div className="mb-3">
-            <label htmlFor="password" className="form-label text-dark">
+            <label htmlFor="passwordUasuario" className="form-label text-dark">
               Contraseña
             </label>
             <input
               type="password"
               className="form-control"
-              id="contrasena"
-              name="contrasena"
+              id="passwordUsuario"
+              name="passwordUsuario"
               value={formData.passwordUsuario}
               onChange={handleChange}
               placeholder="Ingresá tu contrasena"
@@ -228,7 +228,7 @@ const MainLogin = () => {
             </button>
             <button
               type="button"
-              className="btn btn-green"
+              className="btn btn-register"
               onClick={handleRegisterClick}
             >
               Registrarse

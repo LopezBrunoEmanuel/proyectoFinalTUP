@@ -7,15 +7,15 @@
   border: 1.5px solid #ca1c73;
 }
 
-.btn-pink {
-  background-color: #ca1c73;
+.btn-volver {
+  background-color: #5dade2;
   color: #fff;
   border: none;
   padding: 0.5rem 1rem;
 }
 
-.btn-pink:hover {
-  background-color: #ca1c73;
+.btn-volver:hover {
+  background-color: #5dade2;
   color: #000;
 }
 

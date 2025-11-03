@@ -67,14 +67,14 @@
   color: #000;
 }
 
-.btn-green {
+.btn-register {
   background-color: #5dade2;
   color: #fff;
   border: none;
   padding: 0.5rem 1rem;
 }
 
-.btn-green:hover {
+.btn-register:hover {
   background-color: #5dade2;
   color: #000;
 }

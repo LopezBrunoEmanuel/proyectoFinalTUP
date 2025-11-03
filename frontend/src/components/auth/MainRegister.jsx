@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
-
+import "../../styles/register.css";
 import axios from "axios";
 import { swalCustom } from "../../utils/customSwal";
 
@@ -27,7 +27,6 @@ const MainRegister = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
 
     try {
       await axios.post("http://localhost:3000/api/usuarios", formData);
@@ -117,7 +116,7 @@ const MainRegister = () => {
               name="telefonoUsuario"
               value={formData.telefonoUsuario}
               onChange={handleChange}
-              placeholder="Ingresá tu nombre"
+              placeholder="Ingresá tu telefono"
               required
             />
             <label htmlFor="direccionUsuario" className="form-label text-dark">
@@ -130,7 +129,7 @@ const MainRegister = () => {
               name="direccionUsuario"
               value={formData.direccionUsuario}
               onChange={handleChange}
-              placeholder="Ingresá tu nombre"
+              placeholder="Ingresá tu direccion"
               required
             />
           </div>
@@ -153,7 +152,11 @@ const MainRegister = () => {
             <button type="submit" className="btn btn-pink mt-4">
               Registrarme
             </button>
-            <button type="submit" className="btn btn-pink mt-4" onClick={handleVolver}>
+            <button
+              type="submit"
+              className="btn btn-volver mt-4"
+              onClick={handleVolver}
+            >
               Volver
             </button>
           </div>
