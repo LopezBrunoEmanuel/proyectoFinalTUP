@@ -8,7 +8,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "../../styles/login.css";
 // import Swal from "sweetalert2";
-import { useAuthStore } from "../../store/authStore";
+import { useAuthStore } from "../../store/useAuthStore";
 import axios from "axios";
 import Logo from "../../assets/logopatio.png";
 import { swalCustom } from "../../utils/customSwal";
@@ -58,6 +58,7 @@ const MainLogin = () => {
         "http://localhost:3000/api/login",
         formData
       );
+      console.log("Respuesta del servidor:", data);
 
       if (!data.user) {
         swalCustom.fire({
@@ -81,7 +82,7 @@ const MainLogin = () => {
           navigate("/admin");
           break;
         case "empleado":
-          navigate("/empleado");
+          navigate("/admin");
           break;
         case "cliente":
           navigate("/");
@@ -208,7 +209,7 @@ const MainLogin = () => {
             />
           </div>
           <div className="mb-3">
-            <label htmlFor="passwordUasuario" className="form-label text-dark">
+            <label htmlFor="passwordUsuario" className="form-label text-dark">
               Contraseña
             </label>
             <input

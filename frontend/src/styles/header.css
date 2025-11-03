@@ -148,3 +148,25 @@
     bottom: -2px;
   }
 }
+
+/* header.css */
+.btn-logout {
+  background-color: #ca1c73;
+  /* color de fondo rosa/rojo */
+  color: white;
+  /* texto blanco */
+  border: none;
+  /* sin borde */
+  padding: 5px 12px;
+  /* tamaño del botón */
+  border-radius: 5px;
+  /* esquinas redondeadas */
+  cursor: pointer;
+  /* cursor puntero */
+  transition: background-color 0.3s ease;
+}
+
+.btn-logout:hover {
+  background-color: #ca1c73;
+  /* color más oscuro al pasar el mouse */
+}

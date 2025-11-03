@@ -15,7 +15,7 @@ const MainRegister = () => {
     telefonoUsuario: "",
     direccionUsuario: "",
     passwordUsuario: "",
-    rol: "cliente",
+    rolUsuario: "cliente",
   });
 
   const handleChange = (e) => {
@@ -29,7 +29,7 @@ const MainRegister = () => {
     e.preventDefault();
 
     try {
-      await axios.post("http://localhost:3000/api/usuarios", formData);
+      await axios.post("http://localhost:3000/usuarios", formData);
 
       swalCustom.fire({
         icon: "success",
