@@ -40,7 +40,7 @@ const Header = () => {
   const handleLogout = () => {
     logout();
     setExpanded(false);
-    navigate("/");
+    navigate("/login");
   };
 
   return (

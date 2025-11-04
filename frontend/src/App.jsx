@@ -1,21 +1,20 @@
 import { Routes, Route, Navigate } from "react-router-dom";
-import Home from "./pages/Home"
-import Footer from "./components/layout/Footer"
-import Header from "./components/layout/Header"
-import Login from "./pages/Login"
-import Register from "./pages/Register"
-import CatalogoProductos from "./pages/CatalogoProductos"
-import Carrito from "./pages/Carrito"
-import SobreNosotros from "./pages/SobreNosotros"
-import Servicios from "./pages/Servicios"
+import Home from "./pages/Home";
+import Footer from "./components/layout/Footer";
+import Header from "./components/layout/Header";
+import Login from "./pages/Login";
+import Register from "./pages/Register";
+import CatalogoProductos from "./pages/CatalogoProductos";
+import Carrito from "./pages/Carrito";
+import SobreNosotros from "./pages/SobreNosotros";
+import Servicios from "./pages/Servicios";
 import Perfil from "./pages/Perfil";
-import Error from "./pages/Error"
+import Error from "./pages/Error";
 import Tips from "./pages/Tips";
-import "./App.css"
+import "./App.css";
 import Admin from "./pages/Admin";
 
 function App() {
-
   return (
     <>
       <Header />
@@ -32,6 +31,7 @@ function App() {
           <Route path="/carrito" element={<Carrito />} />
           <Route path="/admin" element={<Admin />} />
           <Route path="*" element={<Error />} />
+
           {/* Ruta solo para admin */}
           {/* <Route
             path="/admin/*"
@@ -54,7 +54,7 @@ function App() {
       </div>
       <Footer />
     </>
-  )
+  );
 }
 
-export default App
+export default App;
