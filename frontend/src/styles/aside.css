@@ -31,8 +31,8 @@
 
 .aside-topbar .form-control:focus,
 .aside-topbar .form-select:focus {
-  border-color: #e65a9f;
-  box-shadow: 0 0 0 0.15rem rgba(230, 90, 159, 0.25);
+  border-color: var(--color-principal, #ca1c73) !important;
+  box-shadow: none !important; /* 🔹 Quitamos el destello rosado */
 }
 
 /* 🔍 BUSCADOR */
@@ -65,10 +65,12 @@
 }
 
 .clear-btn:hover {
-  color: #e65a9f;
+  color: var(--color-principal, #ca1c73);
 }
 
-/* 🎨 BOTONES APLICAR / LIMPIAR */
+/* ===================================================
+   🎨 BOTONES APLICAR / LIMPIAR - IGUALES A "AGREGAR AL CARRITO"
+   =================================================== */
 .botones-filtros {
   display: flex;
   justify-content: flex-end;
@@ -77,50 +79,78 @@
   flex-wrap: wrap;
 }
 
-.botones-filtros .btn-filtrar,
-.botones-filtros .btn-limpiar {
-  background-color: #f07fb2 !important; /* rosa suave */
-  color: #fff !important;
-  border: none !important;
-  border-radius: 8px;
-  font-weight: 500;
-  transition: background-color 0.25s ease-in-out;
-  min-width: 120px;
-  padding: 0.5rem 1rem;
+/* Estilo base (idéntico al de las cards) */
+.botones-filtros .btn-outline-primary {
+  background-color: #fff !important;
+  border: 1.5px solid var(--color-principal, #ca1c73) !important;
+  color: var(--color-principal, #ca1c73) !important;
+  border-radius: 50px !important;
+  font-weight: 600 !important;
+  font-size: 1rem !important;
+  padding: 0.6rem 1.4rem !important;
+  min-height: 44px !important;
+  line-height: 1.2 !important;
+  transition: all 0.25s ease-in-out !important;
+  box-shadow: none !important;
 }
 
-/* Hover igual para ambos */
-.botones-filtros .btn-filtrar:hover,
-.botones-filtros .btn-limpiar:hover {
-  background-color: #e65a9f !important; /* rosa más fuerte */
+/* Hover - 🔹 sin sombra */
+.botones-filtros .btn-outline-primary:hover {
+  background-color: var(--color-principal, #ca1c73) !important;
+  color: #fff !important;
+  transform: none !important; /* sin movimiento */
+  box-shadow: none !important; /* sin sombra */
+}
+
+/* Active (clic táctil) - 🔹 sin efecto */
+.botones-filtros .btn-outline-primary:active {
+  transform: none !important;
+  border-color: var(--color-principal, #ca1c73) !important;
+  box-shadow: none !important;
+  background-color: var(--color-principal, #ca1c73) !important;
+  color: #fff !important;
+}
+
+/* Focus - 🔹 sin destello rosado */
+.botones-filtros .btn-outline-primary:focus {
+  outline: none !important;
+  box-shadow: none !important;
 }
 
 /* Disabled */
-.botones-filtros .btn-filtrar:disabled,
-.botones-filtros .btn-limpiar:disabled {
-  background-color: #f4c6da !important;
-  color: #fff !important;
-  cursor: not-allowed;
+.botones-filtros .btn-outline-primary:disabled {
+  opacity: 0.6 !important;
+  cursor: not-allowed !important;
+  background-color: #fff !important;
+  color: lightgrey !important;
+  border-color: #aaa !important;
+  box-shadow: none !important;
+  transform: none !important;
 }
 
 /* 🔽 BOTÓN TOGGLE (Mostrar/Ocultar filtros) */
 .aside-topbar-container button.btn {
-  border: 1px solid #e65a9f !important;
-  color: #e65a9f !important;
+  border: 1.5px solid var(--color-principal, #ca1c73) !important;
+  color: var(--color-principal, #ca1c73) !important;
   background-color: #fff !important;
-  border-radius: 8px;
-  font-weight: 500;
-  transition: all 0.25s ease-in-out;
+  border-radius: 50px !important;
+  font-weight: 600 !important;
+  transition: all 0.25s ease-in-out !important;
+  padding: 0.6rem 1.4rem !important;
+  box-shadow: none !important;
 }
 
+/* Hover - 🔹 sin sombra */
 .aside-topbar-container button.btn:hover {
-  background-color: rgba(230, 90, 159, 0.1) !important;
-  color: #d94e92 !important;
+  background-color: var(--color-principal, #ca1c73) !important;
+  color: #fff !important;
+  box-shadow: none !important; /* sin brillo */
 }
 
+/* Focus - 🔹 sin destello */
 .aside-topbar-container button.btn:focus {
   outline: none !important;
-  box-shadow: 0 0 0 0.15rem rgba(230, 90, 159, 0.25);
+  box-shadow: none !important;
 }
 
 /* 📱 RESPONSIVE */
@@ -134,13 +164,50 @@
     justify-content: center;
   }
 
-  .botones-filtros .btn-filtrar,
-  .botones-filtros .btn-limpiar {
-    flex: 1 1 100%;
-    max-width: 320px;
+  .botones-filtros .btn-outline-primary {
+    width: 100% !important;
+    max-width: 320px !important;
+    font-size: 1.05rem !important;
+    padding: 0.8rem 1.6rem !important;
+    justify-content: center !important;
   }
 
   .aside-topbar-container {
     margin-bottom: 1rem;
   }
+}
+
+/* ====== FILTROS ACTIVOS ====== */
+.filtros-activos {
+  border-top: 1px solid #e6e6e6;
+  padding-top: 0.75rem;
+}
+
+.chip-filtro {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background-color: #fff;
+  border: 1px solid var(--color-principal, #ca1c7386);
+  border-radius: 50px;
+  padding: 0.3rem 0.8rem;
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+.chip-filtro button {
+  background: none;
+  border: none;
+  color: #aaa;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  cursor: pointer;
+  font-size: 1rem;
+}
+
+.chip-filtro button:hover {
+  color: #ca1c73;
+  transform: scale(1.05);
 }

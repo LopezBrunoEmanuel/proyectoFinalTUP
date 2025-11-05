@@ -10,7 +10,7 @@ const Aside = ({ filtrosTemporales, setFiltrosTemporales, filtrosAplicados, setF
         <Container fluid className="aside-topbar-container">
             <div className="d-md-none text-center mb-3 mt-3">
                 <Button
-                    variant="outline-secondary"
+                    variant="outline-primary"
                     onClick={() => setOpen(!open)}
                     aria-controls="filtros-collapse"
                     aria-expanded={open}
@@ -84,7 +84,7 @@ const Aside = ({ filtrosTemporales, setFiltrosTemporales, filtrosAplicados, setF
 
                                 {/* Botón Aplicar */}
                                 <Button
-                                    variant="primary"
+                                    variant="outline-primary"
                                     className="btn-filtrar flex-grow-1 flex-md-grow-0"
                                     disabled={
                                         !filtrosTemporales.busqueda &&
@@ -94,14 +94,16 @@ const Aside = ({ filtrosTemporales, setFiltrosTemporales, filtrosAplicados, setF
                                     onClick={() => {
                                         setFiltrosAplicados({ ...filtrosTemporales });
                                         setPaginaActual(1);
+                                        // setOpen(!open)
                                     }}
                                 >
-                                    Aplicar
+                                    Aplicar filtros
                                 </Button>
 
                                 {/* Botón Limpiar */}
+                                {/* CUANDO SE USE EL BOTON DE LIMPIAR FILTROS SE DEBERAN BORRAR LOS INPUTS DE CANTIDAD SELECCIONADA DE UN PRODUCTO/S */}
                                 <Button
-                                    variant="outline-secondary"
+                                    variant="outline-primary"
                                     className="btn-limpiar flex-grow-1 flex-md-grow-0"
                                     disabled={
                                         !filtrosAplicados.busqueda &&
@@ -116,12 +118,69 @@ const Aside = ({ filtrosTemporales, setFiltrosTemporales, filtrosAplicados, setF
                                 >
                                     Limpiar filtros
                                 </Button>
-
                             </div>
                         </Col>
-
-
                     </Row>
+                    {/* 🪴 Filtros activos */}
+                    {(filtrosAplicados.busqueda || filtrosAplicados.categoria || filtrosAplicados.orden) && (
+                        <div className="filtros-activos mt-3 px-4">
+                            <p className="mb-2 fw-semibold text-muted">Filtros activos:</p>
+                            <div className="d-flex flex-wrap align-items-center gap-2">
+                                {filtrosAplicados.busqueda && (
+                                    <span className="chip-filtro">
+                                        {filtrosAplicados.busqueda}
+                                        <button
+                                            onClick={() => {
+                                                const nuevosFiltros = { ...filtrosAplicados, busqueda: "" };
+                                                setFiltrosTemporales(nuevosFiltros);
+                                                setFiltrosAplicados(nuevosFiltros);
+                                                setPaginaActual(1);
+                                            }}
+                                        >
+                                            <FaTimesCircle />
+                                        </button>
+                                    </span>
+                                )}
+
+                                {filtrosAplicados.categoria && (
+                                    <span className="chip-filtro">
+                                        {filtrosAplicados.categoria + "s"}
+                                        <button
+                                            onClick={() => {
+                                                const nuevosFiltros = { ...filtrosAplicados, categoria: "" };
+                                                setFiltrosTemporales(nuevosFiltros);
+                                                setFiltrosAplicados(nuevosFiltros);
+                                                setPaginaActual(1);
+                                            }}
+                                        >
+                                            <FaTimesCircle />
+                                        </button>
+                                    </span>
+                                )}
+
+                                {filtrosAplicados.orden && (
+                                    <span className="chip-filtro">
+                                        {filtrosAplicados.orden === "az"
+                                            ? "A-Z"
+                                            : filtrosAplicados.orden === "precioAsc"
+                                                ? "Menor precio"
+                                                : "Mayor precio"}
+                                        <button
+                                            onClick={() => {
+                                                const nuevosFiltros = { ...filtrosAplicados, orden: "" };
+                                                setFiltrosTemporales(nuevosFiltros);
+                                                setFiltrosAplicados(nuevosFiltros);
+                                                setPaginaActual(1);
+                                            }}
+                                        >
+                                            <FaTimesCircle />
+                                        </button>
+                                    </span>
+                                )}
+                            </div>
+                        </div>
+                    )}
+
                 </div>
             </Collapse>
         </Container>

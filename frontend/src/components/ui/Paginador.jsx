@@ -43,10 +43,10 @@ const Paginador = ({ paginaActual, totalPaginas, onChangePagina }) => {
         <div key={paginaActual} className="paginador transition-fade">
             <Pagination className="justify-content-center my-3">
                 {/* ir al principio */}
-                {paginaActual > 1 && (<Pagination.First onClick={() => goTo(1)} />)}
+                {paginaActual > 1 && totalPaginas > 5 && (<Pagination.First onClick={() => goTo(1)} />)}
 
                 {/* anterior */}
-                <Pagination.Prev disabled={paginaActual === 1} onClick={() => goTo(paginaActual - 1)} />
+                {/* <Pagination.Prev disabled={paginaActual === 1} onClick={() => goTo(paginaActual - 1)} /> */}
 
                 {/* botones numericos */}
                 {Array.from({ length: cantidad }, (_, i) => {
@@ -63,10 +63,10 @@ const Paginador = ({ paginaActual, totalPaginas, onChangePagina }) => {
                 })}
 
                 {/* siguiente */}
-                <Pagination.Next disabled={paginaActual === totalPaginas} onClick={() => goTo(paginaActual + 1)} />
+                {/* <Pagination.Next disabled={paginaActual === totalPaginas} onClick={() => goTo(paginaActual + 1)} /> */}
 
                 {/* ir a ultima pagina */}
-                {paginaActual < totalPaginas && (<Pagination.Last onClick={() => goTo(totalPaginas)} />)}
+                {paginaActual < totalPaginas && totalPaginas > 5 && (<Pagination.Last onClick={() => goTo(totalPaginas)} />)}
             </Pagination>
         </div>
     )

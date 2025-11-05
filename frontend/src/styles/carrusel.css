@@ -7,7 +7,7 @@
 .carrusel-img {
   height: 70vh;
   object-fit: cover;
-  filter: brightness(0.5); /* oscurece un poco para que se lea el texto */
+  filter: brightness(0.7); /* oscurece un poco para que se lea el texto */
 }
 
 /* Textos centrados y con sombra */

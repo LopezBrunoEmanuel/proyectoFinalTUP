@@ -1,56 +1,269 @@
+/* ====== VARIABLES ====== */
+:root {
+  --color-principal: #ca1c73;
+  --color-verde: #28a745;
+  --sombra-hover: 0 6px 16px rgba(0, 0, 0, 0.1);
+}
+
+/* ====== CONTENEDOR GENERAL ====== */
 .cards-container {
-  margin: auto;
-  width: 70%;
-  margin-top: 20px;
-}
-
-.botones-cards {
-  width: 70%;
-  margin: auto;
-  display: flex;
-  justify-content: center;
-  margin-bottom: 10px;
-  gap: 5px;
-}
-
-.card-title {
-  display: -webkit-box;
-  line-clamp: 2;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  height: 4rem;
-  transition: all 0.3s ease;
+  width: 100%;
+  max-width: 1200px;
+  margin: 20px auto;
+  padding: 0 10px;
+  box-sizing: border-box;
+  overflow-x: hidden;
 }
 
 @media (max-width: 992px) {
   .cards-container {
-    width: 85%;
-    margin-bottom: 20px;
-  }
-
-  .card-title {
-    line-clamp: 3;
-    -webkit-line-clamp: 3;
-    height: 5rem;
+    width: 95%;
   }
 }
 
-/* 🪴 MENSAJE DE "NO SE ENCONTRARON PRODUCTOS" */
+/* ====== CARD BASE ====== */
+.producto-card {
+  border: 1px solid #eee;
+  border-radius: 12px;
+  overflow: hidden;
+  background-color: #fff;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+/* ====== BODY ====== */
+.producto-card .card-body {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  padding: 0.5rem 1rem;
+  text-align: center;
+}
+
+/* ====== ESTILO PARA CARDS SIN STOCK (versión horizontal) ====== */
+.producto-card.sin-stock {
+  position: relative;
+  opacity: 0.55; /* efecto sombreado */
+  filter: grayscale(20%);
+}
+
+/* Cinta horizontal superior */
+.producto-card.sin-stock::before {
+  content: "SIN STOCK";
+  position: absolute;
+  top: 10px;
+  left: 0;
+  right: 0;
+  text-align: center;
+  background-color: rgba(202, 28, 115, 0.9);
+  color: #fff;
+  font-weight: 700;
+  font-size: 0.95rem;
+  letter-spacing: 1px;
+  padding: 6px 0;
+  text-transform: uppercase;
+  z-index: 20;
+}
+
+/* Opcional: resalta un poco el texto de la cinta */
+.producto-card.sin-stock::before {
+  backdrop-filter: blur(5px);
+}
+
+/* Deshabilita clics */
+.producto-card.sin-stock * {
+  pointer-events: none;
+  user-select: none;
+}
+
+/* Imagen uniforme con proporción fija */
+.card-img-top {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  border-radius: 0;
+  transition: transform 0.3s ease;
+  display: block; /* 🧩 Evita desborde por inline-block */
+}
+
+/* ====== INFO DE PRECIO Y STOCK ====== */
+.precio-stock .fw-bold {
+  font-size: 1.1rem;
+  color: var(--color-verde);
+}
+
+.precio-stock .text-muted {
+  font-size: 0.85rem;
+}
+
+/* ====== GRUPO DE BOTONES ====== */
+.botones-cards {
+  /* 🧩 Se cambió a wrap para evitar desborde en pantallas pequeñas */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 0.5rem;
+}
+
+.botones-cards .btn {
+  min-width: 38px;
+  height: 38px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50px;
+  font-size: 0.95rem;
+  font-weight: 500;
+  padding: 0 0.75rem;
+  transition: all 0.25s ease;
+  cursor: pointer;
+}
+
+/* Botón principal (🛒 agregar) */
+.botones-cards .btn-outline-primary {
+  border-color: var(--color-principal);
+  color: var(--color-principal);
+  background-color: #fff;
+}
+
+.botones-cards .btn-outline-primary:hover {
+  background-color: var(--color-principal);
+  color: #fff;
+  /* box-shadow: 0 3px 8px rgba(202, 28, 115, 0.3); */
+}
+
+.botones-cards .btn-outline-primary:disabled {
+  opacity: 1 !important;
+  cursor: not-allowed !important;
+  background-color: #fff !important;
+  color: #ccc !important;
+  border-color: #aaa !important;
+  box-shadow: none !important;
+  transform: none !important;
+}
+
+.btn-outline-primary:active {
+  transform: scale(0.95);
+  border-color: var(--color-principal) !important;
+}
+
+.botones-cards .btn-outline-secondary:hover {
+  border-color: var(--color-principal);
+  color: var(--color-principal);
+  /* box-shadow: 0 3px 8px rgba(202, 28, 115, 0.2); */
+}
+
+/* ====== CONTROL DE CANTIDAD (PÍLDORA HORIZONTAL) ====== */
+.cantidad-container {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #aaa;
+  border-radius: 999px;
+  overflow: hidden;
+  background-color: #fff;
+  transition: all 0.2s ease;
+}
+
+.cantidad-container:focus-within {
+  border-color: var(--color-principal);
+  /* box-shadow: 0 0 4px rgba(202, 28, 115, 0.25); */
+}
+
+/* Botones +/- */
+.cantidad-container .btn {
+  border: none;
+  border-radius: 0;
+  background: transparent;
+  color: var(--color-principal);
+  font-weight: bold;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.cantidad-container .btn:hover:not(:disabled) {
+  background-color: #ca1c7320;
+}
+
+.cantidad-container .btn:active {
+  transform: scale(1.05);
+  transform: translateY(1px);
+}
+
+.cantidad-container .btn:disabled {
+  opacity: 1;
+  cursor: not-allowed;
+  color: #ccc;
+}
+
+/* Input numérico */
+.cantidad-input {
+  width: 50px;
+  text-align: center;
+  font-weight: 500;
+  border: none;
+  outline: none;
+  background: transparent;
+  font-size: 0.95rem;
+}
+
+.cantidad-input:focus {
+  outline: none;
+  box-shadow: none;
+}
+
+/* Quita las flechas de los inputs numéricos */
+.cantidad-input::-webkit-outer-spin-button,
+.cantidad-input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* ====== AJUSTES DE TAMAÑO - BOTÓN "AGREGAR AL CARRITO" ====== */
+.btn-agregar {
+  padding: 0.6rem 1.4rem; /* 🧩 más alto y ancho */
+  font-size: 1rem; /* texto un poco más grande */
+  font-weight: 600;
+  border-radius: 40px;
+  line-height: 1.2;
+  white-space: nowrap;
+}
+
+/* 🧩 Versión mobile: ancho total, más alto, texto centrado */
+@media (max-width: 576px) {
+  .btn-agregar {
+    width: 100%;
+    padding: 0.8rem 1.6rem;
+    font-size: 1.05rem;
+    text-align: center;
+    justify-content: center;
+  }
+}
+
+/* ====== MENSAJE DE "NO SE ENCONTRARON PRODUCTOS" ====== */
 .no-resultados {
   text-align: center;
-  padding: 3rem 1rem;
+  padding: 3rem;
   color: #666;
   background-color: #fafafa;
   border-radius: 12px;
-  border: 1px dashed #ddd;
+  border: 1px solid #ddd;
   margin-top: 2rem;
-  animation: fadeIn 0.4s ease-in-out;
+  animation: fadeIn 0.6s ease-in-out;
 }
 
 .no-resultados h5 {
-  color: #ca1c73;
+  color: var(--color-principal);
   font-weight: 600;
   margin-bottom: 0.5rem;
 }
@@ -60,7 +273,7 @@
   color: #555;
 }
 
-/* Animación suave */
+/* ====== ANIMACIONES ====== */
 @keyframes fadeIn {
   from {
     opacity: 0;
@@ -68,73 +281,105 @@
   }
   to {
     opacity: 1;
-    transform: translateY(0);
+    transform: translateY(0px);
   }
 }
 
-/* 🔢 Grupo de cantidad */
-.producto-card .btn-group .btn {
-  border-radius: 6px !important;
-  min-width: 32px;
+/* ====== RESPONSIVE ====== */
+@media (max-width: 576px) {
+  .cards-container {
+    width: 95%;
+  }
+
+  .card-img-top {
+    aspect-ratio: 1 / 1;
+  }
+
+  .precio-stock .fw-bold {
+    font-size: 1rem;
+  }
+
+  .botones-cards {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 8px;
+  }
+
+  .botones-cards .btn {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .cantidad-container {
+    min-width: 120px;
+  }
+
+  .cantidad-container .btn {
+    width: 34px;
+    height: 34px;
+  }
+
+  .cantidad-input {
+    width: 45px;
+  }
 }
 
-.producto-card .btn-group .btn:disabled {
-  opacity: 0.6;
-  cursor: not-allowed;
-}
-
-/* 🛒 Botón agregar */
-.producto-card .btn-outline-primary {
-  border-color: #ca1c73;
-  color: #ca1c73;
-  transition: all 0.2s ease-in-out;
-}
-
-.producto-card .btn-outline-primary:hover {
-  background-color: #ca1c73;
-  color: white;
-}
-
-/* 🔢 Contenedor del control de cantidad */
-.cantidad-container {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-/* Input de cantidad */
-.cantidad-input {
-  width: 50px;
+/* ====== NUEVA ESTRUCTURA DE CARD ====== */
+.nombre-producto {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #333;
   text-align: center;
-  padding: 0.25rem 0.4rem;
-  font-size: 0.9rem;
-  font-weight: 500;
-  border: 1px solid #ccc;
-  border-radius: 6px;
-  transition: all 0.2s ease;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  line-clamp: 2;
+  min-height: 2.8rem;
+  line-height: 1.4rem;
+  margin-top: 0.5rem;
+  margin-bottom: 0.4rem;
 }
 
-.cantidad-input:focus {
-  outline: none;
-  border-color: #ca1c73;
-  box-shadow: 0 0 0 0.1rem rgba(202, 28, 115, 0.3);
+.precio-producto {
+  font-size: 1.1rem;
+  color: var(--color-verde);
 }
 
-/* Botones de +/- */
-.cantidad-container .btn {
-  min-width: 32px;
-  font-weight: bold;
-  border-radius: 6px;
-  transition: all 0.2s ease;
+.stock-producto {
+  font-size: 0.85rem;
+  color: #666;
 }
 
-.cantidad-container .btn:hover {
-  background-color: #ca1c7320;
-  border-color: #ca1c73;
-  color: #ca1c73;
+.categoria-text {
+  color: #888;
+  font-size: 0.8rem;
+  letter-spacing: 0.3px;
 }
 
-.cantidad-container .btn:disabled {
-  opacity: 0.5;
-  cursor: not-allowed;
+/* 🧩 Corrección final: contención general */
+.cards-container .row {
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+}
+
+.cards-container .col {
+  padding: 0.5rem;
+  box-sizing: border-box;
+  max-width: 100%;
+}
+
+/* 🧩 Mantiene alineación inferior de botones */
+.producto-card .botones-cards {
+  margin-top: auto;
+  padding-top: 0.5rem;
+  border-top: 1px solid #f1f1f1;
+}
+
+/* ====== DESACTIVAR HOVER EN MOBILE ====== */
+@media (max-width: 768px) {
+  .producto-card:hover {
+    transform: none !important;
+    box-shadow: none !important;
+  }
 }
