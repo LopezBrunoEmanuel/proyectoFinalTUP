@@ -1,0 +1,141 @@
+/* General del carrito */
+.offcanvas-body {
+  background-color: #f8f4ed;
+  overflow-y: auto;
+  padding-bottom: 2rem;
+}
+
+/* Cada producto (card) */
+.carrito-item {
+  background-color: #fff;
+  border: 1px solid #e0e0e0;
+  transition: all 0.2s ease-in-out;
+}
+
+.carrito-item:hover {
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.carrito-item-img {
+  max-width: 70px;
+  height: 70px;
+  object-fit: cover;
+}
+
+/* Nombre del producto */
+.nombre-prod {
+  font-size: 0.95rem;
+}
+
+/* Precio individual */
+.precio-item {
+  font-size: 0.9rem;
+  color: #2d3436;
+}
+
+/* Botones de cantidad */
+.btn-cantidad {
+  width: 28px;
+  height: 28px;
+  line-height: 1;
+  padding: 0;
+}
+
+.cantidad-input {
+  width: 45px;
+  height: 28px;
+  font-size: 0.9rem;
+}
+
+/* Botón eliminar */
+.btn-eliminar {
+  color: #dc3545 !important;
+  font-size: 0.9rem;
+}
+.btn-eliminar:hover {
+  opacity: 0.8;
+}
+
+.offcanvas-header {
+  /* este color esta bueno para header y footer */
+  /* background-color: #efe5d5; */
+
+  /* y este color esta bueno para los backgrounds */
+  background-color: #f8f4ed;
+}
+
+.offcanvas-header button {
+  background: transparent;
+  border: none;
+  color: inherit;
+  font-size: 1.2rem;
+  transition: color 0.25s ease;
+}
+
+.offcanvas-header button:hover {
+  color: #ca1c73; /* 🔹 tu rosado principal */
+  cursor: pointer;
+}
+
+.volver button {
+  background-color: #fff;
+  color: var(--color-principal, #ca1c73);
+  border: 1.5px solid var(--color-principal, #ca1c73);
+  border-radius: 50px;
+  font-weight: 600;
+  font-size: 1rem;
+  padding: 0.6rem 1.4rem;
+  line-height: 1.2;
+  transition: all 0.25s ease-in-out;
+  box-shadow: none;
+}
+
+/* Hover */
+.volver button:hover {
+  background-color: var(--color-principal, #ca1c73);
+  color: #fff;
+  transform: none; /* sin movimiento */
+  box-shadow: none;
+}
+
+/* Active (clic) */
+.volver button:active {
+  background-color: var(--color-principal, #ca1c73);
+  color: #fff;
+  border-color: var(--color-principal, #ca1c73);
+  transform: none;
+  box-shadow: none;
+}
+
+/* Focus */
+.volver button:focus {
+  outline: none;
+  box-shadow: none;
+}
+
+.carrito-vacio {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 300px;
+  text-align: center;
+  padding: 1rem;
+}
+
+.carrito-vacio .btn-volver {
+  background-color: #f8f4ed;
+  color: var(--color-principal, #ca1c73);
+  border: 1.5px solid var(--color-principal, #ca1c73);
+  border-radius: 50px;
+  font-weight: 600;
+  font-size: 1rem;
+  padding: 0.6rem 1.4rem;
+  line-height: 1.2;
+  transition: all 0.25s ease-in-out;
+}
+
+.carrito-vacio .btn-volver:hover {
+  background-color: var(--color-principal, #ca1c73);
+  color: #fff;
+}

@@ -4,7 +4,7 @@
   z-index: 999;
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
-  background-color: rgba(218, 211, 202, 0.9);
+  background-color: #f2e4d6e6;
   transition: all 0.3s ease;
 }
 

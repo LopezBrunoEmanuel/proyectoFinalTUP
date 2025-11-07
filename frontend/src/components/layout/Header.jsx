@@ -1,15 +1,29 @@
 import { useState, useEffect, useRef } from "react";
-import Container from "react-bootstrap/Container";
-import Nav from "react-bootstrap/Nav";
-import Navbar from "react-bootstrap/Navbar";
+import { Container, Nav, Navbar } from "react-bootstrap";
 import { FaShoppingCart, FaUserCircle } from "react-icons/fa";
 import "../../styles/header.css";
 import { useAuthStore } from "../../store/useAuthStore";
 import { useNavigate } from "react-router-dom";
+import { useUIStore } from "../../store/useUIStore"
+import { useCarritoStore } from "../../store/useCarritoStore"
 
 const Header = () => {
   const [expanded, setExpanded] = useState(false);
   const navbarRef = useRef(null);
+  const navigate = useNavigate();
+  const { abrirCarrito } = useUIStore()
+  const { vaciarCarrito } = useCarritoStore()
+  const totalItems = useCarritoStore((state) => (state.carrito || []).reduce((acc, item) => acc + (item?.cantidad || 0), 0))
+
+  const user = useAuthStore((state) => state.user);
+  const logout = useAuthStore((state) => state.logout);
+
+  const handleLogout = () => {
+    logout();
+    vaciarCarrito();
+    setExpanded(false);
+    navigate("/login");
+  };
 
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -32,17 +46,6 @@ const Header = () => {
     };
   }, [expanded]);
 
-  const navigate = useNavigate();
-
-  const user = useAuthStore((state) => state.user);
-  const logout = useAuthStore((state) => state.logout);
-
-  const handleLogout = () => {
-    logout();
-    setExpanded(false);
-    navigate("/login");
-  };
-
   return (
     <div className="header" ref={navbarRef}>
       <Navbar
@@ -56,9 +59,31 @@ const Header = () => {
           <Navbar.Brand href="/">Patio 1220</Navbar.Brand>
 
           <div className="navbar-icons order-lg-2">
-            <Nav.Link href="/carrito" className="icon-link">
-              <FaShoppingCart />
-            </Nav.Link>
+            <div className="cart-icon-container position-relative">
+              <button
+                type="button"
+                className="icon-link btn btn-link p-0 border-0 position-relative"
+                onClick={abrirCarrito}
+              >
+                <FaShoppingCart size={22} />
+                {totalItems > 0 && (
+                  <span
+                    className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"
+                    style={{
+                      fontSize: "0.7rem",
+                      minWidth: "18px",
+                      minHeight: "18px",
+                      display: "flex",
+                      justifyContent: "center",
+                      alignItems: "center",
+                    }}
+                  >
+                    {totalItems}
+                  </span>
+                )}
+              </button>
+            </div>
+
             {user ? (
               <>
                 <button

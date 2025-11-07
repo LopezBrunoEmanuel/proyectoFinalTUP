@@ -1,38 +1,158 @@
-.carrusel-container {
-  width: 100%;
-  overflow: hidden;
-}
-
-/* Ajuste de imagen para que cubra bien la pantalla */
-.carrusel-img {
-  height: 70vh;
+/* .home__carrusel-img {
+  height: 75vh;
   object-fit: cover;
-  filter: brightness(0.7); /* oscurece un poco para que se lea el texto */
+  filter: brightness(0.8);
 }
 
-/* Textos centrados y con sombra */
-.carousel-caption h3 {
-  font-size: 2rem;
-  font-weight: bold;
-  text-shadow: 0 2px 5px rgba(0, 0, 0, 0.6);
+.home__carrusel-caption {
+  position: absolute;
+  bottom: 10%;
+  left: 50%;
+  transform: translateX(-50%); */
+
+/* estas lineas codigo de abajo van comentadas */
+/* background: rgba(70, 98, 74, 0.55); */
+/* backdrop-filter: blur(6px); */
+/* border-radius: var(--radius); */
+/* padding: 1.5rem 2rem; */
+
+/* max-width: 600px;
+  text-align: center;
 }
 
-.carousel-caption p {
-  font-size: 1.2rem;
-  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.6);
+.home__carrusel-caption h3 {
+  font-family: var(--fuente-titulos);
+  color: var(--color-dorado);
+  font-size: 50px;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
 }
 
-/* Responsive */
+.home__carrusel-caption p {
+  color: var(--color-blanco);
+  font-size: 1.1rem;
+} */
+
+/* =========================================
+   🌿 HOME CARRUSEL
+   ========================================= */
+
+/* Imagen del carrusel */
+.home__carrusel-img {
+  height: 75vh;
+  object-fit: cover;
+  filter: brightness(0.8);
+  transition: filter 0.5s ease;
+}
+
+/* Suaviza el paso entre slides */
+.carousel-item img {
+  transition: opacity 1s ease-in-out;
+}
+
+/* Contenedor del texto */
+.home__carrusel-caption {
+  position: absolute;
+  bottom: 12%;
+  left: 50%;
+  transform: translateX(-50%);
+  text-align: center;
+  max-width: 650px;
+
+  /* 💡 OPCIONAL: si querés que el texto tenga un leve contraste sobre imágenes muy claras */
+  /* background: rgba(0, 0, 0, 0.25);
+  padding: 1.2rem 2rem;
+  border-radius: var(--radius);
+  backdrop-filter: blur(3px); */
+}
+
+/* Título principal */
+.home__carrusel-caption h3 {
+  font-family: var(--fuente-titulos);
+  color: var(--color-dorado);
+  font-size: clamp(2rem, 5vw, 3rem); /* 🔧 responsive elegante */
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+  text-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);
+  letter-spacing: 0.5px;
+  text-shadow: 1px 1px white;
+}
+
+/* Subtexto */
+.home__carrusel-caption p {
+  color: var(--color-blanco);
+  font-size: clamp(1rem, 2vw, 1.2rem);
+  line-height: 1.6;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
+  margin-top: 0.3rem;
+}
+
+/* Animación suave al cambiar de slide */
+.carousel-item {
+  transition: transform 1s ease-in-out, opacity 1s ease-in-out;
+}
+
+/* 🔹 Hover opcional (sutil brillo en la imagen del slide actual) */
+.carousel-item.active .home__carrusel-img {
+  filter: brightness(0.9);
+}
+
+/* =========================================
+   📱 RESPONSIVE
+   ========================================= */
 @media (max-width: 768px) {
-  .carrusel-img {
+  .home__carrusel-img {
     height: 55vh;
   }
 
-  .carousel-caption h3 {
-    font-size: 1.5rem;
+  .home__carrusel-caption {
+    bottom: 8%;
+    max-width: 90%;
   }
 
-  .carousel-caption p {
+  .home__carrusel-caption h3 {
+    font-size: 1.8rem;
+  }
+
+  .home__carrusel-caption p {
     font-size: 1rem;
   }
+}
+/* ✅ Elimina el destello blanco entre slides */
+.home__carrusel {
+  background-color: #000; /* Fondo oscuro durante transiciones */
+  overflow: hidden;
+}
+
+/* Controla la transición entre slides para evitar flash blanco */
+.carousel-item {
+  background-color: #000; /* Mantiene fondo negro debajo de las imágenes */
+  transition: transform 1s ease-in-out; /* 🔸 Quitamos el opacity */
+}
+
+/* También podés ajustar el filtro de brillo para compensar */
+.home__carrusel-img {
+  transition: transform 0.8s ease-in-out, filter 0.8s ease-in-out;
+}
+
+/* =========================================
+   🌑 Degradado inferior para mejorar legibilidad del texto
+   ========================================= */
+.home__carrusel::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 40%; /* 🔧 ajustá la altura según cuánto querés que suba el degradado */
+  pointer-events: none; /* evita bloquear clicks o interacción */
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.6), transparent);
+  z-index: 1;
+}
+
+/* Asegura que el texto quede por encima del degradado */
+.home__carrusel-caption {
+  position: absolute;
+  z-index: 2;
 }

@@ -11,12 +11,14 @@ const CatalogoProductos = () => {
   const [filtrosTemporales, setFiltrosTemporales] = useState({
     busqueda: "",
     categoria: "",
-    orden: ""
+    orden: "",
+    soloDisponibles: false
   })
   const [filtrosAplicados, setFiltrosAplicados] = useState({
     busqueda: "",
     categoria: "",
-    orden: ""
+    orden: "",
+    soloDisponibles: false
   })
 
   const productosPorPagina = 12
@@ -40,7 +42,11 @@ const CatalogoProductos = () => {
       ? prod.categoriaProducto === filtrosAplicados.categoria
       : true;
 
-    return coincideBusqueda && coincideCategoria
+    const coincideDisponibilidad = filtrosAplicados.soloDisponibles
+      ? prod.stockProducto > 0
+      : true
+
+    return coincideBusqueda && coincideCategoria && coincideDisponibilidad
   })
 
   const productosOrdenados = [...productosFiltrados]
@@ -69,8 +75,8 @@ const CatalogoProductos = () => {
           <MostrarProductos productos={productosVisibles} />
         ) : (
           <div className="no-resultados">
-            <h5>No se encontraron productos</h5>
-            <p>Intentá ajustar tu búsqueda con los filtros</p>
+            <h5>No se encontraron resultados para tu búsqueda</h5>
+            <p>Intentá ajustar tu búsqueda usando los filtros!</p>
           </div>
         )}
         <Paginador paginaActual={paginaActual} totalPaginas={totalPaginas} onChangePagina={setPaginaActual} />

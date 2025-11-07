@@ -70,26 +70,43 @@ button:focus-visible {
 
 /* NUEVOS ESTILOS */
 /* comentar todo esto para dejar la pagina como estaba */
+/* ===== Tipografías ===== */
+@import url("https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Lato:wght@300;400;700&display=swap");
+
+/* ===== Variables globales ===== */
 :root {
-  /* 🎨 Paleta base */
+  /* 🎨 Paleta natural */
+  --color-verde-olivo: #7a9e7e;
+  --color-verde-bosque: #46624a;
+  --color-beige: #f5f1e6;
+  --color-dorado: #c1a45f;
+  --color-marron: #8b7355;
+  --color-blanco: #ffffff;
+  --color-texto: #2e3b2e;
+
+  /* 🎨 Paleta heredada (por compatibilidad) */
   --color-principal: #ca1c73;
   --color-principal-hover: #b21764;
   --color-secundario: #f289bd;
-  --color-texto: #333;
-  --color-fondo: #ffffff;
   --color-borde: #e4e4e4;
   --color-gris: #aaa;
 
   /* 🧱 Forma y motion */
   --radio: 8px;
-  --sombra-suave: 0 3px 12px rgba(0, 0, 0, 0.05);
+  --radius: 16px;
+  --sombra-suave: 0 8px 20px rgba(0, 0, 0, 0.08);
   --transicion: all 0.25s ease;
   --transicion-rapida: all 0.15s ease;
 
   /* 🅰️ Tipografía */
-  --fuente-base: "Inter", "Avenir", "Helvetica", "Arial", sans-serif;
+  --fuente-base: "Lato", "Inter", "Avenir", "Helvetica", "Arial", sans-serif;
+  --fuente-titulos: "Playfair Display", serif;
+
+  /* 📏 Espaciado global */
+  --section-py: clamp(56px, 8vw, 96px);
 }
 
+/* ===== Reset básico ===== */
 * {
   margin: 0;
   padding: 0;
@@ -103,68 +120,110 @@ html {
 body {
   font-family: var(--fuente-base);
   color: var(--color-texto);
-  background-color: var(--color-fondo);
+  background-color: var(--color-beige);
   min-height: 100vh;
   display: flex;
   flex-direction: column;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
 }
 
+/* ===== Tipografía general ===== */
+h1,
+h2,
+h3,
+h4 {
+  font-family: var(--fuente-titulos);
+  color: var(--color-verde-bosque);
+  line-height: 1.2;
+  margin-bottom: 0.5em;
+}
+h1 {
+  font-size: clamp(2rem, 5vw, 3rem);
+}
+h2 {
+  font-size: clamp(1.75rem, 3.5vw, 2.25rem);
+}
+h3 {
+  font-size: clamp(1.35rem, 2.6vw, 1.6rem);
+}
+
+p {
+  margin-bottom: 1rem;
+}
+
+/* ===== Enlaces ===== */
 a {
-  color: var(--color-principal);
+  color: var(--color-verde-olivo);
   text-decoration: none;
   transition: color 0.2s ease-in-out;
 }
 a:hover {
-  color: var(--color-secundario);
+  color: var(--color-dorado);
 }
 
-h1,
-h2,
-h3 {
-  color: var(--color-texto);
-  font-weight: 400;
-}
-
-button {
+/* ===== Botones ===== */
+button,
+.btn {
   cursor: pointer;
   border: none;
   font-family: inherit;
-  background: none; /* evita estilos raros por defecto */
+  border-radius: var(--radius);
+  transition: var(--transicion);
+}
+button:active,
+.btn:active {
+  transform: translateY(1px);
 }
 
-/* 🖼️ Imágenes responsivas */
+/* Personalización de Bootstrap */
+.btn-success {
+  background-color: var(--color-verde-olivo);
+  border-color: var(--color-verde-olivo);
+}
+.btn-success:hover {
+  background-color: var(--color-dorado);
+  border-color: var(--color-dorado);
+}
+.btn-outline-success {
+  color: var(--color-verde-olivo);
+  border-color: var(--color-verde-olivo);
+}
+.btn-outline-success:hover {
+  background-color: var(--color-verde-olivo);
+  border-color: var(--color-verde-olivo);
+  color: var(--color-blanco);
+}
+
+/* ===== Imágenes responsivas ===== */
 img {
   max-width: 100%;
   height: auto;
   display: block;
+  border-radius: calc(var(--radius) - 8px);
 }
 
-/* ♿ Accesibilidad y foco consistente */
+/* ===== Foco accesible ===== */
 :focus-visible {
-  outline: 3px solid rgba(202, 28, 115, 0.35);
+  outline: 3px solid rgba(122, 158, 126, 0.4);
   outline-offset: 2px;
   border-radius: var(--radio);
 }
 
-/* 🚦 Respeta usuarios con reduce motion */
-@media (prefers-reduced-motion: reduce) {
-  * {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
-    scroll-behavior: auto !important;
-  }
+/* ===== Tarjetas y superficies ===== */
+.card,
+.shadow-sm {
+  box-shadow: var(--sombra-suave);
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  border-radius: var(--radius);
 }
 
-/* 🧰 Utilidades globales que podés usar en cualquier lado */
+/* ===== Helpers reutilizables ===== */
 .u-shadow {
   box-shadow: var(--sombra-suave);
 }
 .u-rounded {
-  border-radius: var(--radio);
-}
-.u-transition {
-  transition: var(--transicion);
+  border-radius: var(--radius);
 }
 .u-border {
   border: 1px solid var(--color-borde);
@@ -172,4 +231,20 @@ img {
 .u-maxw {
   max-width: 1200px;
   margin-inline: auto;
+}
+.u-transition {
+  transition: var(--transicion);
+}
+.py-section {
+  padding-block: var(--section-py) !important;
+}
+
+/* ===== Motion preferente ===== */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }

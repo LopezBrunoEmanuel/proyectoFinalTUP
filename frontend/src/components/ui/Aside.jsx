@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Form, Button, InputGroup, Row, Col, Collapse, Container } from "react-bootstrap";
 import "../../styles/aside.css";
-import { FaTimesCircle, FaChevronDown, FaChevronUp } from "react-icons/fa";
+import { FaTimesCircle, FaSearch, FaChevronDown, FaChevronUp } from "react-icons/fa";
 
 const Aside = ({ filtrosTemporales, setFiltrosTemporales, filtrosAplicados, setFiltrosAplicados, setPaginaActual }) => {
     const [open, setOpen] = useState(true);
@@ -26,7 +26,7 @@ const Aside = ({ filtrosTemporales, setFiltrosTemporales, filtrosAplicados, setF
                             <InputGroup className="position-relative buscador-container">
                                 <Form.Control
                                     type="text"
-                                    placeholder="Buscar producto..."
+                                    placeholder="Buscar producto... 🔍"
                                     value={filtrosTemporales.busqueda}
                                     onChange={(e) => {
                                         setFiltrosTemporales({ ...filtrosTemporales, busqueda: e.target.value });
@@ -77,6 +77,24 @@ const Aside = ({ filtrosTemporales, setFiltrosTemporales, filtrosAplicados, setF
                                 <option value="precioAsc">Menor precio</option>
                                 <option value="precioDesc">Mayor precio</option>
                             </Form.Select>
+                        </Col>
+
+                        <Col xs={12} md={3} lg={2}>
+                            <Form.Check
+                                type="checkbox"
+                                id="soloDisponibles"
+                                label="Solo productos disponibles"
+                                checked={filtrosTemporales.soloDisponibles || false}
+                                onChange={(e) => {
+                                    const nuevosFiltros = {
+                                        ...filtrosTemporales,
+                                        soloDisponibles: e.target.checked,
+                                    };
+                                    setFiltrosTemporales(nuevosFiltros);
+                                    setFiltrosAplicados(nuevosFiltros);
+                                    setPaginaActual(1);
+                                }}
+                            />
                         </Col>
 
                         <Col xs={12} md={5} lg={4}>

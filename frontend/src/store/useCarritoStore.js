@@ -1,6 +1,7 @@
 import { create } from "zustand";
+import { persist } from "zustand/middleware"
 
-export const useCarritoStore = create((set, get) => ({
+export const useCarritoStore = create( persist( (set, get) => ({
     carrito:[],
 
     agregarAlCarrito: (producto, cantidad = 1) => {
@@ -9,11 +10,16 @@ export const useCarritoStore = create((set, get) => ({
         const existente = carrito.find(p => p.idProducto === producto.idProducto) 
 
         if (existente) {
-            const actualizado = carrito.map(p => p.idProducto === producto.idProducto ? {...p, cantidad: p.cantidad + cantidad}
-                : p
-            )
-            set({carrito: actualizado})
+          const nuevaCantidad = existente.cantidad + cantidad;
+          if (nuevaCantidad > producto.stockProducto) {
+            return;
+          }
+          const actualizado = carrito.map(p => p.idProducto === producto.idProducto ? {...p, cantidad: nuevaCantidad} : p)
+          set({carrito: actualizado})
         } else {
+          if (cantidad > producto.stockProducto) {
+            cantidad = producto.stockProducto
+          }
             set({ carrito: [...carrito, {...producto, cantidad}] })
         }
     },
@@ -49,12 +55,20 @@ export const useCarritoStore = create((set, get) => ({
 
     vaciarCarrito: () => set({carrito: []}),
 
-
-     totalCarrito: () => { // 🆕 nueva función
+    totalCarrito: () => { // 🆕 nueva función
     const { carrito } = get();
     return carrito.reduce((total, p) => total + p.precioProducto * p.cantidad, 0);
   },
 
+    totalItems: () => {
+      const { carrito } = get();
+      return carrito.reduce((acc, item) => acc + item.cantidad, 0)
+    }
 
-}));
+}),
+  {
+    name: "carrito-storage",
+    getStorage: () => localStorage,
+  }
+));
 

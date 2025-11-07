@@ -1,0 +1,30 @@
+.productos-destacados {
+  background-color: #fff;
+  border-top: 1px solid #eaeaea;
+  border-bottom: 1px solid #eaeaea;
+}
+
+.productos-destacados .titulo-seccion {
+  color: #204e37;
+  font-weight: 700;
+  font-size: 2rem;
+}
+
+.productos-destacados .texto-intro {
+  color: #666;
+  font-size: 1.1rem;
+  margin-bottom: 2rem;
+}
+
+.productos-destacados .btn {
+  border-radius: 30px;
+  font-weight: 600;
+  padding: 0.6rem 1.6rem;
+  transition: all 0.25s ease-in-out;
+}
+
+.productos-destacados .btn:hover {
+  background-color: var(--color-principal, #ca1c73);
+  border-color: var(--color-principal, #ca1c73);
+  color: #fff;
+}

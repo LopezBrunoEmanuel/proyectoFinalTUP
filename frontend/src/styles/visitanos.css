@@ -1,0 +1,35 @@
+.home__visitanos {
+  background-color: var(--color-verde-bosque);
+  color: var(--color-blanco);
+  padding-block: var(--section-py);
+}
+
+.home__visitanos-titulo {
+  font-family: var(--fuente-titulos);
+  color: var(--color-dorado);
+  font-weight: 600;
+  margin-bottom: 1rem;
+}
+
+.home__visitanos-texto {
+  color: var(--color-beige);
+  font-size: 1.1rem;
+  max-width: 700px;
+  margin: 0 auto 2rem;
+}
+
+.home__visitanos-boton {
+  border-radius: 50px;
+  font-weight: 600;
+  padding: 0.8rem 1.8rem;
+  transition: var(--transicion);
+  background-color: var(--color-dorado);
+  border-color: var(--color-dorado);
+  color: var(--color-blanco);
+}
+
+.home__visitanos-boton:hover {
+  background-color: var(--color-verde-olivo);
+  border-color: var(--color-verde-olivo);
+  color: var(--color-blanco);
+}

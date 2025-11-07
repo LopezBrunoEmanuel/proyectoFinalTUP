@@ -211,3 +211,70 @@
   color: #ca1c73;
   transform: scale(1.05);
 }
+
+/* ===========================
+   🧩 NUEVOS ESTILOS PARA FILAS DE FILTROS
+   =========================== */
+
+/* En pantallas grandes (≥992px): una sola línea de filtros */
+@media (min-width: 992px) {
+  .aside-topbar .row.gx-3 {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center; /* 🔹 Centra todo horizontalmente */
+    gap: 1rem;
+  }
+
+  /* Filtros (buscador, selects, checkbox) en una sola fila */
+  .aside-topbar .row.gx-3 > .col-md-4,
+  .aside-topbar .row.gx-3 > .col-md-3,
+  .aside-topbar .row.gx-3 > .col-md-2 {
+    flex: 0 0 auto;
+    width: auto !important;
+  }
+
+  /* Botones van a segunda línea centrados */
+  .botones-filtros {
+    width: 100%;
+    justify-content: center !important;
+    margin-top: 0.5rem;
+  }
+}
+
+/* ===========================
+   🎨 ESTILO DEL CHECKBOX
+   =========================== */
+
+.form-check-input[type="checkbox"] {
+  width: 1.2rem;
+  height: 1.2rem;
+  cursor: pointer;
+  border: 1.5px solid #aaa;
+  border-radius: 4px;
+  transition: all 0.2s ease;
+  box-shadow: none !important;
+  border-radius: 50px;
+}
+
+.form-check-input:checked {
+  background-color: var(--color-principal, #ca1c73);
+  border-color: var(--color-principal, #ca1c73);
+}
+
+.form-check-input:focus {
+  box-shadow: none !important;
+}
+
+.form-check-label {
+  font-weight: 500;
+  color: #555;
+  margin-left: 0.3rem;
+  cursor: pointer;
+  user-select: none;
+  transition: color 0.2s ease;
+}
+
+.form-check-label:hover {
+  color: #333;
+}

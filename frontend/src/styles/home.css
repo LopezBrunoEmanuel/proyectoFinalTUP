@@ -1,0 +1,247 @@
+/* ==============================
+   🏡 ESTILO GENERAL DEL HOME
+   ============================== */
+
+.home__main {
+  background-color: var(--color-beige);
+  color: var(--color-texto);
+  font-family: var(--fuente-base);
+}
+
+/* Cada sección del Home */
+.home__intro,
+.home__categorias,
+.home__beneficios,
+.home__destacados,
+.home__visitanos {
+  padding-block: var(--section-py);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.home__visitanos {
+  border-bottom: none; /* última sección sin borde */
+}
+
+/* Textos principales */
+.home__main h1,
+.home__main h2,
+.home__main h3 {
+  font-family: var(--fuente-titulos);
+  color: var(--color-verde-bosque);
+  font-weight: 600;
+  margin-bottom: 1rem;
+}
+
+.home__main p {
+  color: var(--color-texto);
+  font-size: 1.1rem;
+  line-height: 1.7;
+  max-width: 800px;
+  margin-inline: auto;
+}
+
+/* Divisor decorativo opcional */
+.section-divider {
+  width: 60%;
+  height: 2px;
+  background-color: rgba(70, 98, 74, 0.25);
+  margin: 2rem auto 3rem;
+  border-radius: 50px;
+}
+
+/* ==============================
+   🎠 CARRUSEL (hero principal)
+   ============================== */
+.home__carrusel {
+  position: relative;
+  overflow: hidden;
+}
+
+.home__carrusel-img {
+  height: 75vh;
+  object-fit: cover;
+  filter: brightness(0.85);
+}
+
+.home__carrusel .carousel-caption {
+  background: rgba(70, 98, 74, 0.55);
+  backdrop-filter: blur(6px);
+  border-radius: var(--radius);
+  padding: 1.5rem 2rem;
+  max-width: 600px;
+  margin: auto;
+}
+
+.home__carrusel .carousel-caption h3 {
+  font-family: var(--fuente-titulos);
+  color: var(--color-dorado);
+  font-weight: 700;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.home__carrusel .carousel-caption p {
+  color: var(--color-blanco);
+  font-size: 1.1rem;
+  margin-top: 0.5rem;
+}
+
+/* ==============================
+   🌱 SECCIÓN INTRO
+   ============================== */
+.home__intro {
+  text-align: center;
+  background-color: var(--color-beige);
+}
+
+.home__intro h2 {
+  color: var(--color-verde-bosque);
+  font-size: clamp(1.8rem, 4vw, 2.5rem);
+  margin-bottom: 1rem;
+}
+
+.home__intro p {
+  color: var(--color-marron);
+  font-size: 1.1rem;
+  max-width: 600px;
+}
+
+/* ==============================
+   🌿 SECCIÓN CATEGORÍAS
+   ============================== */
+.home__categorias {
+  background-color: var(--color-blanco);
+}
+
+.home__categoria-card {
+  transition: var(--transicion);
+  cursor: pointer;
+  border-radius: var(--radius);
+  overflow: hidden;
+  box-shadow: var(--sombra-suave);
+}
+
+.home__categoria-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 12px 25px rgba(0, 0, 0, 0.12);
+}
+
+.home__categoria-img {
+  height: 180px;
+  background-size: cover;
+  background-position: center;
+  filter: brightness(0.9);
+}
+
+.home__categoria-card h5 {
+  color: var(--color-verde-bosque);
+  font-weight: 600;
+  margin-top: 0.5rem;
+}
+
+/* ==============================
+   🌸 SECCIÓN BENEFICIOS
+   ============================== */
+.home__beneficios {
+  background-color: var(--color-blanco);
+}
+
+.home__beneficio-card {
+  transition: var(--transicion);
+  background-color: var(--color-beige);
+  border-radius: var(--radius);
+  box-shadow: var(--sombra-suave);
+}
+
+.home__beneficio-card:hover {
+  transform: translateY(-4px);
+  background-color: var(--color-blanco);
+}
+
+.home__beneficio-icono {
+  font-size: 2rem;
+  color: var(--color-verde-olivo);
+  margin-bottom: 1rem;
+}
+
+/* ==============================
+   🌻 SECCIÓN PRODUCTOS DESTACADOS
+   ============================== */
+.home__destacados {
+  background-color: var(--color-blanco);
+  text-align: center;
+}
+
+.home__destacados-titulo {
+  font-family: var(--fuente-titulos);
+  color: var(--color-verde-bosque);
+  font-weight: 600;
+}
+
+.home__destacados-texto {
+  color: var(--color-marron);
+  font-size: 1.1rem;
+  margin-bottom: 2rem;
+}
+
+/* ==============================
+   🌿 SECCIÓN VISITANOS (CTA)
+   ============================== */
+.home__visitanos {
+  background-color: var(--color-verde-bosque);
+  color: var(--color-blanco);
+}
+
+.home__visitanos-titulo {
+  color: var(--color-dorado);
+  font-family: var(--fuente-titulos);
+  font-weight: 600;
+  margin-bottom: 1rem;
+}
+
+.home__visitanos-texto {
+  color: var(--color-beige);
+  font-size: 1.1rem;
+  max-width: 700px;
+  margin: 0 auto 2rem;
+}
+
+.home__visitanos-boton {
+  border-radius: 50px;
+  font-weight: 600;
+  padding: 0.8rem 1.8rem;
+  transition: var(--transicion);
+  background-color: var(--color-dorado);
+  border-color: var(--color-dorado);
+  color: var(--color-blanco);
+}
+
+.home__visitanos-boton:hover {
+  background-color: var(--color-verde-olivo);
+  border-color: var(--color-verde-olivo);
+  color: var(--color-blanco);
+}
+
+/* ==============================
+   📱 RESPONSIVE
+   ============================== */
+@media (max-width: 768px) {
+  .home__intro,
+  .home__categorias,
+  .home__beneficios,
+  .home__destacados,
+  .home__visitanos {
+    padding-block: 3rem;
+  }
+
+  .home__intro h2 {
+    font-size: 1.6rem;
+  }
+
+  .home__main p {
+    font-size: 1rem;
+  }
+
+  .home__carrusel-img {
+    height: 55vh;
+  }
+}
