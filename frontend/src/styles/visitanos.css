@@ -19,17 +19,23 @@
 }
 
 .home__visitanos-boton {
-  border-radius: 50px;
+  background-color: var(--color-dorado) !important;
+  color: var(--color-verde-bosque) !important;
   font-weight: 600;
-  padding: 0.8rem 1.8rem;
+  border: none;
+  border-radius: 50px;
+  padding: 0.6rem 1.6rem;
   transition: var(--transicion);
-  background-color: var(--color-dorado);
-  border-color: var(--color-dorado);
-  color: var(--color-blanco);
 }
 
 .home__visitanos-boton:hover {
-  background-color: var(--color-verde-olivo);
-  border-color: var(--color-verde-olivo);
-  color: var(--color-blanco);
+  opacity: 0.95;
+  background-color: var(--color-dorado) !important;
+  transform: scale(1.02);
+}
+
+.home__visitanos-boton .whatsapp-icon {
+  margin-left: 8px;
+  margin-top: 0px;
+  font-size: 1.4rem;
 }

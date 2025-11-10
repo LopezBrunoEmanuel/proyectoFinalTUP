@@ -1,39 +1,52 @@
 import "../../styles/footer.css";
-import { FaInstagram, FaWhatsapp, FaLocationArrow, FaCalendarAlt, FaPhone, FaInbox } from "react-icons/fa";
+import { FaInstagram, FaFacebook, FaWhatsapp, FaEnvelope, FaMapMarkerAlt } from "react-icons/fa";
+import { WHATSAPP_NUMBER, WHATSAPP_MESSAGES } from "../utils/whatsappMensajes";
 
 const Footer = () => {
+    // const handleWhatsAppClick = (mensaje = WHATSAPP_MESSAGES.contactoGeneral) => {
+    //     const encodedMessage = encodeURIComponent(mensaje.trim());
+    //     const whatsappURL = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodedMessage}`;
+    //     window.open(whatsappURL, "_blank");
+    // };
+
     return (
-        <div className="footer">
-            <div className="content-izq">
-                <h2>INFO</h2>
-                <p>
-                    <FaCalendarAlt /> Lunes a Sábado - 8:00 a 18:00 hs
-                    <br />
-                    <FaLocationArrow /> Sta. Fe 4600, San Miguel de Tucumán.
-                </p>
+        <footer className="footer">
+            <div className="footer-content">
+                {/* Columna 1 - Descripción */}
+                <div className="footer-section footer-about">
+                    <h2 className="footer-logo">Patio 1220</h2>
+                    <p>
+                        Espacio verde y diseño natural. <br />
+                        Plantas, macetas y decoración para transformar tu hogar.
+                    </p>
+                </div>
+
+                {/* Columna 2 - Contacto */}
+                <div className="footer-section footer-contact">
+                    <ul>
+                        <li><FaMapMarkerAlt className="footer-icon" /> Santa Fe 4600 · San Miguel de Tucumán</li>
+                        <li><FaEnvelope className="footer-icon" /> contacto@patio1220.com</li>
+                        <li><FaWhatsapp className="footer-icon" /> +54 381 650 5000</li>
+                    </ul>
+                </div>
+
+                {/* Columna 3 - Redes y botón */}
+                <div className="footer-section footer-social">
+                    <h3>Seguinos</h3>
+                    <div className="social-icons">
+                        <a href="https://www.instagram.com/patio.1220/" aria-label="Instagram" target="blank"><FaInstagram /></a>
+                        <a href="https://www.facebook.com/people/Patio-1220/100083043053405/?locale=hi_IN" aria-label="Facebook" target="blank"><FaFacebook /></a>
+                        <a href="" aria-label="Whatsapp"><FaWhatsapp /></a>
+                    </div>
+                </div>
+
             </div>
-            <div className="content-der">
-                <h2>CONTACTO</h2>
-                <p>
-                    <FaInstagram /> @patio.1220
-                    <br />
-                    <FaWhatsapp /> 381-1234567
-                    {/* <br /> */}
-                    {/* <FaPhone /> Teléfono - 381-1234567 */}
-                </p>
+
+            {/* Línea inferior */}
+            <div className="footer-bottom">
+                <p>© {new Date().getFullYear()} Patio 1220 — Todos los derechos reservados.</p>
             </div>
-            {/* <div className="content-footer">
-                <h2>MAPA</h2>
-                <iframe
-                    src="https://www.google.com/maps/embed?pb=!1m23!1m12!1m3!1d113951.83867900548!2d-65.34245417571199!3d-26.808289148327574!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!4m8!3e6!4m0!4m5!1s0x94225dd5528652f1%3A0x8f508b4561b1dbd1!2sSta.%20Fe%204600%2C%20T4000%20San%20Miguel%20de%20Tucum%C3%A1n%2C%20Tucum%C3%A1n!3m2!1d-26.808313!2d-65.2600527!5e0!3m2!1ses!2sar!4v1760320534634!5m2!1ses!2sar"
-                    style={{ border: 0 }}
-                    allowFullScreen=""
-                    loading="lazy"
-                    referrerPolicy="no-referrer-when-downgrade"
-                    title="Ubicación del vivero"
-                ></iframe>
-            </div> */}
-        </div>
+        </footer>
     );
 };
 

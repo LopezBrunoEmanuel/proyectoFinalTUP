@@ -1,16 +1,12 @@
-import { Container, Row, Col, Button } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
+import { Container, Row, Col } from "react-bootstrap";
 // eslint-disable-next-line no-unused-vars
 import { motion } from "framer-motion";
-import {
-    fadeInUp,
-    fadeDelayed,
-    staggerContainer,
-    scaleIn,
-    // fadeIn,
-} from "../../animations/variants";
+import { fadeInUp, fadeDelayed, staggerContainer, scaleIn } from "../../animations/variants";
 import "../../styles/main-home.css";
 
 const MainHome = () => {
+    const navigate = useNavigate();
 
     return (
         <main className="home__main bg-light">
@@ -58,25 +54,32 @@ const MainHome = () => {
                             {[
                                 {
                                     nombre: "Plantas",
-                                    img: "https://images.unsplash.com/photo-1501004318641-b39e6451bec6",
+                                    categoria: "planta",
+                                    img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRip7IjQ47SH4_AP2wW8n4LycLV7FmGtODduw&s",
                                 },
                                 {
                                     nombre: "Macetas",
-                                    img: "https://images.unsplash.com/photo-1501004318641-b39e6451bec6",
+                                    categoria: "maceta",
+                                    img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTTU02NOrRTmSRVAVDq5fXPhQ2XVoqeOmhH4w&s",
                                 },
                                 {
                                     nombre: "Fertilizantes",
-                                    img: "https://images.unsplash.com/photo-1501004318641-b39e6451bec6",
+                                    categoria: "fertilizante",
+                                    img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4nr1XsOX2GSXp4G24UwjJQM4bjTFul-IuGw&s",
                                 },
                                 {
                                     nombre: "Herramientas",
-                                    img: "https://images.unsplash.com/photo-1501004318641-b39e6451bec6",
+                                    categoria: "herramienta",
+                                    img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRpMKE07ZrQ2slIfG6Wd0XXpsa0gIWD--vSYA&s",
                                 },
                             ].map((cat, i) => (
                                 <Col xs={12} sm={6} md={3} key={i}>
                                     <motion.div
                                         className="home__categoria-card shadow-sm rounded overflow-hidden"
                                         variants={scaleIn}
+                                        onClick={() => {
+                                            const categoria = cat.categoria; navigate("/productos", { state: { categoria } })
+                                        }}
                                     >
                                         <div
                                             className="home__categoria-img"
@@ -125,8 +128,8 @@ const MainHome = () => {
                                     icono: "🌼",
                                 },
                                 {
-                                    titulo: "Productos de calidad",
-                                    desc: "Seleccionamos cuidadosamente cada especie y accesorio.",
+                                    titulo: "Crea tu propia huerta",
+                                    desc: "Seleccionamos cuidadosamente cada especie y accesorio para vos.",
                                     icono: "🌿",
                                 },
                                 {

@@ -1,109 +1,42 @@
-/* :root {
-  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
-  font-weight: 400;
-
-  color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
-
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-
-a {
-  font-weight: 500;
-  color: #646cff;
-  text-decoration: inherit;
-}
-a:hover {
-  color: #535bf2;
-}
-
-body {
-  margin: 0;
-  display: flex;
-  place-items: center;
-  min-width: 320px;
-  min-height: 100vh;
-}
-
-h1 {
-  font-size: 3.2em;
-  line-height: 1.1;
-}
-
-button {
-  border-radius: 8px;
-  border: 1px solid transparent;
-  padding: 0.6em 1.2em;
-  font-size: 1em;
-  font-weight: 500;
-  font-family: inherit;
-  background-color: #1a1a1a;
-  cursor: pointer;
-  transition: border-color 0.25s;
-}
-button:hover {
-  border-color: #646cff;
-}
-button:focus,
-button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
-}
-
-@media (prefers-color-scheme: light) {
-  :root {
-    color: #213547;
-    background-color: #ffffff;
-  }
-  a:hover {
-    color: #747bff;
-  }
-  button {
-    background-color: #f9f9f9;
-  }
-} */
-/* estos de arriba eran los estilos por defecto */
-
-/* NUEVOS ESTILOS */
-/* comentar todo esto para dejar la pagina como estaba */
 /* ===== Tipografías ===== */
 @import url("https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Lato:wght@300;400;700&display=swap");
 
 /* ===== Variables globales ===== */
 :root {
-  /* 🎨 Paleta natural */
-  --color-verde-olivo: #7a9e7e;
-  --color-verde-bosque: #46624a;
-  --color-beige: #f5f1e6;
-  --color-dorado: #c1a45f;
-  --color-marron: #8b7355;
+  /* 🌿 Colores base */
+  --color-verde-bosque: #46624a; /* verde oscuro principal: header/footer */
+  --color-verde-olivo: #7a9e7e; /* verde medio para acentos suaves */
+  --color-beige: #f5ede4; /* beige neutro de fondo general */
+  --color-beige-claro: #f8f4ed; /* beige claro (como el del carrito) */
+  --color-dorado: #d4af37; /* dorado elegante para hover/detalles */
+  --color-gris-medio: #2d3436; /* texto sobre fondos claros */
+  --color-gris-suave: #e0e0e0; /* bordes, líneas separadoras */
   --color-blanco: #ffffff;
-  --color-texto: #2e3b2e;
 
-  /* 🎨 Paleta heredada (por compatibilidad) */
-  --color-principal: #ca1c73;
-  --color-principal-hover: #b21764;
-  --color-secundario: #f289bd;
+  /* 🌸 Colores de acento */
+  --color-rosa: #ca1c73; /* acento puntual (sin stock, detalles) */
+  --color-rosa-hover: #b21764; /* hover o versión más oscura */
+
+  /* 🧱 Bordes, sombras y transiciones */
   --color-borde: #e4e4e4;
-  --color-gris: #aaa;
-
-  /* 🧱 Forma y motion */
+  --sombra-suave: 0 8px 20px rgba(0, 0, 0, 0.08);
   --radio: 8px;
   --radius: 16px;
-  --sombra-suave: 0 8px 20px rgba(0, 0, 0, 0.08);
   --transicion: all 0.25s ease;
   --transicion-rapida: all 0.15s ease;
 
   /* 🅰️ Tipografía */
   --fuente-base: "Lato", "Inter", "Avenir", "Helvetica", "Arial", sans-serif;
   --fuente-titulos: "Playfair Display", serif;
+  --color-texto: var(--color-gris-medio);
 
-  /* 📏 Espaciado global */
+  /* 🧭 Espaciados globales */
   --section-py: clamp(56px, 8vw, 96px);
+
+  /* 💬 Colores de estado */
+  --color-exito: #4caf50;
+  --color-error: #dc3545;
+  --color-advertencia: #ffc107;
 }
 
 /* ===== Reset básico ===== */

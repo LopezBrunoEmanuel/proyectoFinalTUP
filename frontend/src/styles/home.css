@@ -1,7 +1,3 @@
-/* ==============================
-   🏡 ESTILO GENERAL DEL HOME
-   ============================== */
-
 .home__main {
   background-color: var(--color-beige);
   color: var(--color-texto);
@@ -19,7 +15,7 @@
 }
 
 .home__visitanos {
-  border-bottom: none; /* última sección sin borde */
+  border-bottom: none;
 }
 
 /* Textos principales */
@@ -40,18 +36,6 @@
   margin-inline: auto;
 }
 
-/* Divisor decorativo opcional */
-.section-divider {
-  width: 60%;
-  height: 2px;
-  background-color: rgba(70, 98, 74, 0.25);
-  margin: 2rem auto 3rem;
-  border-radius: 50px;
-}
-
-/* ==============================
-   🎠 CARRUSEL (hero principal)
-   ============================== */
 .home__carrusel {
   position: relative;
   overflow: hidden;
@@ -85,9 +69,6 @@
   margin-top: 0.5rem;
 }
 
-/* ==============================
-   🌱 SECCIÓN INTRO
-   ============================== */
 .home__intro {
   text-align: center;
   background-color: var(--color-beige);
@@ -105,9 +86,6 @@
   max-width: 600px;
 }
 
-/* ==============================
-   🌿 SECCIÓN CATEGORÍAS
-   ============================== */
 .home__categorias {
   background-color: var(--color-blanco);
 }
@@ -138,9 +116,6 @@
   margin-top: 0.5rem;
 }
 
-/* ==============================
-   🌸 SECCIÓN BENEFICIOS
-   ============================== */
 .home__beneficios {
   background-color: var(--color-blanco);
 }
@@ -163,9 +138,6 @@
   margin-bottom: 1rem;
 }
 
-/* ==============================
-   🌻 SECCIÓN PRODUCTOS DESTACADOS
-   ============================== */
 .home__destacados {
   background-color: var(--color-blanco);
   text-align: center;
@@ -183,9 +155,6 @@
   margin-bottom: 2rem;
 }
 
-/* ==============================
-   🌿 SECCIÓN VISITANOS (CTA)
-   ============================== */
 .home__visitanos {
   background-color: var(--color-verde-bosque);
   color: var(--color-blanco);
@@ -221,9 +190,6 @@
   color: var(--color-blanco);
 }
 
-/* ==============================
-   📱 RESPONSIVE
-   ============================== */
 @media (max-width: 768px) {
   .home__intro,
   .home__categorias,

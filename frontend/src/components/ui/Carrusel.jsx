@@ -5,19 +5,19 @@ import img1 from "../../assets/imgcarrusel1.jpg";
 import img2 from "../../assets/imgcarrusel2.jpg";
 import img3 from "../../assets/imgcarrusel3.jpg";
 import "../../styles/carrusel.css";
-import { fadeInUp, fadeInDown, fadeIn } from "../../animations/variants";
+import { fadeInUp, fadeInDown } from "../../animations/variants";
 
 const Carrusel = () => {
     const slides = [
         {
             src: img1,
-            title: "Plantas",
-            text: "Cuidamos la naturaleza en tu hogar.",
+            title: "Paisajismo",
+            text: "Diseñamos espacios verdes únicos.",
         },
         {
             src: img2,
-            title: "Paisajismo",
-            text: "Diseñamos espacios verdes únicos.",
+            title: "Plantas",
+            text: "Cuidamos la naturaleza en tu hogar.",
         },
         {
             src: img3,
@@ -26,21 +26,50 @@ const Carrusel = () => {
         },
     ];
 
+    // const slides2 = [
+    //     {
+    //         srcDesktop: img1Desktop,
+    //         srcMobile: img1Mobile,
+    //         title: "Paisajismo",
+    //         text: "Diseñamos espacios verdes únicos.",
+    //     },
+    //     {
+    //         srcDesktop: img2Desktop,
+    //         srcMobile: img2Mobile,
+    //         title: "Plantas",
+    //         text: "Cuidamos la naturaleza en tu hogar."
+    //     },
+    //     {
+    //         srcDesktop: img3Desktop,
+    //         srcMobile: img3Mobile,
+    //         title: "Jardinería",
+    //         text: "Servicios personalizados y asesoramiento.",
+    //     }
+    // ];
+
+
     return (
         <div className="home__carrusel">
             <Carousel fade interval={3500} pause={false}>
                 {slides.map((item, index) => (
                     <Carousel.Item key={index}>
-                        <motion.img
-                            variants={fadeIn}
-                            initial="hidden"
-                            animate="visible"
-                            className="d-block w-100 home__carrusel-img"
-                            src={item.src}
-                            alt={item.title}
-                        />
+                        <div className="home__carrusel-slide">
+                            <motion.img
+                                className="d-block w-100 home__carrusel-img"
+                                src={item.src}
+                                alt={item.title}
+                            />
+                            {/* <picture>
+                                <source media="(max-width: 768px)" srcSet={item.srcMobile} />
+                                <source media="(min-width: 769px)" srcSet={item.srcDesktop} />
+                                <motion.img
+                                    className="d-block w-100 home__carrusel-img"
+                                    src={item.srcDesktop}
+                                    alt={item.title}
+                                />
+                            </picture> */}
+                        </div>
 
-                        {/* Animación coordinada en el texto */}
                         <motion.div
                             className="home__carrusel-caption"
                             initial="hidden"

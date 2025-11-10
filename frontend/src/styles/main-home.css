@@ -1,76 +1,69 @@
-/* ===========================================
-   🏡 SECCIÓN PRINCIPAL DEL HOME
-   =========================================== */
-
-/* Fondo general */
 .main-home {
-  background-color: #f8f4ed; /* beige suave */
-  color: #2d2d2d;
-  font-family: "Cormorant Garamond", serif;
+  background-color: var(--color-beige-claro);
+  color: var(--color-texto);
+  font-family: var(--fuente-titulos);
 }
 
-/* 🌱 Sección 1 - Introducción */
-.intro-section h2 {
-  font-family: "Playfair Display", serif;
+/* 🪴 Sección Intro */
+.home__intro h2 {
+  font-family: var(--fuente-titulos);
   font-size: 2.6rem;
-  color: #4a3f2f; /* marrón suave */
+  color: var(--color-verde-bosque);
   text-transform: capitalize;
   letter-spacing: 0.5px;
 }
 
-.intro-section p {
+.home__intro p {
   font-size: 1.15rem;
-  color: #5b5b5b;
+  color: var(--color-gris-medio);
   line-height: 1.6;
   margin-bottom: 1.8rem;
 }
 
-.intro-section button {
-  border: 2px solid #9c7b16 !important; /* dorado cálido */
-  color: #9c7b16 !important;
+.home__intro button {
+  border: 2px solid var(--color-dorado) !important;
+  color: var(--color-dorado) !important;
   font-weight: 600 !important;
   border-radius: 50px !important;
   background-color: transparent !important;
   padding: 0.6rem 1.5rem !important;
-  transition: all 0.3s ease-in-out;
+  transition: var(--transicion);
 }
 
-.intro-section button:hover {
-  background-color: #9c7b16 !important;
-  color: #fff !important;
+.home__intro button:hover {
+  background-color: var(--color-dorado) !important;
+  color: var(--color-blanco) !important;
   transform: scale(1.05);
 }
 
-/* ===========================================
-   🌿 Sección 2 - Categorías destacadas
-   =========================================== */
-.categorias-section {
-  background-color: #fff;
-  border-top: 1px solid #e6e0d5;
-  border-bottom: 1px solid #e6e0d5;
+/* 🌿 Sección Categorías */
+.home__categorias {
+  background-color: var(--color-blanco);
+  border-top: 1px solid var(--color-gris-suave);
+  border-bottom: 1px solid var(--color-gris-suave);
 }
 
-.categorias-section h3 {
-  font-family: "Playfair Display", serif;
-  color: #2d4a3a; /* verde oscuro */
+.home__categorias h3 {
+  font-family: var(--fuente-titulos);
+  color: var(--color-verde-bosque);
   font-size: 2rem;
 }
 
-.categoria-card {
+.home__categoria-card {
   border: none;
-  background-color: #fff;
+  background-color: var(--color-blanco);
   transition: transform 0.35s ease, box-shadow 0.35s ease;
   cursor: pointer;
   overflow: hidden;
   border-radius: 12px;
 }
 
-.categoria-card:hover {
-  transform: translateY(-6px);
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.12);
+.home__categoria-card:hover {
+  box-shadow: var(--sombra-suave) !important;
+  transform: scale(1.05) !important;
 }
 
-.categoria-img {
+.home__categoria-img {
   height: 180px;
   background-size: cover;
   background-position: center;
@@ -78,72 +71,68 @@
   transition: filter 0.3s ease;
 }
 
-.categoria-card:hover .categoria-img {
+.home__categoria-card:hover .home__categoria-img {
   filter: brightness(1);
 }
 
-.categoria-card h5 {
-  color: #4a3f2f;
-  font-family: "Cormorant Garamond", serif;
+.home__categoria-card h5 {
+  color: var(--color-verde-bosque);
+  font-family: var(--fuente-titulos);
   font-size: 1.2rem;
   letter-spacing: 0.4px;
 }
 
-/* ===========================================
-   🌻 Sección 3 - Beneficios
-   =========================================== */
-.beneficios-section {
-  background-color: #fdfaf6;
+/* 🌻 Sección Beneficios */
+.home__beneficios {
+  background-color: var(--color-beige-claro);
 }
 
-.beneficios-section h3 {
-  font-family: "Playfair Display", serif;
-  color: #2d4a3a;
+.home__beneficios h3 {
+  font-family: var(--fuente-titulos);
+  color: var(--color-verde-bosque);
   font-size: 2rem;
 }
 
-.beneficio-card {
-  background-color: #fff;
-  border: 1px solid #e9e4da;
+.home__beneficio-card {
+  background-color: var(--color-blanco);
+  border: 1px solid var(--color-borde);
   border-radius: 16px;
-  transition: all 0.3s ease;
+  transition: var(--transicion);
 }
 
-.beneficio-card:hover {
-  transform: translateY(-6px);
-  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1);
+.home__beneficio-card:hover {
+  transform: translateY(-6px) scale(1.1);
+  box-shadow: var(--sombra-suave);
 }
 
-.beneficio-card h5 {
-  font-family: "Cormorant Garamond", serif;
+.home__beneficio-card h5 {
+  font-family: var(--fuente-titulos);
   font-weight: 700;
-  color: #4a3f2f;
+  color: var(--color-verde-bosque);
 }
 
-.beneficio-card p {
+.home__beneficio-card p {
   font-size: 1rem;
-  color: #5f5f5f;
+  color: var(--color-gris-medio);
 }
 
-.icono {
+.home__beneficio-icono {
   font-size: 2.5rem;
-  color: #9c7b16;
+  color: var(--color-dorado);
 }
 
-/* ===========================================
-   📱 Responsive ajustes
-   =========================================== */
+/* 📱 Responsive */
 @media (max-width: 768px) {
-  .intro-section h2 {
+  .home__intro h2 {
     font-size: 2rem;
   }
 
-  .categorias-section h3,
-  .beneficios-section h3 {
+  .home__categorias h3,
+  .home__beneficios h3 {
     font-size: 1.6rem;
   }
 
-  .beneficio-card {
+  .home__beneficio-card {
     padding: 1.2rem;
   }
 }

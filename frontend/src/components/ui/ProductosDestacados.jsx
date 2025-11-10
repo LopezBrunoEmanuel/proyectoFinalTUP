@@ -5,12 +5,8 @@ import MostrarProductos from "./MostrarProductos";
 import { useNavigate } from "react-router-dom";
 // eslint-disable-next-line no-unused-vars
 import { motion } from "framer-motion";
-import {
-    fadeInUp,
-    fadeDelayed,
-    fadeIn,
-    staggerContainer,
-} from "../../animations/variants";
+import { FaArrowRight } from "react-icons/fa";
+import { fadeInUp, fadeDelayed, fadeIn, staggerContainer } from "../../animations/variants";
 import "../../styles/productos-destacados.css";
 
 const ProductosDestacados = () => {
@@ -77,14 +73,14 @@ const ProductosDestacados = () => {
                     initial="hidden"
                     whileInView="visible"
                     viewport={{ once: true }}
-                    className="text-center mt-4"
+                    className="home__destacados-boton text-center mt-4"
                 >
                     <Button
                         variant="outline-success"
                         size="lg"
                         onClick={() => navigate("/productos")}
                     >
-                        Ver todos los productos
+                        Ver más productos <FaArrowRight />
                     </Button>
                 </motion.div>
             </Container>

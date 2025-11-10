@@ -1,0 +1,501 @@
+/* ======================================
+   🌿 SISTEMA DE BOTONES - Patio 1220
+   ====================================== */
+
+/* ===== Estilo base para todos los botones ===== */
+button,
+.btn {
+  cursor: pointer;
+  font-family: var(--fuente-base);
+  font-weight: 600;
+  border-radius: 50px;
+  padding: 0.6rem 1.6rem;
+  border: none;
+  transition: var(--transicion);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+/* ===== Botón Dorado (principal) ===== */
+.btn-dorado {
+  background-color: var(--color-dorado);
+  color: var(--color-verde-bosque);
+  opacity: 0.9;
+}
+
+.btn-dorado:hover {
+  opacity: 1;
+  transform: scale(1.03);
+}
+
+/* ===== Botón Verde (secundario) ===== */
+.btn-verde {
+  background-color: var(--color-verde-bosque);
+  color: var(--color-beige);
+  opacity: 0.9;
+}
+
+.btn-verde:hover {
+  opacity: 1;
+  transform: scale(1.03);
+}
+
+/* ===== Botón Rosa (alerta / especial) ===== */
+.btn-rosa {
+  background-color: var(--color-rosa);
+  color: var(--color-beige);
+  opacity: 0.9;
+}
+
+.btn-rosa:hover {
+  background-color: var(--color-rosa-hover);
+  opacity: 1;
+  transform: scale(1.03);
+}
+
+/* ===== Variante Outline ===== */
+.btn-outline {
+  background-color: transparent;
+  border: 2px solid var(--color-dorado);
+  color: var(--color-dorado);
+}
+
+.btn-outline:hover {
+  background-color: var(--color-dorado);
+  color: var(--color-verde-bosque);
+  transform: scale(1.03);
+}
+
+/* ===== Tamaños ===== */
+.btn-sm {
+  padding: 0.4rem 1rem;
+  font-size: 0.9rem;
+}
+
+.btn-lg {
+  padding: 0.9rem 2rem;
+  font-size: 1.1rem;
+}
+
+/* ===== Íconos ===== */
+.btn svg {
+  vertical-align: middle;
+  font-size: 1.1rem;
+}
+
+/* ======================================
+   🌈 VARIANTES ADICIONALES DE BOTONES
+   ====================================== */
+
+/* ===== Botón Verde Olivo ===== */
+.btn-olivo {
+  background-color: var(--color-verde-olivo);
+  color: var(--color-blanco);
+  box-shadow: 0 4px 10px rgba(122, 158, 126, 0.3);
+}
+.btn-olivo:hover {
+  background-color: #6c8f6f; /* tono un poco más oscuro */
+  transform: translateY(-2px);
+}
+
+/* ===== Botón Beige ===== */
+.btn-beige {
+  background-color: var(--color-beige);
+  color: var(--color-verde-bosque);
+  border: 1px solid var(--color-gris-suave);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+.btn-beige:hover {
+  background-color: var(--color-beige-claro);
+  transform: translateY(-2px);
+}
+
+/* ===== Botón Gris Medio ===== */
+.btn-gris {
+  background-color: var(--color-gris-medio);
+  color: var(--color-beige);
+}
+.btn-gris:hover {
+  opacity: 0.9;
+  transform: scale(1.03);
+}
+
+/* ===== Botón Dorado con Degradado ===== */
+.btn-dorado-gradiente {
+  background: linear-gradient(135deg, #d4af37, #c19b2f);
+  color: var(--color-verde-bosque);
+  box-shadow: 0 4px 10px rgba(212, 175, 55, 0.4);
+}
+.btn-dorado-gradiente:hover {
+  filter: brightness(1.1);
+  transform: translateY(-2px);
+}
+
+/* ===== Botón Translúcido (ideal sobre fondos con imagen) ===== */
+.btn-translucido {
+  background-color: rgba(255, 255, 255, 0.2);
+  color: var(--color-beige);
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  backdrop-filter: blur(4px);
+}
+.btn-translucido:hover {
+  background-color: rgba(255, 255, 255, 0.3);
+  transform: scale(1.05);
+}
+
+/* ===== Botón Outline Verde Olivo ===== */
+.btn-outline-olivo {
+  background-color: transparent;
+  border: 2px solid var(--color-verde-olivo);
+  color: var(--color-verde-olivo);
+}
+.btn-outline-olivo:hover {
+  background-color: var(--color-verde-olivo);
+  color: var(--color-beige);
+  transform: scale(1.03);
+}
+
+/* ===== Botón Outline Rosa ===== */
+.btn-outline-rosa {
+  background-color: transparent;
+  border: 2px solid var(--color-rosa);
+  color: var(--color-rosa);
+}
+.btn-outline-rosa:hover {
+  background-color: var(--color-rosa);
+  color: var(--color-beige);
+  transform: scale(1.03);
+}
+
+/* ===== Botón Textual (solo texto, sin fondo) ===== */
+.btn-texto {
+  background: none;
+  border: none;
+  color: var(--color-dorado);
+  padding: 0.4rem 0.6rem;
+  font-weight: 600;
+}
+.btn-texto:hover {
+  color: var(--color-rosa);
+  text-decoration: underline;
+  transform: translateY(-1px);
+}
+
+/* ===== Botón con sombra "elevado" ===== */
+.btn-elevado {
+  background-color: var(--color-verde-bosque);
+  color: var(--color-beige);
+  box-shadow: 0 6px 15px rgba(70, 98, 74, 0.35);
+}
+.btn-elevado:hover {
+  box-shadow: 0 8px 20px rgba(70, 98, 74, 0.45);
+  transform: translateY(-3px);
+}
+
+/* ======================================
+   🌟 NUEVAS VARIANTES DE BOTONES
+   ====================================== */
+
+/* ===== Botón Dorado con borde doble ===== */
+.btn-doble-dorado {
+  background-color: var(--color-dorado);
+  color: var(--color-verde-bosque);
+  border: 3px double var(--color-beige);
+  font-weight: 700;
+}
+.btn-doble-dorado:hover {
+  background-color: var(--color-beige);
+  color: var(--color-verde-bosque);
+  transform: scale(1.03);
+}
+
+/* ===== Botón Verde Bosque con brillo interior ===== */
+.btn-verde-glow {
+  background-color: var(--color-verde-bosque);
+  color: var(--color-beige);
+  box-shadow: inset 0 0 0 0 var(--color-dorado);
+  transition: all 0.3s ease;
+}
+.btn-verde-glow:hover {
+  box-shadow: inset 0 0 0 3px var(--color-dorado);
+  transform: scale(1.04);
+}
+
+/* ===== Botón Rosa Pastel con sombra suave ===== */
+.btn-rosa-pastel {
+  background-color: #e5aac0;
+  color: var(--color-verde-bosque);
+  box-shadow: 0 3px 10px rgba(202, 28, 115, 0.25);
+}
+.btn-rosa-pastel:hover {
+  background-color: #d992ae;
+  transform: translateY(-2px);
+}
+
+/* ===== Botón con efecto degradado Olivo-Dorado ===== */
+.btn-gradiente-olivo {
+  background: linear-gradient(
+    135deg,
+    var(--color-verde-olivo),
+    var(--color-dorado)
+  );
+  color: var(--color-beige);
+  box-shadow: 0 4px 12px rgba(122, 158, 126, 0.3);
+}
+.btn-gradiente-olivo:hover {
+  filter: brightness(1.05);
+  transform: translateY(-2px);
+}
+
+/* ===== Botón Glass efecto vidrio ===== */
+.btn-glass {
+  background-color: rgba(255, 255, 255, 0.15);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  color: var(--color-beige);
+  backdrop-filter: blur(8px);
+}
+.btn-glass:hover {
+  background-color: rgba(255, 255, 255, 0.25);
+  transform: scale(1.05);
+}
+
+/* ===== Botón con borde animado ===== */
+.btn-borde-animado {
+  position: relative;
+  color: var(--color-dorado);
+  border: 2px solid var(--color-dorado);
+  background: transparent;
+  overflow: hidden;
+}
+.btn-borde-animado::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background-color: var(--color-dorado);
+  transition: all 0.3s ease;
+  z-index: -1;
+}
+.btn-borde-animado:hover {
+  color: var(--color-verde-bosque);
+}
+.btn-borde-animado:hover::before {
+  left: 0;
+}
+
+/* ===== Botón con sombra interior invertida ===== */
+.btn-invertido {
+  background-color: var(--color-beige);
+  color: var(--color-verde-bosque);
+  box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.2);
+}
+.btn-invertido:hover {
+  background-color: var(--color-beige-claro);
+  box-shadow: inset 0 0 15px rgba(0, 0, 0, 0.3);
+}
+
+/* ===== Botón circular con ícono (ideal para redes o acciones pequeñas) ===== */
+.btn-circular {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--color-verde-olivo);
+  color: var(--color-beige);
+  transition: var(--transicion);
+}
+.btn-circular:hover {
+  background-color: var(--color-dorado);
+  color: var(--color-verde-bosque);
+  transform: scale(1.1);
+}
+
+/* ===== Botón con efecto desvanecido ===== */
+.btn-fade {
+  background-color: var(--color-gris-medio);
+  color: var(--color-beige);
+  opacity: 0.7;
+  transition: opacity 0.3s ease;
+}
+.btn-fade:hover {
+  opacity: 1;
+  transform: scale(1.02);
+}
+
+/* ===== Botón Minimalista (líneas finas y texto pequeño) ===== */
+.btn-minimalista {
+  background: none;
+  border-bottom: 2px solid var(--color-dorado);
+  color: var(--color-dorado);
+  font-weight: 500;
+  border-radius: 0;
+  padding: 0.3rem 0.6rem;
+}
+.btn-minimalista:hover {
+  color: var(--color-rosa);
+  border-color: var(--color-rosa);
+}
+
+/* ======================================
+   ⚡ BOTONES ANIMADOS Y MODERNOS
+   ====================================== */
+
+/* ===== Relleno diagonal ===== */
+.btn-diagonal {
+  position: relative;
+  background: transparent;
+  color: var(--color-dorado);
+  border: 2px solid var(--color-dorado);
+  overflow: hidden;
+  z-index: 1;
+  transition: all 0.3s ease;
+}
+.btn-diagonal::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: var(--color-dorado);
+  transform: skewX(-20deg);
+  z-index: -1;
+  transition: all 0.4s ease;
+}
+.btn-diagonal:hover::before {
+  left: 100%;
+}
+.btn-diagonal:hover {
+  color: var(--color-verde-bosque);
+}
+
+/* ===== Gradiente animado ===== */
+.btn-gradiente-animado {
+  background: linear-gradient(
+    270deg,
+    var(--color-dorado),
+    var(--color-verde-olivo),
+    var(--color-dorado)
+  );
+  background-size: 400% 400%;
+  color: var(--color-verde-bosque);
+  animation: gradiente-move 5s ease infinite;
+  border: none;
+  font-weight: 600;
+}
+@keyframes gradiente-move {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+/* ===== Botón con brillo deslizante ===== */
+.btn-brillo {
+  position: relative;
+  background-color: var(--color-verde-olivo);
+  color: var(--color-beige);
+  overflow: hidden;
+}
+.btn-brillo::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -75%;
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(
+    120deg,
+    rgba(255, 255, 255, 0),
+    rgba(255, 255, 255, 0.4),
+    rgba(255, 255, 255, 0)
+  );
+  transform: skewX(-25deg);
+}
+.btn-brillo:hover::after {
+  animation: brillo-slide 1s ease-in-out;
+}
+@keyframes brillo-slide {
+  0% {
+    left: -75%;
+  }
+  100% {
+    left: 125%;
+  }
+}
+
+/* ===== Pulsación suave ===== */
+.btn-pulse {
+  background-color: var(--color-dorado);
+  color: var(--color-verde-bosque);
+  box-shadow: 0 0 0 rgba(212, 175, 55, 0.4);
+  animation: pulse 2s infinite;
+}
+@keyframes pulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(212, 175, 55, 0.5);
+  }
+  70% {
+    box-shadow: 0 0 0 15px rgba(212, 175, 55, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(212, 175, 55, 0);
+  }
+}
+
+/* ===== Botón con efecto “levantarse” (hover dinámico) ===== */
+.btn-lift {
+  background-color: var(--color-verde-bosque);
+  color: var(--color-beige);
+  box-shadow: 0 4px 0 var(--color-verde-olivo);
+  transition: all 0.15s ease;
+}
+.btn-lift:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 0 var(--color-verde-olivo);
+}
+
+/* ===== Botón con borde expandido ===== */
+.btn-borde-expand {
+  background-color: transparent;
+  color: var(--color-dorado);
+  border: 2px solid transparent;
+  position: relative;
+}
+.btn-borde-expand::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border: 2px solid var(--color-dorado);
+  transform: scale(0);
+  transition: all 0.3s ease;
+}
+.btn-borde-expand:hover::before {
+  transform: scale(1);
+}
+.btn-borde-expand:hover {
+  color: var(--color-verde-bosque);
+}
+
+/* ===== Botón con sombra dinámica ===== */
+.btn-sombra-dinamica {
+  background-color: var(--color-verde-olivo);
+  color: var(--color-beige);
+  box-shadow: 0 5px 0 var(--color-dorado);
+  transition: all 0.2s ease;
+}
+.btn-sombra-dinamica:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 0 var(--color-dorado);
+}

@@ -10,6 +10,13 @@ const Paginador = ({ paginaActual, totalPaginas, onChangePagina }) => {
     let inicio = Math.max(1, paginaActual - Math.floor(maxBotones / 2))
     let fin = inicio + maxBotones - 1
 
+    const scrollToTop = () => {
+        window.scrollTo({
+            top: 0,
+            behavior: "smooth"
+        })
+    }
+
     if (fin > totalPaginas) {
         fin = totalPaginas
         inicio = Math.max(1, fin - maxBotones + 1)
@@ -43,10 +50,10 @@ const Paginador = ({ paginaActual, totalPaginas, onChangePagina }) => {
         <div key={paginaActual} className="paginador transition-fade">
             <Pagination className="justify-content-center my-3">
                 {/* ir al principio */}
-                {paginaActual > 1 && totalPaginas > 5 && (<Pagination.First onClick={() => goTo(1)} />)}
+                {paginaActual > 1 && totalPaginas > 5 && (<Pagination.First onClick={() => { goTo(1); scrollToTop() }} />)}
 
                 {/* anterior */}
-                {/* <Pagination.Prev disabled={paginaActual === 1} onClick={() => goTo(paginaActual - 1)} /> */}
+                {/* <Pagination.Prev disabled={paginaActual === 1} onClick={() => { goTo(paginaActual - 1);scrollToTop()}} /> */}
 
                 {/* botones numericos */}
                 {Array.from({ length: cantidad }, (_, i) => {
@@ -55,7 +62,7 @@ const Paginador = ({ paginaActual, totalPaginas, onChangePagina }) => {
                         <Pagination.Item
                             key={num}
                             active={num === paginaActual}
-                            onClick={() => goTo(num)}
+                            onClick={() => { goTo(num); scrollToTop() }}
                         >
                             {num}
                         </Pagination.Item>
@@ -63,10 +70,10 @@ const Paginador = ({ paginaActual, totalPaginas, onChangePagina }) => {
                 })}
 
                 {/* siguiente */}
-                {/* <Pagination.Next disabled={paginaActual === totalPaginas} onClick={() => goTo(paginaActual + 1)} /> */}
+                {/* <Pagination.Next disabled={paginaActual === totalPaginas} onClick={() => { goTo(paginaActual + 1); scrollToTop()}} /> */}
 
                 {/* ir a ultima pagina */}
-                {paginaActual < totalPaginas && totalPaginas > 5 && (<Pagination.Last onClick={() => goTo(totalPaginas)} />)}
+                {paginaActual < totalPaginas && totalPaginas > 5 && (<Pagination.Last onClick={() => { goTo(totalPaginas); scrollToTop() }} />)}
             </Pagination>
         </div>
     )

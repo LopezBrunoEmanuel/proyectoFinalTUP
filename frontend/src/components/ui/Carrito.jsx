@@ -44,7 +44,7 @@ const Carrito = ({ show, handleClose }) => {
                                 setTimeout(() => navigate("/productos"), 300);
                             }}
                         >
-                            Ver productos
+                            Visita la tienda
                         </button>
                     </div>
                 ) : (

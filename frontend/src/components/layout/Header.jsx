@@ -1,9 +1,11 @@
 import { useState, useEffect, useRef } from "react";
+import { useNavigate, NavLink } from "react-router-dom";
 import { Container, Nav, Navbar } from "react-bootstrap";
 import { FaShoppingCart, FaUserCircle } from "react-icons/fa";
+// eslint-disable-next-line no-unused-vars
+import { motion } from "framer-motion";
 import "../../styles/header.css";
 import { useAuthStore } from "../../store/useAuthStore";
-import { useNavigate } from "react-router-dom";
 import { useUIStore } from "../../store/useUIStore"
 import { useCarritoStore } from "../../store/useCarritoStore"
 
@@ -45,6 +47,21 @@ const Header = () => {
       document.body.style.overflow = "auto";
     };
   }, [expanded]);
+
+  // Animaciones para cada ítem del menú
+  const navItem = {
+    hidden: { y: -20, opacity: 0 },
+    visible: (i) => ({
+      y: 0,
+      opacity: 1,
+      transition: {
+        delay: i * 0.15, // pequeño delay progresivo
+        duration: 0.5,
+        ease: "easeOut",
+      },
+    }),
+  };
+
 
   return (
     <div className="header" ref={navbarRef}>
@@ -109,22 +126,32 @@ const Header = () => {
 
           <Navbar.Collapse id="basic-navbar-nav" className="order-lg-1">
             <Nav className="mx-auto">
-              <Nav.Link href="/productos" onClick={() => setExpanded(false)}>
-                Productos
-              </Nav.Link>
-              <Nav.Link href="/servicios" onClick={() => setExpanded(false)}>
-                Servicios
-              </Nav.Link>
-              <Nav.Link href="/tips" onClick={() => setExpanded(false)}>
-                Tips y cuidados
-              </Nav.Link>
-              <Nav.Link
-                href="/sobreNosotros"
-                onClick={() => setExpanded(false)}
-              >
-                Sobre Nosotros
-              </Nav.Link>
+              {[
+                { to: "/", text: "Inicio" },
+                { to: "/productos", text: "Productos" },
+                { to: "/servicios", text: "Servicios" },
+                { to: "/tips", text: "Tips y cuidados" },
+                { to: "/sobreNosotros", text: "Sobre Nosotros" },
+              ].map((item, i) => (
+                <motion.div
+                  key={item.to}
+                  custom={i}
+                  variants={navItem}
+                  initial="hidden"
+                  animate="visible"
+                  style={{ display: "inline-block" }} // 🔑 mantiene el layout horizontal
+                >
+                  <NavLink
+                    to={item.to}
+                    className="nav-link"
+                    onClick={() => setExpanded(false)}
+                  >
+                    {item.text}
+                  </NavLink>
+                </motion.div>
+              ))}
             </Nav>
+
           </Navbar.Collapse>
         </Container>
       </Navbar>

@@ -1,8 +1,9 @@
 /* ====== VARIABLES ====== */
 :root {
-  --color-principal: #ca1c73;
-  --color-verde: #28a745;
-  --sombra-hover: 0 6px 16px rgba(0, 0, 0, 0.1);
+  --color-principal: var(--color-verde-bosque);
+  --color-acento: var(--color-dorado);
+  --color-verde: var(--color-verde-olivo);
+  --sombra-hover: var(--sombra-suave);
 }
 
 /* ====== CONTENEDOR GENERAL ====== */
@@ -23,15 +24,15 @@
 
 /* ====== CARD BASE ====== */
 .producto-card {
-  border: 1px solid #eee;
+  border: 1px solid var(--color-borde);
   border-radius: 12px;
   overflow: hidden;
-  background-color: #fafafa;
+  background-color: var(--color-beige-claro);
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   height: 100%;
-  transition: transform 0.25s ease, box-shadow 0.25s ease;
+  transition: transform 0.25s ease, box-shadow 0.5s ease;
 }
 
 /* ====== BODY ====== */
@@ -44,14 +45,13 @@
   text-align: center;
 }
 
-/* ====== ESTILO PARA CARDS SIN STOCK (versión horizontal) ====== */
+/* ====== ESTILO PARA CARDS SIN STOCK ====== */
 .producto-card.sin-stock {
   position: relative;
-  opacity: 0.55; /* efecto sombreado */
+  opacity: 0.55;
   filter: grayscale(20%);
 }
 
-/* Cinta horizontal superior */
 .producto-card.sin-stock::before {
   content: "SIN STOCK";
   position: absolute;
@@ -59,41 +59,38 @@
   left: 0;
   right: 0;
   text-align: center;
-  background-color: rgba(202, 28, 115, 0.9);
-  color: #fff;
+  background-color: rgba(122, 158, 126, 0.9); /* verde oliva translúcido */
+  color: var(--color-blanco);
   font-weight: 700;
   font-size: 0.95rem;
   letter-spacing: 1px;
   padding: 6px 0;
   text-transform: uppercase;
   z-index: 20;
-}
-
-/* Opcional: resalta un poco el texto de la cinta */
-.producto-card.sin-stock::before {
   backdrop-filter: blur(5px);
 }
 
-/* Deshabilita clics */
 .producto-card.sin-stock * {
   pointer-events: none;
   user-select: none;
 }
 
-/* Imagen uniforme con proporción fija */
+/* ====== IMAGEN ====== */
 .card-img-top {
   width: 100%;
   aspect-ratio: 4 / 3;
   object-fit: cover;
   border-radius: 0;
   transition: transform 0.3s ease;
-  display: block; /* 🧩 Evita desborde por inline-block */
+  display: block;
 }
 
 /* ====== INFO DE PRECIO Y STOCK ====== */
-.precio-stock .fw-bold {
+.precio-stock .fw-bold,
+.precio-producto {
   font-size: 1.1rem;
-  color: var(--color-verde);
+  color: var(--color-verde-olivo);
+  font-weight: 600;
 }
 
 .precio-stock .text-muted {
@@ -102,7 +99,6 @@
 
 /* ====== GRUPO DE BOTONES ====== */
 .botones-cards {
-  /* 🧩 Se cambió a wrap para evitar desborde en pantallas pequeñas */
   display: flex;
   justify-content: center;
   align-items: center;
@@ -127,53 +123,50 @@
 
 /* Botón principal (🛒 agregar) */
 .botones-cards .btn-outline-primary {
-  border-color: var(--color-principal);
-  color: var(--color-principal);
-  background-color: #fff;
+  border: 1px solid var(--color-borde);
+  color: var(--color-verde-bosque);
+  background-color: var(--color-blanco);
 }
 
 .botones-cards .btn-outline-primary:hover {
-  background-color: var(--color-principal);
-  color: #fff;
-  /* box-shadow: 0 3px 8px rgba(202, 28, 115, 0.3); */
+  background-color: var(--color-verde-bosque);
+  color: var(--color-blanco);
 }
 
 .botones-cards .btn-outline-primary:disabled {
   opacity: 1 !important;
   cursor: not-allowed !important;
-  background-color: #fff !important;
-  color: #ccc !important;
-  border-color: #aaa !important;
+  background-color: var(--color-blanco) !important;
+  color: var(--color-gris-suave) !important;
+  border-color: var(--color-borde) !important;
   box-shadow: none !important;
   transform: none !important;
 }
 
 .btn-outline-primary:active {
   transform: scale(0.95);
-  border-color: var(--color-principal) !important;
+  border-color: var(--color-verde-bosque) !important;
 }
 
 .botones-cards .btn-outline-secondary:hover {
-  border-color: var(--color-principal);
-  color: var(--color-principal);
-  /* box-shadow: 0 3px 8px rgba(202, 28, 115, 0.2); */
+  border-color: var(--color-verde-bosque);
+  color: var(--color-verde-bosque);
 }
 
-/* ====== CONTROL DE CANTIDAD (PÍLDORA HORIZONTAL) ====== */
+/* ====== CONTROL DE CANTIDAD ====== */
 .cantidad-container {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  border: 1px solid #aaa;
+  border: 1px solid var(--color-borde);
   border-radius: 999px;
   overflow: hidden;
-  background-color: #fff;
-  transition: all 0.2s ease;
+  background-color: var(--color-blanco);
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
 }
 
 .cantidad-container:focus-within {
-  border-color: var(--color-principal);
-  /* box-shadow: 0 0 4px rgba(202, 28, 115, 0.25); */
+  border-color: #bbb;
 }
 
 /* Botones +/- */
@@ -181,29 +174,28 @@
   border: none;
   border-radius: 0;
   background: transparent;
-  color: var(--color-principal);
+  color: var(--color-gris-medio);
   font-weight: bold;
   width: 36px;
   height: 36px;
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: background-color 0.2s ease, color 0.2s ease;
+  transition: background-color 0.2s ease, color 0.2s ease, transform 0.2s ease;
 }
 
 .cantidad-container .btn:hover:not(:disabled) {
-  background-color: #ca1c7320;
+  background-color: rgba(0, 0, 0, 0.05);
 }
 
 .cantidad-container .btn:active {
-  transform: scale(1.05);
-  transform: translateY(1px);
+  transform: scale(1.05) translateY(1px);
 }
 
 .cantidad-container .btn:disabled {
   opacity: 1;
   cursor: not-allowed;
-  color: #ccc;
+  color: #bbb;
 }
 
 /* Input numérico */
@@ -215,6 +207,7 @@
   outline: none;
   background: transparent;
   font-size: 0.95rem;
+  color: var(--color-texto);
 }
 
 .cantidad-input:focus {
@@ -222,55 +215,105 @@
   box-shadow: none;
 }
 
-/* Quita las flechas de los inputs numéricos */
 .cantidad-input::-webkit-outer-spin-button,
 .cantidad-input::-webkit-inner-spin-button {
   -webkit-appearance: none;
   margin: 0;
 }
 
-/* ====== AJUSTES DE TAMAÑO - BOTÓN "AGREGAR AL CARRITO" ====== */
+/* ====== BOTÓN "AGREGAR AL CARRITO" ====== */
 .btn-agregar {
-  padding: 0.6rem 1.4rem; /* 🧩 más alto y ancho */
-  font-size: 1rem; /* texto un poco más grande */
+  padding: 0.6rem 1.4rem;
+  font-size: 1rem;
   font-weight: 600;
   border-radius: 40px;
   line-height: 1.2;
   white-space: nowrap;
+  color: var(--color-verde-bosque);
+  background-color: transparent;
+  border: 2px solid var(--color-verde-bosque);
+  transition: var(--transicion);
 }
 
-/* 🧩 Versión mobile: ancho total, más alto, texto centrado */
-@media (max-width: 576px) {
-  .btn-agregar {
-    width: 100%;
-    padding: 0.8rem 1.6rem;
-    font-size: 1.05rem;
-    text-align: center;
-    justify-content: center;
-  }
+.btn-agregar:hover {
+  background-color: var(--color-verde-bosque);
+  color: var(--color-blanco);
+}
+
+.btn-agregar:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  border-color: var(--color-gris-suave);
+  color: var(--color-gris-suave);
 }
 
 /* ====== MENSAJE DE "NO SE ENCONTRARON PRODUCTOS" ====== */
 .no-resultados {
   text-align: center;
   padding: 3rem;
-  color: #666;
-  background-color: #fafafa;
+  color: var(--color-texto);
+  background-color: var(--color-beige-claro);
   border-radius: 12px;
-  border: 1px solid #ddd;
+  border: 1px solid var(--color-borde);
   margin-top: 2rem;
   animation: fadeIn 0.6s ease-in-out;
 }
 
 .no-resultados h5 {
-  color: var(--color-principal);
+  color: var(--color-verde-bosque);
   font-weight: 600;
   margin-bottom: 0.5rem;
 }
 
 .no-resultados p {
   font-size: 0.95rem;
-  color: #555;
+  color: var(--color-gris-medio);
+}
+
+/* ====== NUEVA ESTRUCTURA DE CARD ====== */
+.nombre-producto {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--color-texto);
+  text-align: center;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  line-clamp: 2;
+  min-height: 2.8rem;
+  line-height: 1.4rem;
+  margin-top: 0.5rem;
+  margin-bottom: 0.4rem;
+}
+
+.stock-producto {
+  font-size: 0.85rem;
+  color: var(--color-gris-medio);
+}
+
+.categoria-text {
+  color: var(--color-gris-suave);
+  font-size: 0.8rem;
+  letter-spacing: 0.3px;
+}
+
+/* ====== CORRECCIONES Y RESPONSIVE ====== */
+.cards-container .row {
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+}
+
+.cards-container .col {
+  padding: 0.5rem;
+  box-sizing: border-box;
+  max-width: 100%;
+}
+
+.producto-card .botones-cards {
+  margin-top: auto;
+  padding-top: 0.5rem;
+  border-top: 1px solid var(--color-borde);
 }
 
 /* ====== ANIMACIONES ====== */
@@ -322,58 +365,14 @@
   .cantidad-input {
     width: 45px;
   }
-}
 
-/* ====== NUEVA ESTRUCTURA DE CARD ====== */
-.nombre-producto {
-  font-size: 1rem;
-  font-weight: 600;
-  color: #333;
-  text-align: center;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  display: -webkit-box;
-  -webkit-box-orient: vertical;
-  line-clamp: 2;
-  min-height: 2.8rem;
-  line-height: 1.4rem;
-  margin-top: 0.5rem;
-  margin-bottom: 0.4rem;
-}
-
-.precio-producto {
-  font-size: 1.1rem;
-  color: var(--color-verde);
-}
-
-.stock-producto {
-  font-size: 0.85rem;
-  color: #666;
-}
-
-.categoria-text {
-  color: #888;
-  font-size: 0.8rem;
-  letter-spacing: 0.3px;
-}
-
-/* 🧩 Corrección final: contención general */
-.cards-container .row {
-  margin-left: 0 !important;
-  margin-right: 0 !important;
-}
-
-.cards-container .col {
-  padding: 0.5rem;
-  box-sizing: border-box;
-  max-width: 100%;
-}
-
-/* 🧩 Mantiene alineación inferior de botones */
-.producto-card .botones-cards {
-  margin-top: auto;
-  padding-top: 0.5rem;
-  border-top: 1px solid #f1f1f1;
+  .btn-agregar {
+    width: 100%;
+    padding: 0.8rem 1.6rem;
+    font-size: 1.05rem;
+    text-align: center;
+    justify-content: center;
+  }
 }
 
 /* ====== DESACTIVAR HOVER EN MOBILE ====== */

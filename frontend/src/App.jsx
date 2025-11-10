@@ -14,6 +14,7 @@ import Tips from "./pages/Tips";
 import "./App.css";
 import Admin from "./pages/Admin";
 import { useUIStore } from "./store/useUIStore";
+import ScrollToTopButton from "./components/buttons/ScrollToTopButton";
 
 function App() {
   const { showCarrito, cerrarCarrito } = useUIStore()
@@ -55,6 +56,7 @@ function App() {
         </Routes>
       </div>
       <Footer />
+      <ScrollToTopButton />
       <Carrito show={showCarrito} handleClose={cerrarCarrito} />
     </>
   );

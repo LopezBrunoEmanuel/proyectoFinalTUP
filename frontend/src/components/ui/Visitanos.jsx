@@ -1,5 +1,4 @@
 import { Container, Button } from "react-bootstrap";
-import { useNavigate } from "react-router-dom";
 // eslint-disable-next-line no-unused-vars
 import { motion } from "framer-motion";
 import { FaWhatsapp } from "react-icons/fa";
@@ -10,9 +9,16 @@ import {
     scaleIn,
 } from "../../animations/variants";
 import "../../styles/visitanos.css";
+import "../../styles/buttons.css"
+import { WHATSAPP_NUMBER, WHATSAPP_MESSAGES } from "../utils/whatsappMensajes";
+
 
 const Visitanos = () => {
-    const navigate = useNavigate();
+    const handleWhatsAppClick = (mensaje = WHATSAPP_MESSAGES.contactoGeneral) => {
+        const encodedMessage = encodeURIComponent(mensaje.trim());
+        const whatsappURL = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodedMessage}`;
+        window.open(whatsappURL, "_blank");
+    };
 
     return (
         <section className="home__visitanos text-center py-5">
@@ -27,7 +33,7 @@ const Visitanos = () => {
                         className="home__visitanos-titulo mb-3"
                         variants={fadeInUp}
                     >
-                        🌱 Visitá nuestro vivero y llevate naturaleza a casa
+                        Visitá nuestro vivero y llevá naturaleza a casa
                     </motion.h2>
 
                     <motion.p
@@ -39,14 +45,12 @@ const Visitanos = () => {
                     </motion.p>
 
                     <motion.div variants={scaleIn}>
-                        <Button
-                            variant="success"
-                            size="lg"
-                            className="home__visitanos-boton m-2"
-                            onClick={() => navigate("/contacto")}
+                        <button
+                            className="home__visitanos-boton"
+                            onClick={() => handleWhatsAppClick(WHATSAPP_MESSAGES.contactoGeneral)}
                         >
-                            Contactanos <FaWhatsapp />
-                        </Button>
+                            Contactanos <FaWhatsapp className="whatsapp-icon" />
+                        </button>
                     </motion.div>
                 </motion.div>
             </Container>

@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { useLocation } from 'react-router-dom';
 import { useProductosStore } from '../store/useProductosStore';
 import "../styles/producto-card.css"
 import Aside from '../components/ui/Aside';
@@ -20,6 +21,7 @@ const CatalogoProductos = () => {
     orden: "",
     soloDisponibles: false
   })
+  const location = useLocation()
 
   const productosPorPagina = 12
   const indiceUltimoProducto = paginaActual * productosPorPagina
@@ -66,6 +68,20 @@ const CatalogoProductos = () => {
     fetchProductos();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
+
+  useEffect(() => {
+    if (location.state?.categoria) {
+      const categoria = location.state.categoria
+
+      setFiltrosTemporales((prev) => ({ ...prev, categoria }))
+      setFiltrosAplicados((prev) => ({ ...prev, categoria }))
+      setPaginaActual(1)
+    }
+  }, [location.state])
+
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }, []);
 
   return (
     <div className="productos-layout">

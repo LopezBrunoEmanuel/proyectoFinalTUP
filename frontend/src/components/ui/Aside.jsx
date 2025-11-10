@@ -1,14 +1,14 @@
-import { useState } from "react";
+// import { useState } from "react";
 import { Form, Button, InputGroup, Row, Col, Collapse, Container } from "react-bootstrap";
 import "../../styles/aside.css";
-import { FaTimesCircle, FaSearch, FaChevronDown, FaChevronUp } from "react-icons/fa";
+import { FaTimesCircle } from "react-icons/fa";
 
 const Aside = ({ filtrosTemporales, setFiltrosTemporales, filtrosAplicados, setFiltrosAplicados, setPaginaActual }) => {
-    const [open, setOpen] = useState(true);
+    // const [open, setOpen] = useState(true);
 
     return (
         <Container fluid className="aside-topbar-container">
-            <div className="d-md-none text-center mb-3 mt-3">
+            {/* <div className="d-md-none text-center mb-3 mt-3">
                 <Button
                     variant="outline-primary"
                     onClick={() => setOpen(!open)}
@@ -17,7 +17,7 @@ const Aside = ({ filtrosTemporales, setFiltrosTemporales, filtrosAplicados, setF
                 >
                     {open ? "Ocultar filtros ▲" : "Mostrar filtros ▼"}
                 </Button>
-            </div>
+            </div> */}
 
             <Collapse in={open}>
                 <div id="filtros-collapse" className="aside-topbar shadow-sm bg-light rounded py-3 px-4">
@@ -60,7 +60,7 @@ const Aside = ({ filtrosTemporales, setFiltrosTemporales, filtrosAplicados, setF
 
 
                         <Col xs={6} md={3} lg={2}>
-                            <Form.Select value={filtrosTemporales.categoria} onChange={(e) => setFiltrosTemporales({ ...filtrosTemporales, categoria: e.target.value })}>
+                            <Form.Select value={filtrosTemporales.categoria || ""} onChange={(e) => setFiltrosTemporales({ ...filtrosTemporales, categoria: e.target.value })}>
                                 <option value="">Todas las categorías</option>
                                 <option value="planta">Plantas</option>
                                 <option value="maceta">Macetas</option>

@@ -2,18 +2,17 @@
 .aside-topbar-container {
   position: relative;
   z-index: 10;
-  border-bottom: 1px solid #e6e6e6;
-  padding-bottom: 0.5rem;
-  margin-bottom: 1.5rem;
+  padding-top: 0.5rem;
+  /* margin-bottom: 1.5rem; */
 }
 
 /* 🧱 BLOQUE DE FILTROS */
 .aside-topbar {
-  border: 1px solid #ebebeb;
-  border-radius: 12px;
-  background-color: #fafafa;
-  padding: 1rem 1.5rem;
-  transition: all 0.3s ease;
+  border: 1px solid var(--color-borde) !important;
+  border-radius: var(--radius) !important;
+  background-color: var(--color-beige-claro) !important;
+  padding: 1rem 1.5rem !important;
+  transition: var(--transicion) !important;
 }
 
 .aside-topbar:hover {
@@ -32,7 +31,7 @@
 .aside-topbar .form-control:focus,
 .aside-topbar .form-select:focus {
   border-color: var(--color-principal, #ca1c73) !important;
-  box-shadow: none !important; /* 🔹 Quitamos el destello rosado */
+  box-shadow: none !important;
 }
 
 /* 🔍 BUSCADOR */
@@ -167,7 +166,8 @@
   .botones-filtros .btn-outline-primary {
     width: 100% !important;
     max-width: 320px !important;
-    font-size: 1.05rem !important;
+    font-size: 1rem !important;
+    margin: auto;
     padding: 0.8rem 1.6rem !important;
     justify-content: center !important;
   }

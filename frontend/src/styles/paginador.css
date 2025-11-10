@@ -1,14 +1,12 @@
-/* 🎯 ESTILOS DEL PAGINADOR */
-
 /* Estado activo (página actual) */
 .paginador .page-item.active .page-link {
-  background-color: #ca1c73 !important;
-  border-color: #ca1c73 !important;
-  color: white !important;
-  font-weight: bold;
-  border-radius: 8px;
-  transform: scale(1.05);
-  transition: all 0.25s ease-in-out;
+  background-color: transparent !important;
+  border: none !important;
+  color: var(--color-dorado) !important;
+  font-weight: 700;
+  font-size: 1.4rem;
+  transform: translateY(-5px);
+  transition: var(--transicion);
 }
 
 /* Botones normales */
@@ -23,9 +21,8 @@
 
 /* Efecto hover (flotante) */
 .paginador .page-link:hover {
-  background-color: rgba(202, 28, 115, 0.1);
-  color: #ca1c73;
-  transform: translateY(-2px);
+  color: var(--color-dorado);
+  transform: translateY(-1px) scale(1.1);
 }
 
 /* Elimina destellos azules al hacer click */
@@ -44,11 +41,6 @@
   .paginador .page-link {
     font-size: 1.1rem;
     padding: 0.6rem 1rem;
-  }
-
-  .paginador .page-item.active .page-link {
-    background-color: #ca1c73 !important;
-    border-color: #ca1c73 !important;
   }
 }
 

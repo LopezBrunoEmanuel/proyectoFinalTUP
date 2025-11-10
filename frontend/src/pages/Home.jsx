@@ -16,8 +16,6 @@ const Home = () => {
                 <MainHome />
             </section>
 
-            <div className="section-divider"></div>
-
             <section className="home-section">
                 <ProductosDestacados />
             </section>
