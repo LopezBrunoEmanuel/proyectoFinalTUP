@@ -74,6 +74,11 @@ const MainLogin = () => {
     navigate("/register");
   };
 
+  const handleForgotPassword = (e) => {
+    e.preventDefault();
+    navigate("/forgot-password"); // ruta donde esté tu componente de recuperación
+  };
+
   return (
     <div className="login-container">
       {/* Sección izquierda */}
@@ -130,10 +135,17 @@ const MainLogin = () => {
               />
             </div>
 
-            <div className="d-grid gap-2 mt-5">
+            <div className="d-grid gap-2 mt-1">
               <button type="submit" className="btn btn-login mt-4">
                 Ingresar
               </button>
+              <hr />
+              <br />
+              <div className="forgot-password text-center mb-3">
+                <a href="#" onClick={handleForgotPassword}>
+                  ¿Olvidaste tu contraseña?
+                </a>
+              </div>
               <button
                 type="button"
                 className="btn btn-register mt-4"

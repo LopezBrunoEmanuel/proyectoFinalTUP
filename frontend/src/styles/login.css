@@ -341,8 +341,13 @@
   background-color: #d4af37;
   color: #fff;
   border: none;
-  padding: 0.6rem 1rem;
+  padding: 0.6rem 0.4rem;
+  /* menos ancho */
   transition: 0.3s ease;
+  display: inline-block;
+  /* evita que se estire */
+  width: auto;
+  /* se ajusta al texto */
 }
 
 .btn-register:hover {
@@ -381,3 +386,5 @@
     max-width: 400px;
   }
 }
+
+

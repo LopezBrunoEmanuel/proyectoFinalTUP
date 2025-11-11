@@ -1,246 +1,124 @@
-/* Fondo general */
-.card-consejo {
-  position: relative;
-  max-width: 850px;
-  margin: 3rem auto;
-  padding: 2.5rem;
-  border-radius: 16px;
-  overflow: hidden;
-  color: #2c2c2c;
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
-  background: #fff;
-  font-family: "Poppins", sans-serif;
-}
-
-/* Imagen de fondo + overlay */
-.card-consejo::before {
-  content: "";
-  background-image: url("https://images.unsplash.com/photo-1501004318641-b39e6451bec6?auto=format&fit=crop&w=1200&q=80");
-  background-size: cover;
-  background-position: center;
-  filter: brightness(0.7);
-  position: absolute;
-  inset: 0;
-  z-index: 0;
-}
-
-.card-consejo .overlay {
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(to bottom right,
-      rgba(202, 28, 115, 0.75),
-      rgba(218, 211, 202, 0.85));
-  z-index: 1;
-}
-
-/* Contenido principal */
-.card-consejo .contenido {
-  position: relative;
-  z-index: 2;
-  background: rgba(255, 255, 255, 0.8);
-  padding: 2rem;
-  border-radius: 12px;
-  backdrop-filter: blur(4px);
-}
-
-/* Títulos */
-.card-consejo h2 {
-  color: #ca1c73;
+.tips-section {
+  padding-block: var(--section-py);
+  background-color: var(--color-beige);
   text-align: center;
-  margin-bottom: 1.2rem;
+  font-family: var(--fuente-base);
 }
 
-.card-consejo h3 {
-  color: #c24382;
-  margin-top: 1.5rem;
-  border-left: 4px solid #ca1c73;
-  padding-left: 10px;
-}
-
-/* Texto */
-.card-consejo p {
-  line-height: 1.6;
+.tips-title {
+  color: var(--color-verde-bosque);
+  font-family: var(--fuente-titulos);
+  font-size: clamp(1.8rem, 4vw, 2.5rem);
   margin-bottom: 1rem;
 }
 
-.card-consejo ul {
-  margin-left: 1.5rem;
-  padding-left: 0.5rem;
-}
-
-.card-consejo li {
-  margin-bottom: 0.5rem;
-}
-
-/* Nota destacada */
-.card-consejo .nota {
-  background: rgba(218, 211, 202, 0.9);
-  border-left: 5px solid #ca1c73;
-  padding: 12px 15px;
-  border-radius: 8px;
-  font-style: italic;
-  margin-top: 1.5rem;
-  color: #4a4a4a;
-  text-align: center;
-  font-weight: 500;
-}
-
-/* 🌸 Responsivo */
-@media (max-width: 600px) {
-  .card-consejo {
-    margin: 1.5rem;
-    padding: 1.5rem;
-  }
-
-  .card-consejo .contenido {
-    padding: 1.2rem;
-  }
-
-  .card-consejo h2 {
-    font-size: 1.4rem;
-  }
-
-  .card-consejo h3 {
-    font-size: 1.1rem;
-  }
-}
-
-.consejo-riego {
-  position: relative;
-  min-height: 90vh; /* Ocupa casi toda la pantalla */
-  width: 100%;
-  overflow: hidden;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: #333;
-  font-family: "Poppins", sans-serif;
-}
-
-/* 🌸 Fondo con imagen + degradado */
-.consejo-riego::before {
-  content: "";
-  background-image: url("https://images.unsplash.com/photo-1501004318641-b39e6451bec6?auto=format&fit=crop&w=1600&q=80");
-  background-size: cover;
-  background-position: center;
-  position: absolute;
-  inset: 0;
-  z-index: 0;
-  filter: brightness(0.6);
-}
-
-.consejo-riego .overlay {
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(
-    to bottom right,
-    rgba(202, 28, 115, 0.7),
-    rgba(218, 211, 202, 0.85)
-  );
-  z-index: 1;
-}
-
-/* 🌿 Contenedor del texto */
-.consejo-riego .contenido {
-  position: relative;
-  z-index: 2;
-  background: rgba(255, 255, 255, 0.85);
-  border-radius: 20px;
-  padding: 3rem;
-  max-width: 1000px;
-  margin: 2rem;
-  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
-  backdrop-filter: blur(5px);
-}
-
-/* 🌺 Títulos */
-.consejo-riego h1 {
-  color: #ca1c73;
-  text-align: center;
-  font-size: 2.2rem;
-  margin-bottom: 1.5rem;
-}
-
-.consejo-riego h3 {
-  color: #c24382;
-  margin-top: 1.8rem;
-  border-left: 4px solid #ca1c73;
-  padding-left: 10px;
-  font-size: 1.3rem;
-}
-
-/* ✨ Texto y listas */
-.consejo-riego p,
-.consejo-riego li {
+.tips-subtitle {
+  color: var(--color-marron);
+  font-size: 1.1rem;
+  max-width: 700px;
+  margin: 0 auto 3rem;
   line-height: 1.7;
-  font-size: 1rem;
 }
 
-.consejo-riego ul {
-  margin-left: 1.5rem;
-  padding-left: 0.5rem;
+/* 🌿 GRID de 2 columnas */
+.tips-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 2rem;
+  max-width: 1100px;
+  margin: 0 auto;
+  padding-inline: 1rem;
 }
 
-.consejo-riego li {
+/* ✨ CARD */
+.tip-card {
+  border-radius: var(--radius);
+  overflow: hidden;
+  box-shadow: var(--sombra-suave);
+  transition: var(--transicion);
+  background-color: var(--color-blanco);
+}
+
+.tip-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 12px 25px rgba(0, 0, 0, 0.12);
+}
+
+/* 🌸 Imagen con overlay */
+.tip-img {
+  background-size: cover;
+  background-position: center;
+  height: 320px;
+  position: relative;
+  display: flex;
+  align-items: flex-end;
+  border-radius: var(--radius);
+  transition: var(--transicion);
+}
+
+.tip-img::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top,
+      rgba(70, 98, 74, 0.8) 0%,
+      rgba(0, 0, 0, 0.2) 80%);
+  z-index: 1;
+}
+
+.tip-card:hover .tip-img {
+  filter: brightness(1.05);
+  transform: scale(1.02);
+}
+
+/* 🌼 Contenido sobre la imagen */
+.tip-content {
+  position: relative;
+  z-index: 2;
+  color: var(--color-blanco);
+  text-align: left;
+  padding: 1.5rem;
+}
+
+.tip-content h3 {
+  font-family: var(--fuente-titulos);
+  font-size: 1.4rem;
+  color: var(--color-dorado);
   margin-bottom: 0.5rem;
 }
 
-/* 🌸 Bloques */
-.consejo-riego .bloque {
-  margin-bottom: 1rem;
+.tip-content p {
+  font-size: 1rem;
+  color: var(--color-beige-claro);
+  margin-bottom: 0.8rem;
+  line-height: 1.6;
 }
 
-/* 💡 Nota destacada */
-.consejo-riego .nota {
-  background: rgba(218, 211, 202, 0.9);
-  border-left: 5px solid #ca1c73;
-  padding: 12px 15px;
-  border-radius: 8px;
+.tip-detail {
+  font-size: 0.9rem;
   font-style: italic;
-  margin-top: 1.8rem;
-  color: #4a4a4a;
-  text-align: center;
-  font-weight: 500;
+  color: var(--color-beige);
 }
 
 /* 📱 Responsivo */
-@media (max-width: 768px) {
-  .consejo-riego .contenido {
-    padding: 2rem 1.2rem;
+@media (max-width: 900px) {
+  .tips-grid {
+    grid-template-columns: 1fr;
   }
 
-  .consejo-riego h1 {
-    font-size: 1.6rem;
+  .tip-img {
+    height: 280px;
   }
 
-  .consejo-riego h3 {
-    font-size: 1.1rem;
+  .tip-content h3 {
+    font-size: 1.2rem;
   }
 
-  .consejo-riego {
-    min-height: auto;
-    padding: 2rem 0;
-  }
-}
-
-/* 💻 Vista en pantallas grandes */
-@media (min-width: 1200px) {
-  .card-consejo {
-    max-width: 1100px; /* más ancho */
-    padding: 3rem 4rem; /* más espacio interior */
+  .tip-content p {
+    font-size: 0.95rem;
   }
 
-  .card-consejo .contenido {
-    padding: 3rem; /* aumenta el contenido */
-    font-size: 1.05rem; /* texto ligeramente más grande */
-  }
-
-  .card-consejo h2 {
-    font-size: 2rem;
-  }
-
-  .card-consejo h3 {
-    font-size: 1.3rem;
+  .tips-subtitle {
+    font-size: 1rem;
   }
 }
-

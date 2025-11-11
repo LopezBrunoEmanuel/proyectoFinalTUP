@@ -1,56 +1,73 @@
 import "../../styles/tips.css";
+
 const MainTips = () => {
+  const tips = [
+    {
+      id: 1,
+      titulo: "💧 Riego adecuado",
+      texto:
+        "Evitá regar en exceso: tocá la tierra antes de hacerlo. Si está húmeda, esperá un poco más.",
+      detalle: "Regar de más puede pudrir las raíces y dañar las hojas.",
+      imagen:
+        "https://images.unsplash.com/photo-1515150144380-bca9f1650ed9?auto=format&fit=crop&w=800&q=80",
+    },
+    {
+      id: 2,
+      titulo: "🌤️ Luz natural",
+      texto:
+        "Colocá tus plantas en lugares bien iluminados, pero evitá el sol directo en horas intensas.",
+      detalle:
+        "Un buen balance de luz mejora el crecimiento y color del follaje.",
+      imagen:
+        "https://images.unsplash.com/photo-1760633331239-fd32e3244ab5?auto=format&fit=crop&w=800&q=80",
+    },
+    {
+      id: 3,
+      titulo: "🌱 Sustrato aireado",
+      texto:
+        "Usá tierra liviana y con buen drenaje. Una mezcla con perlita o corteza es ideal.",
+      detalle:
+        "El sustrato correcto permite que el agua circule sin encharcar las raíces.",
+      imagen:
+        "https://images.unsplash.com/photo-1693414854278-6b3703411629?auto=format&fit=crop&w=800&q=80",
+    },
+    {
+      id: 4,
+      titulo: "🌸 Cuidados generales",
+      texto:
+        "Retirá hojas secas y limpialas con un paño húmedo para que respiren mejor.",
+      detalle: "Pequeños cuidados hacen una gran diferencia a largo plazo.",
+      imagen:
+        "https://plus.unsplash.com/premium_photo-1677756271467-e4394aeb315c?auto=format&fit=crop&w=800&q=80",
+    },
+  ];
+
   return (
-    <div className="card-consejo">
-      <div className="overlay"></div>
+    <section className="tips-section">
+      <h2 className="tips-title">Consejos para tus plantas 🌿</h2>
+      <p className="tips-subtitle">
+        Cuidar tus plantas no tiene por qué ser complicado. Con estos simples
+        consejos, tus espacios verdes van a florecer.
+      </p>
 
-      <div className="contenido">
-        <h2>🌱 ¿Cómo regar correctamente las plantas?</h2>
-
-        <p>
-          Uno de los problemas más frecuentes al cuidar nuestras plantas es el{" "}
-          <strong>descontrol de riego</strong>. Por lo general, regamos en
-          exceso las plantas de interior, lo que daña sus raíces y hojas.
-        </p>
-
-        <p>
-          Aprender a regar correctamente es una de las tareas más difíciles.
-          Aquí te contamos los factores más importantes y cómo hacerlo bien.
-        </p>
-
-        <div className="bloque">
-          <h3>🌼 Señales de descontrol de riego</h3>
-          <ul>
-            <li>Puntas de hojas amarillentas o secas.</li>
-            <li>Hojas caídas o blandas.</li>
-            <li>Hojas nuevas que se secan antes de crecer.</li>
-            <li>Sustrato duro o con exceso de humedad.</li>
-          </ul>
-        </div>
-
-        <div className="bloque">
-          <h3>💧 ¿Cómo regar correctamente?</h3>
-          <p>
-            Antes de regar, toca la tierra. Si está seca, riega abundantemente
-            cubriendo toda la superficie. Si está húmeda, espera un poco más
-            para evitar exceso de agua.
-          </p>
-        </div>
-
-        <div className="bloque">
-          <h3>⏰ ¿Cuándo regar?</h3>
-          <p>
-            Depende de la humedad ambiental, el viento y la temperatura. La
-            mejor forma de comprobarlo es enterrar un dedo o un palito: si sale
-            seco, ¡es hora de regar!
-          </p>
-        </div>
-
-        <div className="nota">
-          🌸 Consejo: Mejor esperar un día más que regar de más.
-        </div>
+      <div className="tips-grid">
+        {tips.map((tip) => (
+          <div key={tip.id} className="tip-card">
+            <div
+              className="tip-img"
+              style={{ backgroundImage: `url(${tip.imagen})` }}
+            >
+              <div className="tip-overlay"></div>
+              <div className="tip-content">
+                <h3>{tip.titulo}</h3>
+                <p>{tip.texto}</p>
+                <span className="tip-detail">{tip.detalle}</span>
+              </div>
+            </div>
+          </div>
+        ))}
       </div>
-    </div>
+    </section>
   );
 };
 

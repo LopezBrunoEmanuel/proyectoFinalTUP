@@ -65,6 +65,7 @@
   /* 👈 sin color de fondo */
   color: var(--color-verde-bosque);
   text-align: center;
+  transform: translateY(-180px);
 }
 
 .register-left h1 {

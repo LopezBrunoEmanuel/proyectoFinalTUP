@@ -15,6 +15,7 @@ const MainRegister = () => {
     telefonoUsuario: "",
     direccionUsuario: "",
     passwordUsuario: "",
+    confirmarPassword: "",
     rolUsuario: "cliente",
   });
 
@@ -28,6 +29,14 @@ const MainRegister = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    if (formData.passwordUsuario !== formData.confirmarPassword) {
+      swalCustom.fire({
+        icon: "error",
+        title: "Las contraseñas no coinciden",
+        text: "Por favor, escribí la misma contraseña en ambos campos",
+      });
+      return;
+    }
     try {
       await axios.post("http://localhost:3000/usuarios", formData);
 
@@ -275,12 +284,30 @@ const MainRegister = () => {
                 placeholder="Ingresá tu contraseña"
                 required
               />
+              <label
+                htmlFor="confirmarPassword"
+                className="form-label text-dark mt-2"
+              >
+                Escribí nuevamente tu contraseña
+              </label>
+              <input
+                type="password"
+                className="form-control"
+                id="confirmarPassword"
+                name="confirmarPassword"
+                value={formData.confirmarPassword}
+                onChange={handleChange}
+                placeholder="Repetí tu contraseña"
+                required
+              />
             </div>
 
-            <div className="d-grid gap-2 mt-4">
+            <div className="d-grid gap-2 mt-5">
               <button type="submit" className="btn btn-registrarse">
                 Registrarme
               </button>
+              <hr />
+              <br />
               <button
                 type="button"
                 className="btn btn-volver"
