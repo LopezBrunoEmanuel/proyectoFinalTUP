@@ -1,9 +1,9 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import Swal from "sweetalert2";
 import "../../styles/register.css";
 import axios from "axios";
 import { swalCustom } from "../../utils/customSwal";
+import Logo from "../../assets/logopatio.png";
 
 const MainRegister = () => {
   const navigate = useNavigate();
@@ -53,114 +53,244 @@ const MainRegister = () => {
   };
 
   return (
-    <div
-      className="d-flex align-items-center justify-content-center"
-      style={{
-        paddingTop: "50px",
-        paddingBottom: "50px",
-      }}
-    >
-      <div
-        className="bg-form card shadow p-4 border-pink"
-        style={{ width: "100%", maxWidth: "400px" }}
-      >
-        <h3 className="text-center mb-4 text-dark">Registrate</h3>
-        <form onSubmit={handleSubmit} className="form">
-          <div className="mb-3">
-            <label htmlFor="nombreUsuario" className="form-label text-dark">
-              Nombre
-            </label>
-            <input
-              type="text"
-              className="form-control"
-              id="nombreUsuario"
-              name="nombreUsuario"
-              value={formData.nombreUsuario}
-              onChange={handleChange}
-              placeholder="Ingresá tu nombre"
-              required
-            />
-            <label htmlFor="apellidoUsuario" className="form-label text-dark">
-              Apellido
-            </label>
-            <input
-              type="text"
-              className="form-control"
-              id="apellidoUsuario"
-              name="apellidoUsuario"
-              value={formData.apellidoUsuario}
-              onChange={handleChange}
-              placeholder="Ingresá tu apellido"
-              required
-            />
-            <label htmlFor="emailUsuario" className="form-label text-dark">
-              Email
-            </label>
-            <input
-              type="email"
-              className="form-control"
-              id="emailUsuario"
-              name="emailUsuario"
-              value={formData.emailUsuario}
-              onChange={handleChange}
-              placeholder="Ingresá tu email"
-              required
-            />
-            <label htmlFor="telefonoUsuario" className="form-label text-dark">
-              Telefono
-            </label>
-            <input
-              type="text"
-              className="form-control"
-              id="telefonoUsuario"
-              name="telefonoUsuario"
-              value={formData.telefonoUsuario}
-              onChange={handleChange}
-              placeholder="Ingresá tu telefono"
-              required
-            />
-            <label htmlFor="direccionUsuario" className="form-label text-dark">
-              Dirección
-            </label>
-            <input
-              type="text"
-              className="form-control"
-              id="direccionUsuario"
-              name="direccionUsuario"
-              value={formData.direccionUsuario}
-              onChange={handleChange}
-              placeholder="Ingresá tu direccion"
-              required
-            />
-          </div>
-          <div className="mb-3">
-            <label htmlFor="passwordUsuario" className="form-label text-dark">
-              Contraseña
-            </label>
-            <input
-              type="password"
-              className="form-control"
-              id="passwordUsuario"
-              name="passwordUsuario"
-              value={formData.passwordUsuario}
-              onChange={handleChange}
-              placeholder="Ingresá tu contraseña"
-              required
-            />
-          </div>
-          <div className="d-grid gap-2">
-            <button type="submit" className="btn btn-pink mt-4">
-              Registrarme
-            </button>
-            <button
-              type="submit"
-              className="btn btn-volver mt-4"
-              onClick={handleVolver}
-            >
-              Volver
-            </button>
-          </div>
-        </form>
+    // <div
+    //   className="d-flex align-items-center justify-content-center"
+    //   style={{
+    //     paddingTop: "50px",
+    //     paddingBottom: "50px",
+    //   }}
+    // >
+    //   <div
+    //     className="bg-form card shadow p-4 border-form"
+    //     style={{ width: "100%", maxWidth: "400px" }}
+    //   >
+    //     <h3 className="text-center mb-4 text-dark">Registrate</h3>
+    //     <form onSubmit={handleSubmit} className="form">
+    //       <div className="mb-3">
+    //         <label htmlFor="nombreUsuario" className="form-label text-dark">
+    //           Nombre
+    //         </label>
+    //         <input
+    //           type="text"
+    //           className="form-control"
+    //           id="nombreUsuario"
+    //           name="nombreUsuario"
+    //           value={formData.nombreUsuario}
+    //           onChange={handleChange}
+    //           placeholder="Ingresá tu nombre"
+    //           required
+    //         />
+    //         <label htmlFor="apellidoUsuario" className="form-label text-dark">
+    //           Apellido
+    //         </label>
+    //         <input
+    //           type="text"
+    //           className="form-control"
+    //           id="apellidoUsuario"
+    //           name="apellidoUsuario"
+    //           value={formData.apellidoUsuario}
+    //           onChange={handleChange}
+    //           placeholder="Ingresá tu apellido"
+    //           required
+    //         />
+    //         <label htmlFor="emailUsuario" className="form-label text-dark">
+    //           Email
+    //         </label>
+    //         <input
+    //           type="email"
+    //           className="form-control"
+    //           id="emailUsuario"
+    //           name="emailUsuario"
+    //           value={formData.emailUsuario}
+    //           onChange={handleChange}
+    //           placeholder="Ingresá tu email"
+    //           required
+    //         />
+    //         <label htmlFor="telefonoUsuario" className="form-label text-dark">
+    //           Telefono
+    //         </label>
+    //         <input
+    //           type="text"
+    //           className="form-control"
+    //           id="telefonoUsuario"
+    //           name="telefonoUsuario"
+    //           value={formData.telefonoUsuario}
+    //           onChange={handleChange}
+    //           placeholder="Ingresá tu telefono"
+    //           required
+    //         />
+    //         <label htmlFor="direccionUsuario" className="form-label text-dark">
+    //           Dirección
+    //         </label>
+    //         <input
+    //           type="text"
+    //           className="form-control"
+    //           id="direccionUsuario"
+    //           name="direccionUsuario"
+    //           value={formData.direccionUsuario}
+    //           onChange={handleChange}
+    //           placeholder="Ingresá tu direccion"
+    //           required
+    //         />
+    //       </div>
+    //       <div className="mb-3">
+    //         <label htmlFor="passwordUsuario" className="form-label text-dark">
+    //           Contraseña
+    //         </label>
+    //         <input
+    //           type="password"
+    //           className="form-control"
+    //           id="passwordUsuario"
+    //           name="passwordUsuario"
+    //           value={formData.passwordUsuario}
+    //           onChange={handleChange}
+    //           placeholder="Ingresá tu contraseña"
+    //           required
+    //         />
+    //       </div>
+    //       <div className="d-grid gap-2">
+    //         <button type="submit" className="btn btn-registrarse mt-4">
+    //           Registrarme
+    //         </button>
+    //         <button
+    //           type="submit"
+    //           className="btn btn-volver mt-4"
+    //           onClick={handleVolver}
+    //         >
+    //           Volver
+    //         </button>
+    //       </div>
+    //     </form>
+    //   </div>
+    // </div>
+    <div className="register-container">
+      {/* Lado izquierdo */}
+      <div className="register-left">
+        <h1>¡Unite a nuestra comunidad!</h1>
+        <p>
+          Registrate para acceder a promociones exclusivas y descubrir todo lo
+          que tenemos para ofrecerte. ¡Tu nueva experiencia comienza acá!
+        </p>
+      </div>
+
+      {/* Lado derecho */}
+      <div className="register-right">
+        <div className="bg-form p-4 border-form">
+          <img
+            src={Logo}
+            alt="Logo del sitio"
+            className="img-fluid mx-auto d-block mb-3"
+            style={{ width: "100px", height: "auto" }}
+          />
+
+          <h3 className="text-center mb-4 text-dark">Registrate</h3>
+
+          <form onSubmit={handleSubmit}>
+            <div className="mb-3">
+              <label htmlFor="nombreUsuario" className="form-label text-dark">
+                Nombre
+              </label>
+              <input
+                type="text"
+                className="form-control"
+                id="nombreUsuario"
+                name="nombreUsuario"
+                value={formData.nombreUsuario}
+                onChange={handleChange}
+                placeholder="Ingresá tu nombre"
+                required
+              />
+
+              <label htmlFor="apellidoUsuario" className="form-label text-dark">
+                Apellido
+              </label>
+              <input
+                type="text"
+                className="form-control"
+                id="apellidoUsuario"
+                name="apellidoUsuario"
+                value={formData.apellidoUsuario}
+                onChange={handleChange}
+                placeholder="Ingresá tu apellido"
+                required
+              />
+
+              <label htmlFor="emailUsuario" className="form-label text-dark">
+                Email
+              </label>
+              <input
+                type="email"
+                className="form-control"
+                id="emailUsuario"
+                name="emailUsuario"
+                value={formData.emailUsuario}
+                onChange={handleChange}
+                placeholder="Ingresá tu email"
+                required
+              />
+
+              <label htmlFor="telefonoUsuario" className="form-label text-dark">
+                Teléfono
+              </label>
+              <input
+                type="text"
+                className="form-control"
+                id="telefonoUsuario"
+                name="telefonoUsuario"
+                value={formData.telefonoUsuario}
+                onChange={handleChange}
+                placeholder="Ingresá tu teléfono"
+                required
+              />
+
+              <label
+                htmlFor="direccionUsuario"
+                className="form-label text-dark"
+              >
+                Dirección
+              </label>
+              <input
+                type="text"
+                className="form-control"
+                id="direccionUsuario"
+                name="direccionUsuario"
+                value={formData.direccionUsuario}
+                onChange={handleChange}
+                placeholder="Ingresá tu dirección"
+                required
+              />
+            </div>
+
+            <div className="mb-3">
+              <label htmlFor="passwordUsuario" className="form-label text-dark">
+                Contraseña
+              </label>
+              <input
+                type="password"
+                className="form-control"
+                id="passwordUsuario"
+                name="passwordUsuario"
+                value={formData.passwordUsuario}
+                onChange={handleChange}
+                placeholder="Ingresá tu contraseña"
+                required
+              />
+            </div>
+
+            <div className="d-grid gap-2 mt-4">
+              <button type="submit" className="btn btn-registrarse">
+                Registrarme
+              </button>
+              <button
+                type="button"
+                className="btn btn-volver"
+                onClick={handleVolver}
+              >
+                Volver
+              </button>
+            </div>
+          </form>
+        </div>
       </div>
     </div>
   );
