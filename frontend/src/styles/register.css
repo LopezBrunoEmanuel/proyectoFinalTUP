@@ -62,10 +62,10 @@
   align-items: center;
   padding: 3rem;
   background: none;
-  /* 👈 sin color de fondo */
+ 
   color: var(--color-verde-bosque);
   text-align: center;
-  transform: translateY(-180px);
+  transform: translateY(-30px);
 }
 
 .register-left h1 {

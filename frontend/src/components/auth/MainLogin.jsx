@@ -1,11 +1,11 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "../../styles/login.css";
-// import Swal from "sweetalert2";
 import { useAuthStore } from "../../store/useAuthStore";
 import axios from "axios";
 import Logo from "../../assets/logopatio.png";
 import { swalCustom } from "../../utils/customSwal";
+import RecuperarPasswordModal from "../../components/modals/RecuperarPasswordModal";
 
 const MainLogin = () => {
   const navigate = useNavigate();
@@ -15,6 +15,8 @@ const MainLogin = () => {
     emailUsuario: "",
     passwordUsuario: "",
   });
+
+  const [showResetModal, setShowResetModal] = useState(false);
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -76,7 +78,7 @@ const MainLogin = () => {
 
   const handleForgotPassword = (e) => {
     e.preventDefault();
-    navigate("/forgot-password"); // ruta donde esté tu componente de recuperación
+    setShowResetModal(true);
   };
 
   return (
@@ -140,7 +142,6 @@ const MainLogin = () => {
                 Ingresar
               </button>
               <hr />
-              <br />
               <div className="forgot-password text-center mb-3">
                 <a href="#" onClick={handleForgotPassword}>
                   ¿Olvidaste tu contraseña?
@@ -157,6 +158,10 @@ const MainLogin = () => {
           </form>
         </div>
       </div>
+      <RecuperarPasswordModal
+        visible={showResetModal}
+        onClose={() => setShowResetModal(false)}
+      />
     </div>
   );
 };
