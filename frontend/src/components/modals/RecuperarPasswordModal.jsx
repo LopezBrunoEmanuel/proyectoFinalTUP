@@ -6,7 +6,7 @@ const RecuperarPasswordModal = ({ onClose, visible }) => {
   const [email, setEmail] = useState("");
   const [newPassword, setNewPassword] = useState("");
 
-  if (!visible) return null; // Solo se renderiza si visible es true
+  if (!visible) return null;
 
   const handleClose = () => {
     setEmail("");
