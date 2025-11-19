@@ -7,16 +7,14 @@ const EditButton = ({ producto, onOpenModal }) => {
 
     const handleEdit = () => {
         setProductoSeleccionado(producto);
-        onOpenModal();
-    }
+        onOpenModal("editar");
+    };
 
     return (
-        <div>
-            <Button variant="outline-warning" onClick={handleEdit} >
-                <FaPencil />
-            </Button>
-        </div>
-    )
-}
+        <Button variant="outline-warning" onClick={handleEdit}>
+            <FaPencil />
+        </Button>
+    );
+};
 
-export default EditButton
+export default EditButton;

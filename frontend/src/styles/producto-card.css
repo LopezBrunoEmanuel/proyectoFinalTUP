@@ -1,4 +1,6 @@
-/* ====== VARIABLES ====== */
+/* ==========================
+   VARIABLES
+========================== */
 :root {
   --color-principal: var(--color-verde-bosque);
   --color-acento: var(--color-dorado);
@@ -6,13 +8,14 @@
   --sombra-hover: var(--sombra-suave);
 }
 
-/* ====== CONTENEDOR GENERAL ====== */
+/* ==========================
+   CONTENEDOR GENERAL
+========================== */
 .cards-container {
   width: 100%;
   max-width: 1200px;
   margin: 20px auto;
   padding: 0 10px;
-  box-sizing: border-box;
   overflow-x: hidden;
 }
 
@@ -22,7 +25,9 @@
   }
 }
 
-/* ====== CARD BASE ====== */
+/* ==========================
+   CARD BASE
+========================== */
 .producto-card {
   border: 1px solid var(--color-borde);
   border-radius: 12px;
@@ -30,22 +35,17 @@
   background-color: var(--color-beige-claro);
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
   height: 100%;
   transition: transform 0.25s ease, box-shadow 0.5s ease;
 }
 
-/* ====== BODY ====== */
-.producto-card .card-body {
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  align-items: center;
-  padding: 0.5rem 1rem;
-  text-align: center;
-}
+/* ==========================
+   CUERPO DE LA CARD (flex)
+========================== */
 
-/* ====== ESTILO PARA CARDS SIN STOCK ====== */
+/* ==========================
+   CARDS SIN STOCK
+========================== */
 .producto-card.sin-stock {
   position: relative;
   opacity: 0.55;
@@ -59,13 +59,13 @@
   left: 0;
   right: 0;
   text-align: center;
-  background-color: rgba(122, 158, 126, 0.9); /* verde oliva translúcido */
+  background-color: rgba(122, 158, 126, 0.9);
   color: var(--color-blanco);
   font-weight: 700;
   font-size: 0.95rem;
-  letter-spacing: 1px;
   padding: 6px 0;
   text-transform: uppercase;
+  letter-spacing: 1px;
   z-index: 20;
   backdrop-filter: blur(5px);
 }
@@ -75,113 +75,54 @@
   user-select: none;
 }
 
-/* ====== IMAGEN ====== */
+/* ==========================
+   IMAGEN
+========================== */
 .card-img-top {
   width: 100%;
   aspect-ratio: 4 / 3;
   object-fit: cover;
   border-radius: 0;
   transition: transform 0.3s ease;
-  display: block;
 }
 
-/* ====== INFO DE PRECIO Y STOCK ====== */
-.precio-stock .fw-bold,
+/* ==========================
+   INFORMACIÓN
+========================== */
+.nombre-producto {
+  font-weight: 600;
+  font-size: 1rem;
+  color: var(--color-texto);
+  text-align: center;
+  overflow: hidden;
+  display: -webkit-box;
+  line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+
 .precio-producto {
   font-size: 1.1rem;
   color: var(--color-verde-olivo);
   font-weight: 600;
 }
 
-.precio-stock .text-muted {
+.stock-producto {
   font-size: 0.85rem;
+  color: var(--color-gris-medio);
 }
 
-/* ====== GRUPO DE BOTONES ====== */
-.botones-cards {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 10px;
-  margin-top: 0.5rem;
-}
+/* ==========================
+  CONTROL DE CANTIDAD
+========================== */
 
-.botones-cards .btn {
-  min-width: 38px;
-  height: 38px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 50px;
-  font-size: 0.95rem;
-  font-weight: 500;
-  padding: 0 0.75rem;
-  transition: all 0.25s ease;
-  cursor: pointer;
-}
-
-/* Botón principal (🛒 agregar) */
-.botones-cards .btn-outline-primary {
-  border: 1px solid var(--color-borde);
-  color: var(--color-verde-bosque);
-  background-color: var(--color-blanco);
-}
-
-.botones-cards .btn-outline-primary:hover {
-  background-color: var(--color-verde-bosque);
-  color: var(--color-blanco);
-}
-
-.botones-cards .btn-outline-primary:disabled {
-  opacity: 1 !important;
-  cursor: not-allowed !important;
-  background-color: var(--color-blanco) !important;
-  color: var(--color-gris-suave) !important;
-  border-color: var(--color-borde) !important;
-  box-shadow: none !important;
-  transform: none !important;
-}
-
-.btn-outline-primary:active {
-  transform: scale(0.95);
-  border-color: var(--color-verde-bosque) !important;
-}
-
-.botones-cards .btn-outline-secondary:hover {
-  border-color: var(--color-verde-bosque);
-  color: var(--color-verde-bosque);
-}
-
-/* ====== CONTROL DE CANTIDAD ====== */
-.cantidad-container {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  border: 1px solid var(--color-borde);
-  border-radius: 999px;
-  overflow: hidden;
-  background-color: var(--color-blanco);
-  transition: border-color 0.2s ease, box-shadow 0.2s ease;
-}
-
-.cantidad-container:focus-within {
-  border-color: #bbb;
-}
-
-/* Botones +/- */
 .cantidad-container .btn {
   border: none;
-  border-radius: 0;
   background: transparent;
   color: var(--color-gris-medio);
   font-weight: bold;
   width: 36px;
   height: 36px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: background-color 0.2s ease, color 0.2s ease, transform 0.2s ease;
+  transition: 0.2s ease;
 }
 
 .cantidad-container .btn:hover:not(:disabled) {
@@ -193,130 +134,77 @@
 }
 
 .cantidad-container .btn:disabled {
-  opacity: 1;
-  cursor: not-allowed;
   color: #bbb;
+  cursor: not-allowed;
 }
 
-/* Input numérico */
-.cantidad-input {
-  width: 50px;
-  text-align: center;
-  font-weight: 500;
-  border: none;
-  outline: none;
-  background: transparent;
-  font-size: 0.95rem;
-  color: var(--color-texto);
+/* ==========================
+  ESPACIO RESERVADO PARA SELECT
+========================== */
+
+/* ==========================
+  SELECT TAMAÑOS
+========================== */
+
+.select-tamanios:hover {
+  border-color: var(--color-verde-bosque);
 }
 
-.cantidad-input:focus {
-  outline: none;
-  box-shadow: none;
+.select-tamanios:focus,
+.select-tamanios:focus-visible,
+.select-tamanios:active {
+  outline: none !important;
+  box-shadow: none !important;
+  border-color: var(--color-verde-bosque) !important;
 }
 
-.cantidad-input::-webkit-outer-spin-button,
-.cantidad-input::-webkit-inner-spin-button {
-  -webkit-appearance: none;
-  margin: 0;
-}
+/* ==========================
+  BOTÓN AGREGAR
+========================== */
 
-/* ====== BOTÓN "AGREGAR AL CARRITO" ====== */
-.btn-agregar {
-  padding: 0.6rem 1.4rem;
-  font-size: 1rem;
-  font-weight: 600;
-  border-radius: 40px;
-  line-height: 1.2;
-  white-space: nowrap;
-  color: var(--color-verde-bosque);
-  background-color: transparent;
-  border: 2px solid var(--color-verde-bosque);
-  transition: var(--transicion);
-}
-
-.btn-agregar:hover {
-  background-color: var(--color-verde-bosque);
+.btn-agregar:hover:not(:disabled) {
+  background: var(--color-verde-bosque);
   color: var(--color-blanco);
 }
 
-.btn-agregar:disabled {
-  opacity: 0.6;
-  cursor: not-allowed;
-  border-color: var(--color-gris-suave);
-  color: var(--color-gris-suave);
+.btn-agregar:focus,
+.btn-agregar:active {
+  outline: none !important;
+  box-shadow: none !important;
 }
 
-/* ====== MENSAJE DE "NO SE ENCONTRARON PRODUCTOS" ====== */
+.btn-agregar:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+  border-color: var(--color-gris-suave) !important;
+  color: var(--color-gris-suave) !important;
+  background: transparent !important;
+}
+
+/* ==========================
+  MENSAJE SIN RESULTADOS
+========================== */
 .no-resultados {
   text-align: center;
   padding: 3rem;
-  color: var(--color-texto);
   background-color: var(--color-beige-claro);
   border-radius: 12px;
   border: 1px solid var(--color-borde);
-  margin-top: 2rem;
   animation: fadeIn 0.6s ease-in-out;
 }
 
 .no-resultados h5 {
   color: var(--color-verde-bosque);
   font-weight: 600;
-  margin-bottom: 0.5rem;
 }
 
 .no-resultados p {
-  font-size: 0.95rem;
   color: var(--color-gris-medio);
 }
 
-/* ====== NUEVA ESTRUCTURA DE CARD ====== */
-.nombre-producto {
-  font-size: 1rem;
-  font-weight: 600;
-  color: var(--color-texto);
-  text-align: center;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  display: -webkit-box;
-  -webkit-box-orient: vertical;
-  line-clamp: 2;
-  min-height: 2.8rem;
-  line-height: 1.4rem;
-  margin-top: 0.5rem;
-  margin-bottom: 0.4rem;
-}
-
-.stock-producto {
-  font-size: 0.85rem;
-  color: var(--color-gris-medio);
-}
-
-.categoria-text {
-  color: var(--color-gris-suave);
-  font-size: 0.8rem;
-  letter-spacing: 0.3px;
-}
-
-/* ====== CORRECCIONES Y RESPONSIVE ====== */
-.cards-container .row {
-  margin-left: 0 !important;
-  margin-right: 0 !important;
-}
-
-.cards-container .col {
-  padding: 0.5rem;
-  box-sizing: border-box;
-  max-width: 100%;
-}
-
-.producto-card .botones-cards {
-  margin-top: auto;
-  padding-top: 0.5rem;
-  border-top: 1px solid var(--color-borde);
-}
-
-/* ====== ANIMACIONES ====== */
+/* ==========================
+  ANIMACIONES
+========================== */
 @keyframes fadeIn {
   from {
     opacity: 0;
@@ -324,61 +212,232 @@
   }
   to {
     opacity: 1;
-    transform: translateY(0px);
+    transform: translateY(0);
   }
 }
 
-/* ====== RESPONSIVE ====== */
+/* ==========================
+  RESPONSIVE
+========================== */
 @media (max-width: 576px) {
-  .cards-container {
-    width: 95%;
-  }
-
   .card-img-top {
     aspect-ratio: 1 / 1;
   }
 
-  .precio-stock .fw-bold {
-    font-size: 1rem;
-  }
-
   .botones-cards {
     flex-direction: column;
-    align-items: stretch;
     gap: 8px;
-  }
-
-  .botones-cards .btn {
-    width: 100%;
-    justify-content: center;
-  }
-
-  .cantidad-container {
-    min-width: 120px;
-  }
-
-  .cantidad-container .btn {
-    width: 34px;
-    height: 34px;
-  }
-
-  .cantidad-input {
-    width: 45px;
   }
 
   .btn-agregar {
     width: 100%;
-    padding: 0.8rem 1.6rem;
-    font-size: 1.05rem;
-    text-align: center;
-    justify-content: center;
   }
 }
 
-/* ====== DESACTIVAR HOVER EN MOBILE ====== */
 @media (max-width: 768px) {
   .producto-card:hover {
     transform: none !important;
     box-shadow: none !important;
   }
+}
+/* ==========================
+  CUERPO DE LA CARD (estructura flex)
+========================== */
+.producto-body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100%;
+  padding: 0.75rem 1rem !important;
+}
+
+/* Zona superior que se estira */
+.zona-superior-flex {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex-grow: 1;
+}
+
+/* Zona inferior SIEMPRE pegada al fondo */
+.zona-inferior {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: auto;
+}
+
+/* ==========================
+  SELECT TAMAÑOS / ESPACIO RESERVADO
+========================== */
+.select-tamanios,
+.espacio-reservado-select {
+  width: 100%;
+  max-width: 190px;
+  height: 40px;
+}
+
+/* Select visible */
+.select-tamanios {
+  border-radius: 40px;
+  border: 1px solid var(--color-borde);
+  background-color: var(--color-blanco);
+  font-size: 0.9rem;
+  font-weight: 500;
+  padding: 0 0.9rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  appearance: none;
+  transition: border-color 0.2s ease;
+  /* margin-top: -10px; */
+  margin-bottom: 6px;
+}
+
+.select-tamanios:hover {
+  border-color: var(--color-verde-bosque);
+}
+
+.select-tamanios:focus,
+.select-tamanios:focus-visible,
+.select-tamanios:active {
+  outline: none !important;
+  box-shadow: none !important;
+  border-color: var(--color-verde-bosque) !important;
+}
+
+/* Espacio vacío cuando NO hay select */
+.espacio-reservado-select {
+  display: block;
+}
+
+/* ==========================
+  CONTROL DE CANTIDAD
+========================== */
+.cantidad-container {
+  width: 100%;
+  max-width: 190px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-radius: 40px;
+  border: 1px solid var(--color-borde);
+  background-color: var(--color-blanco);
+  overflow: hidden;
+}
+
+/* Botones +/- */
+.cantidad-container .btn {
+  width: 40px;
+  height: 100%;
+  border: none;
+  border-radius: 0;
+  background: transparent;
+  color: var(--color-gris-medio);
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.cantidad-container .btn:hover:not(:disabled) {
+  background-color: rgba(0, 0, 0, 0.05);
+}
+
+.cantidad-container .btn:disabled {
+  cursor: not-allowed;
+  color: #bbb;
+}
+
+/* Input numérico */
+.cantidad-input {
+  flex: 1;
+  height: 100%;
+  border: none;
+  border-left: 1px solid var(--color-borde);
+  border-right: 1px solid var(--color-borde);
+  text-align: center;
+  font-weight: 500;
+  font-size: 0.95rem;
+  background: transparent;
+}
+
+.cantidad-input:focus {
+  outline: none;
+  box-shadow: none;
+}
+
+/* ==========================
+  BOTÓN AGREGAR
+========================== */
+.btn-agregar {
+  width: 100%;
+  max-width: 190px;
+  height: 40px;
+  border-radius: 40px !important;
+  border: 1px solid var(--color-verde-bosque) !important;
+  color: var(--color-verde-bosque);
+  background-color: var(--color-verde-bosque);
+  background: transparent;
+  font-weight: 600;
+  font-size: 0.95rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  transition: background-color 0.2s ease, color 0.2s ease, transform 0.15s ease;
+  margin-bottom: 10px;
+}
+
+.btn-agregar:hover:not(:disabled) {
+  background-color: var(--color-verde-bosque);
+  color: var(--color-blanco);
+}
+
+.btn-agregar:focus,
+.btn-agregar:active {
+  outline: none !important;
+  box-shadow: none !important;
+  transform: scale(0.98);
+}
+
+.btn-agregar:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+  border-color: var(--color-gris-suave) !important;
+  color: var(--color-gris-medio) !important;
+  background: transparent !important;
+}
+
+/* Nombre del producto — 2 líneas exactas, sin que se asome nada */
+.nombre-producto {
+  font-weight: 600;
+  font-size: 1rem;
+  line-height: 1.4rem; /* altura de UNA línea */
+  color: var(--color-texto);
+  text-align: center;
+
+  display: -webkit-box;
+  line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+
+  max-height: calc(1.4rem * 2); /* exactamente 2 líneas */
+  margin-top: 0.5rem;
+  margin-bottom: 0.4rem;
+}
+
+/* Precio — queda SIEMPRE debajo del nombre */
+.precio-producto {
+  margin-top: 0.15rem;
+  margin-bottom: 0.45rem;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--color-verde-olivo);
 }

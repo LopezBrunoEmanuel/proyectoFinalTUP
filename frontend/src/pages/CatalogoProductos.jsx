@@ -27,6 +27,7 @@ const CatalogoProductos = () => {
   const indiceUltimoProducto = paginaActual * productosPorPagina
   const indicePrimerProducto = indiceUltimoProducto - productosPorPagina
   const productosFiltrados = productos.filter((prod) => {
+    const coincideActivo = Number(prod.activo) === 1;
     const coincideBusqueda = filtrosAplicados.busqueda
       ? prod.nombreProducto
         .toLowerCase()
@@ -45,10 +46,10 @@ const CatalogoProductos = () => {
       : true;
 
     const coincideDisponibilidad = filtrosAplicados.soloDisponibles
-      ? prod.stockProducto > 0
+      ? getStockTotal(prod) > 0
       : true
 
-    return coincideBusqueda && coincideCategoria && coincideDisponibilidad
+    return coincideBusqueda && coincideCategoria && coincideDisponibilidad && coincideActivo;
   })
 
   const productosOrdenados = [...productosFiltrados]
@@ -63,6 +64,13 @@ const CatalogoProductos = () => {
   const totalPaginas = Math.ceil(productosOrdenados.length / productosPorPagina)
 
   const productosVisibles = productosOrdenados.slice(indicePrimerProducto, indiceUltimoProducto)
+
+  const getStockTotal = (prod) => {
+    if (prod.tieneTamanios && Array.isArray(prod.tamanios)) {
+      return prod.tamanios.filter((t) => Number(t.activo === 1).reduce((acc, t) => acc + Number(t.stockProducto || 0), 0))
+    }
+    return Number(prod.stockProducto)
+  }
 
   useEffect(() => {
     fetchProductos();

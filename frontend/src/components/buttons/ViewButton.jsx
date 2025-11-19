@@ -7,16 +7,14 @@ const ViewButton = ({ producto, onOpenModal }) => {
 
     const handleView = () => {
         setProductoSeleccionado(producto);
-        onOpenModal();
-    }
+        onOpenModal("ver");
+    };
 
     return (
-        <div>
-            <Button variant="outline-primary" onClick={handleView}>
-                <FaEye />
-            </Button>
-        </div>
-    )
-}
+        <Button variant="outline-primary" onClick={handleView}>
+            <FaEye />
+        </Button>
+    );
+};
 
-export default ViewButton
+export default ViewButton;

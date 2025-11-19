@@ -1,15 +1,15 @@
-import { Nav } from "react-bootstrap";
-import { Link, useLocation, Routes, Route } from "react-router-dom";
+// import { Nav } from "react-bootstrap";
+import { Routes, Route } from "react-router-dom";
 import CrudProductos from "../components/CrudProductos";
 
 
 const Admin = () => {
-    const location = useLocation();
-    const currentPath = location.pathname;
+    // const location = useLocation();
+    // const currentPath = location.pathname;
 
     return (
         <div>
-            <Nav justify variant="tabs" activeKey={currentPath}>
+            {/* <Nav justify variant="tabs" activeKey={currentPath}>
                 <Nav.Item>
                     <Nav.Link as={Link} to="/admin" eventKey="/admin">
                         Inicio
@@ -25,7 +25,7 @@ const Admin = () => {
                         Servicios
                     </Nav.Link>
                 </Nav.Item>
-            </Nav>
+            </Nav> */}
 
             <div style={{ padding: "20px" }}>
                 <CrudProductos />

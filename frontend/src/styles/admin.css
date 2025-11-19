@@ -1,0 +1,19 @@
+/* Centrar columna de acciones y prevenir saltos */
+.table td:last-child,
+.table th:last-child {
+  text-align: center;
+  white-space: nowrap;
+}
+
+.table th[role="button"] {
+  cursor: pointer;
+  user-select: none;
+}
+
+.table th[role="button"]:hover {
+  text-decoration: underline;
+}
+
+.bg-light {
+  background-color: #f8f9fa !important;
+}

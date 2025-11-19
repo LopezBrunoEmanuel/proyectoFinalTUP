@@ -32,7 +32,7 @@ function App() {
           <Route path="/servicios" element={<Servicios />} />
           <Route path="/miPerfil" element={<Perfil />} />
           {/* <Route path="/carrito" element={<Carrito />} /> */}
-          <Route path="/admin" element={<Admin />} />
+          <Route path="/admin/*" element={<Admin />} />
           <Route path="*" element={<Error />} />
 
           {/* Ruta solo para admin */}
