@@ -6,10 +6,10 @@
   justify-content: center !important;
   z-index: 1060 !important;
   padding: 0 !important;
-  height: 90vh;
   margin: auto;
   border-radius: 13px;
   background-color: black;
+  height: 80vh;
 }
 
 .modal.crud-modal .modal-dialog {
@@ -37,7 +37,9 @@
   padding: 0 !important;
   margin: 0 !important;
 
-  min-height: 90vh !important;
+  max-height: 80vh !important;
+  min-height: auto !important;
+
   overflow-y: auto !important;
 }
 

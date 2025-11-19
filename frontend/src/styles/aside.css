@@ -50,21 +50,32 @@
   right: 0.6rem;
   top: 50%;
   transform: translateY(-50%);
-  background: transparent;
-  border: none;
+  background: transparent !important;
+  border: none !important;
+  padding: 0 !important;
+  margin: 0 !important;
   color: #aaa;
   font-size: 1.2rem;
   cursor: pointer;
-  padding: 0;
-  z-index: 999;
+  height: 100%;
+  width: 2rem;
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: color 0.2s ease;
+  line-height: 1 !important;
+  box-shadow: none !important;
+  z-index: 999;
 }
 
 .clear-btn:hover {
-  color: var(--color-principal, #ca1c73);
+  color: var(--color-principal);
+}
+
+.clear-btn:focus,
+.clear-btn:active {
+  outline: none !important;
+  box-shadow: none !important;
+  transform: translateY(-50%) !important; /* 🔥 Bloquea cualquier movimiento */
 }
 
 /* ===================================================
@@ -78,36 +89,20 @@
   flex-wrap: wrap;
 }
 
-/* Estilo base (idéntico al de las cards) */
 .botones-filtros .btn-outline-primary {
   background-color: #fff !important;
-  border: 1.5px solid var(--color-principal, #ca1c73) !important;
-  color: var(--color-principal, #ca1c73) !important;
-  border-radius: 50px !important;
-  font-weight: 600 !important;
-  font-size: 1rem !important;
-  padding: 0.6rem 1.4rem !important;
-  min-height: 44px !important;
-  line-height: 1.2 !important;
-  transition: all 0.25s ease-in-out !important;
-  box-shadow: none !important;
+  border: 1.5px solid var(--color-verde-bosque) !important;
+  color: var(--color-verde-bosque) !important;
 }
 
-/* Hover - 🔹 sin sombra */
 .botones-filtros .btn-outline-primary:hover {
-  background-color: var(--color-principal, #ca1c73) !important;
-  color: #fff !important;
-  transform: none !important; /* sin movimiento */
-  box-shadow: none !important; /* sin sombra */
+  background-color: var(--color-verde-bosque) !important;
+  color: var(--color-blanco) !important;
 }
 
-/* Active (clic táctil) - 🔹 sin efecto */
 .botones-filtros .btn-outline-primary:active {
-  transform: none !important;
-  border-color: var(--color-principal, #ca1c73) !important;
-  box-shadow: none !important;
-  background-color: var(--color-principal, #ca1c73) !important;
-  color: #fff !important;
+  background-color: var(--color-verde-bosque) !important;
+  color: var(--color-blanco) !important;
 }
 
 /* Focus - 🔹 sin destello rosado */
@@ -129,8 +124,8 @@
 
 /* 🔽 BOTÓN TOGGLE (Mostrar/Ocultar filtros) */
 .aside-topbar-container button.btn {
-  border: 1.5px solid var(--color-principal, #ca1c73) !important;
-  color: var(--color-principal, #ca1c73) !important;
+  border: 1.5px solid var(--color-verde-bosque) !important;
+  color: var(--color-verde-bosque) !important;
   background-color: #fff !important;
   border-radius: 50px !important;
   font-weight: 600 !important;
@@ -141,8 +136,8 @@
 
 /* Hover - 🔹 sin sombra */
 .aside-topbar-container button.btn:hover {
-  background-color: var(--color-principal, #ca1c73) !important;
-  color: #fff !important;
+  background-color: var(--color-verde-bosque) !important;
+  color: var(--color-blanco) !important;
   box-shadow: none !important; /* sin brillo */
 }
 
@@ -188,7 +183,8 @@
   align-items: center;
   gap: 6px;
   background-color: #fff;
-  border: 1px solid var(--color-principal, #ca1c7386);
+  border: 1px solid
+    color-mix(in srgb, var(--color-verde-bosque) 40%, transparent);
   border-radius: 50px;
   padding: 0.3rem 0.8rem;
   font-size: 0.9rem;
@@ -208,8 +204,7 @@
 }
 
 .chip-filtro button:hover {
-  color: #ca1c73;
-  transform: scale(1.05);
+  color: var(--color-verde-bosque);
 }
 
 /* ===========================

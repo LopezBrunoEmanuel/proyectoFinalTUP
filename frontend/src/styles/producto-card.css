@@ -385,9 +385,9 @@
 }
 
 /* 🔹 Quitar flechitas (Firefox) */
-.cantidad-input[type="number"] {
+/* .cantidad-input[type="number"] {
   -moz-appearance: textfield;
-}
+} */
 
 /* 🔹 Quitar sombreado azul al hacer focus */
 .cantidad-input:focus {

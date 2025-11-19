@@ -6,20 +6,20 @@ const VerProductoModal = ({ show, onClose }) => {
 
     const { productoSeleccionado } = useProductosStore();
 
-    // 🛑 PRIMERO: si no hay producto, no seguimos
+    // 🛑 Si no hay producto seleccionado, no renderizamos nada
     if (!productoSeleccionado) return null;
 
-    // 🔵 Imagen
+    // 🖼 Imagen
     const imagenSrc =
         productoSeleccionado.imagenPrincipal?.trim()
             ? productoSeleccionado.imagenPrincipal
             : "/placeholder.png";
 
-    // 🔵 Descripción fallback
+    // 📝 Descripción
     const descripcion =
         productoSeleccionado.descripcionProducto || "Sin descripción";
 
-    // 🔵 Categorías estáticas
+    // 📦 Categorías estáticas
     const categorias = {
         1: "Planta",
         2: "Maceta",
@@ -27,20 +27,48 @@ const VerProductoModal = ({ show, onClose }) => {
         4: "Herramienta",
         5: "Otro",
     };
+
     const categoriaNombre = categorias[productoSeleccionado.idCategoria] || "Desconocida";
 
-    // 🟦 Tamaños seguros → ahora sí podemos usarlos
+    // 🟦 Tamaños seguros
     const tamanios = Array.isArray(productoSeleccionado.tamanios)
         ? productoSeleccionado.tamanios
         : [];
 
-    // 🟦 Filtrar solo tamaños activos (activo puede venir como true/false/"1"/0/etc)
+    // 🟦 Filtrar solo tamaños activos
     const tamaniosActivos = tamanios.filter(t =>
-        t && ("activo" in t) ? Boolean(Number(t.activo)) : true
+        t ? (("activo" in t) ? Boolean(Number(t.activo)) : true) : false
     );
 
     const hasTamanios = productoSeleccionado.tieneTamanios;
     const cantidadActivos = tamaniosActivos.length;
+
+    // 🟩 Tamaño único real
+    const tamanioUnico = hasTamanios && cantidadActivos === 1
+        ? tamaniosActivos[0]
+        : null;
+
+    // Mostrar tamaño único solo si tiene algún dato útil
+    const debeMostrarTamanioUnico =
+        !!tamanioUnico &&
+        (
+            (tamanioUnico.nombreTamanio && tamanioUnico.nombreTamanio.trim() !== "") ||
+            (tamanioUnico.precio != null && tamanioUnico.precio !== 0) ||
+            (tamanioUnico.stock != null && tamanioUnico.stock !== 0)
+        );
+
+    // 🟦 Filtrar tamaños que realmente tienen datos válidos
+    const tamaniosConDatos = hasTamanios
+        ? tamaniosActivos.filter(t =>
+            (t.nombreTamanio && t.nombreTamanio.trim() !== "") ||
+            (t.precio != null && t.precio !== 0) ||
+            (t.stock != null && t.stock !== 0)
+        )
+        : [];
+
+    // Mostrar tabla solo si hay más de 1 tamaño con datos
+    const debeMostrarTablaTamanios =
+        hasTamanios && tamaniosConDatos.length > 1;
 
     return (
         <Modal className="crud-modal" show={show} onHide={onClose} centered backdrop="static">
@@ -77,14 +105,14 @@ const VerProductoModal = ({ show, onClose }) => {
                                 <Badge bg="secondary">Inactivo</Badge>
                             )}
 
-                            {/* Badge de tamaños → solo si hay al menos uno activo */}
-                            {hasTamanios && cantidadActivos > 0 && (
+                            {Boolean(hasTamanios) && cantidadActivos > 0 && (
                                 <Badge bg="info" className="ms-2">
                                     {cantidadActivos === 1
                                         ? "Tamaño único"
                                         : `${cantidadActivos} tamaños`}
                                 </Badge>
                             )}
+
                         </h5>
 
                         {/* INFO GENERAL */}
@@ -98,7 +126,7 @@ const VerProductoModal = ({ show, onClose }) => {
                                 📝 <strong>Descripción:</strong> {descripcion}
                             </ListGroup.Item>
 
-                            {/* SIN TAMAÑOS → PRECIO Y STOCK BASE */}
+                            {/* SIN TAMAÑOS → PRECIO y STOCK del producto base */}
                             {!hasTamanios && (
                                 <>
                                     <ListGroup.Item className="bg-secondary text-white">
@@ -114,34 +142,45 @@ const VerProductoModal = ({ show, onClose }) => {
                     </Card.Body>
                 </Card>
 
-                {/* 1 SOLO TAMAÑO ACTIVO → CARD ESPECIAL */}
-                {hasTamanios && cantidadActivos === 1 && (
+                {/* 🟩 BLOQUE: Tamaño único */}
+                {debeMostrarTamanioUnico && (
                     <Card className="bg-dark text-white mt-3 p-3 border border-success">
                         <h5 className="mb-2">Tamaño único</h5>
-                        <p><strong>Nombre:</strong> {tamaniosActivos[0]?.nombreTamanio || "—"}</p>
-                        <p><strong>Precio:</strong> ${tamaniosActivos[0]?.precio || 0}</p>
-                        <p><strong>Stock:</strong> {tamaniosActivos[0]?.stock || 0}</p>
+
+                        {tamanioUnico.nombreTamanio && (
+                            <p><strong>Nombre:</strong> {tamanioUnico.nombreTamanio}</p>
+                        )}
+
+                        {tamanioUnico.precio != null && tamanioUnico.precio !== 0 && (
+                            <p><strong>Precio:</strong> ${tamanioUnico.precio}</p>
+                        )}
+
+                        {tamanioUnico.stock != null && tamanioUnico.stock !== 0 && (
+                            <p><strong>Stock:</strong> {tamanioUnico.stock}</p>
+                        )}
                     </Card>
                 )}
 
-                {/* >1 tamaño → TABLA COMPLETA */}
-                {hasTamanios && cantidadActivos > 1 && (
+                {/* 🟦 BLOQUE: Tabla de múltiples tamaños */}
+                {Boolean(debeMostrarTablaTamanios) && (
                     <div className="mt-3">
                         <h5 className="text-center mb-3">Tamaños disponibles</h5>
+
                         <table className="table table-dark table-striped text-center">
                             <thead>
                                 <tr>
-                                    <th>Nombre</th>
-                                    <th>Precio</th>
-                                    <th>Stock</th>
+                                    {tamaniosConDatos.some(t => t.nombreTamanio) && <th>Nombre</th>}
+                                    {tamaniosConDatos.some(t => t.precio != null && t.precio !== 0) && <th>Precio</th>}
+                                    {tamaniosConDatos.some(t => t.stock != null && t.stock !== 0) && <th>Stock</th>}
                                 </tr>
                             </thead>
+
                             <tbody>
-                                {tamaniosActivos.map((t, i) => (
+                                {tamaniosConDatos.map((t, i) => (
                                     <tr key={i}>
-                                        <td>{t.nombreTamanio}</td>
-                                        <td>${t.precio}</td>
-                                        <td>{t.stock}</td>
+                                        {t.nombreTamanio && <td>{t.nombreTamanio}</td>}
+                                        {(t.precio != null && t.precio !== 0) && <td>${t.precio}</td>}
+                                        {(t.stock != null && t.stock !== 0) && <td>{t.stock}</td>}
                                     </tr>
                                 ))}
                             </tbody>
@@ -149,6 +188,7 @@ const VerProductoModal = ({ show, onClose }) => {
                     </div>
                 )}
 
+                {/* BOTÓN CERRAR */}
                 <div className="text-center mt-3">
                     <Button variant="secondary" onClick={onClose}>
                         Cerrar

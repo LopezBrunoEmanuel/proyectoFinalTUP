@@ -189,7 +189,7 @@ const CrudProductos = () => {
                     </div>
 
                     <div className="col-md-2 text-md-end text-center mt-2 mt-md-0">
-                        <Button variant="outline-secondary" size="sm" onClick={() => { resetFiltros; resetPaginacion() }}>
+                        <Button variant="outline-secondary" size="sm" onClick={() => { resetFiltros(); resetPaginacion() }}>
                             Limpiar filtros
                         </Button>
                     </div>

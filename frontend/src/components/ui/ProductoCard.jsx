@@ -139,7 +139,7 @@ const ProductoCard = ({ prod, onAgregar }) => {
                     <p className="fw-bold precio-producto">${precioUnitario}</p>
 
                     <p className="text-muted small stock-producto">
-                        Disponible: {stockRestante}
+                        Disponible: <strong>{stockRestante}</strong>
                         {/* Si en tu versión usás stockDisponible, cambiá acá solo el nombre de la variable */}
                     </p>
                     {Number(prod.tieneTamanios) === 1 && tamaniosActivos.length > 1 ? (
@@ -157,8 +157,8 @@ const ProductoCard = ({ prod, onAgregar }) => {
                                     value={t.nombreTamanio}
                                     disabled={Number(t.stock) <= 0}
                                 >
-                                    {t.nombreTamanio} —{" "}
-                                    {t.stock > 0 ? `${t.stock} disponibles` : "(sin stock)"}
+                                    {t.nombreTamanio}
+                                    {/* {t.stock > 0 ? `${t.stock} disponibles` : "(sin stock)"} */}
                                 </option>
                             ))}
                         </Form.Select>
