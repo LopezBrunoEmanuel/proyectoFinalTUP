@@ -6,7 +6,6 @@ import Login from "./pages/Login";
 import Register from "./pages/Register";
 import CatalogoProductos from "./pages/CatalogoProductos";
 import Carrito from "./components/ui/Carrito";
-import SobreNosotros from "./pages/SobreNosotros";
 import Servicios from "./pages/Servicios";
 import Perfil from "./pages/Perfil";
 import Error from "./pages/Error";
@@ -28,7 +27,6 @@ function App() {
           <Route path="/register" element={<Register />} />
           <Route path="/productos" element={<CatalogoProductos />} />
           <Route path="/tips" element={<Tips />} />
-          <Route path="/sobreNosotros" element={<SobreNosotros />} />
           <Route path="/servicios" element={<Servicios />} />
           <Route path="/miPerfil" element={<Perfil />} />
           {/* <Route path="/carrito" element={<Carrito />} /> */}

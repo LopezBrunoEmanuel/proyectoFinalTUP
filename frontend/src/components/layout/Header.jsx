@@ -131,7 +131,6 @@ const Header = () => {
                 { to: "/productos", text: "Productos" },
                 { to: "/servicios", text: "Servicios" },
                 { to: "/tips", text: "Tips y cuidados" },
-                { to: "/sobreNosotros", text: "Sobre Nosotros" },
               ].map((item, i) => (
                 <motion.div
                   key={item.to}
