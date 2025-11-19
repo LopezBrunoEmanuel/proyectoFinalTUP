@@ -372,6 +372,44 @@
   box-shadow: none;
 }
 
+/* ==========================================
+   INPUT DE CANTIDAD — SIN FLECHITAS, SIN SOMBREADO,
+   Y SOLO CON BORDES LATERALES
+========================================== */
+
+/* 🔹 Quitar flechitas (Chrome, Edge, Opera) */
+.cantidad-input::-webkit-outer-spin-button,
+.cantidad-input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* 🔹 Quitar flechitas (Firefox) */
+.cantidad-input[type="number"] {
+  -moz-appearance: textfield;
+}
+
+/* 🔹 Quitar sombreado azul al hacer focus */
+.cantidad-input:focus {
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+/* 🔹 Mostrar SOLO bordes laterales */
+.cantidad-input {
+  border: none !important;
+  border-left: 1px solid var(--color-borde) !important;
+  border-right: 1px solid var(--color-borde) !important;
+  border-top: none !important;
+  border-bottom: none !important;
+
+  border-radius: 0 !important; /* ⭐ Bordes rectos */
+
+  background: transparent;
+  outline: none !important;
+  box-shadow: none !important;
+}
+
 /* ==========================
   BOTÓN AGREGAR
 ========================== */
