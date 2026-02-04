@@ -4,32 +4,32 @@ import "../../styles/register.css";
 import axios from "axios";
 import { swalCustom } from "../../utils/customSwal";
 import Logo from "../../assets/logopatio.png";
+import { USUARIOS_URL } from "../../constants/constants";
 
 const MainRegister = () => {
   const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
-    nombreUsuario: "",
-    apellidoUsuario: "",
-    emailUsuario: "",
-    telefonoUsuario: "",
-    direccionUsuario: "",
-    passwordUsuario: "",
+    nombre: "",
+    apellido: "",
+    email: "",
+    telefono: "",
+    direccion: "",
+    password: "",
     confirmarPassword: "",
-    rolUsuario: "cliente",
   });
 
   const handleChange = (e) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value,
-    });
+    setFormData((prev) => ({
+      ...prev,
+      [e.target.name]: e.target.value
+    }));
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (formData.passwordUsuario !== formData.confirmarPassword) {
+    if (formData.password !== formData.confirmarPassword) {
       swalCustom.fire({
         icon: "error",
         title: "Las contraseñas no coinciden",
@@ -37,8 +37,19 @@ const MainRegister = () => {
       });
       return;
     }
+
+    //PAYLOAD LIMPIO (sin confirmarPass)
+    const payload = {
+      nombre: formData.nombre,
+      apellido: formData.apellido,
+      email: formData.email,
+      telefono: formData.telefono,
+      direccion: formData.direccion,
+      password: formData.password
+    }
+
     try {
-      await axios.post("http://localhost:3000/usuarios", formData);
+      await axios.post(USUARIOS_URL, payload);
 
       swalCustom.fire({
         icon: "success",
@@ -49,10 +60,15 @@ const MainRegister = () => {
       navigate("/login");
     } catch (error) {
       console.error("Error al registrar:", error);
+
+      //si el back devuelve 409 (por mail existente), entonces mandamos el mensaje:
+      const status = error?.response?.status;
+      const msg = status === 409 ? "El email ya está registrado. Probá iniciar sesión con otro email." : "No se pudo registrar el usuario";
+
       swalCustom.fire({
         icon: "error",
         title: "Error",
-        text: "No se pudo registrar el usuario",
+        text: msg,
       });
     }
   };
@@ -86,64 +102,64 @@ const MainRegister = () => {
 
           <form onSubmit={handleSubmit}>
             <div className="mb-3">
-              <label htmlFor="nombreUsuario" className="form-label text-dark">
+              <label htmlFor="nombre" className="form-label text-dark">
                 Nombre
               </label>
               <input
                 type="text"
                 className="form-control"
-                id="nombreUsuario"
-                name="nombreUsuario"
-                value={formData.nombreUsuario}
+                id="nombre"
+                name="nombre"
+                value={formData.nombre}
                 onChange={handleChange}
                 placeholder="Ingresá tu nombre"
                 required
               />
 
-              <label htmlFor="apellidoUsuario" className="form-label text-dark">
+              <label htmlFor="apellido" className="form-label text-dark">
                 Apellido
               </label>
               <input
                 type="text"
                 className="form-control"
-                id="apellidoUsuario"
-                name="apellidoUsuario"
-                value={formData.apellidoUsuario}
+                id="apellido"
+                name="apellido"
+                value={formData.apellido}
                 onChange={handleChange}
                 placeholder="Ingresá tu apellido"
                 required
               />
 
-              <label htmlFor="emailUsuario" className="form-label text-dark">
+              <label htmlFor="email" className="form-label text-dark">
                 Email
               </label>
               <input
                 type="email"
                 className="form-control"
-                id="emailUsuario"
-                name="emailUsuario"
-                value={formData.emailUsuario}
+                id="email"
+                name="email"
+                value={formData.email}
                 onChange={handleChange}
                 placeholder="Ingresá tu email"
                 required
               />
 
-              <label htmlFor="telefonoUsuario" className="form-label text-dark">
+              <label htmlFor="telefono" className="form-label text-dark">
                 Teléfono
               </label>
               <input
                 type="text"
                 className="form-control"
-                id="telefonoUsuario"
-                name="telefonoUsuario"
-                value={formData.telefonoUsuario}
+                id="telefono"
+                name="telefono"
+                value={formData.telefono}
                 onChange={handleChange}
                 placeholder="Ingresá tu teléfono"
                 required
               />
 
               <label
-                htmlFor="direccionUsuario"
+                htmlFor="direccion"
                 className="form-label text-dark"
               >
                 Dirección
@@ -151,9 +167,9 @@ const MainRegister = () => {
               <input
                 type="text"
                 className="form-control"
-                id="direccionUsuario"
-                name="direccionUsuario"
-                value={formData.direccionUsuario}
+                id="direccion"
+                name="direccion"
+                value={formData.direccion}
                 onChange={handleChange}
                 placeholder="Ingresá tu dirección"
                 required
@@ -161,15 +177,15 @@ const MainRegister = () => {
             </div>
 
             <div className="mb-3">
-              <label htmlFor="passwordUsuario" className="form-label text-dark">
+              <label htmlFor="password" className="form-label text-dark">
                 Contraseña
               </label>
               <input
                 type="password"
                 className="form-control"
-                id="passwordUsuario"
-                name="passwordUsuario"
-                value={formData.passwordUsuario}
+                id="password"
+                name="password"
+                value={formData.password}
                 onChange={handleChange}
                 placeholder="Ingresá tu contraseña"
                 required

@@ -21,12 +21,31 @@ const ProductosDestacados = () => {
     }, [productos, fetchProductos]);
 
     // Solo mostramos los primeros 4 productos disponibles
-    const destacados = productos.filter((p) => p.stockProducto > 0).slice(0, 4);
+    // const destacados = productos.filter((p) => p.stockProducto > 0).slice(0, 4);
+
+    // con esto ahora mostramos 4 productos al azar (1 de cada categoria)
+    // a futuro se modificara p/ mostrar los que verdaderamente sean mas relevantes o los que se elijan destacar a proposito
+    const obtenerProductoAleatorio = (categoriaId) => {
+        const filtrados = productos.filter(
+            (p) => p.activo && String(p.idCategoria) === String(categoriaId)
+        )
+
+        if (filtrados.length === 0) return null;
+
+        const randomIndex = Math.floor(Math.random() * filtrados.length)
+        return filtrados[randomIndex]
+    }
+
+    const destacados = [
+        obtenerProductoAleatorio(1), //planta
+        obtenerProductoAleatorio(2), // maceta 
+        obtenerProductoAleatorio(3), // fertilzante
+        obtenerProductoAleatorio(4) // herramienta
+    ].filter(Boolean) // elimina nulls (si es que una categoria no tiene productos)
 
     return (
         <section className="home__destacados py-5">
             <Container>
-                {/* 🌿 Título y descripción */}
                 <motion.div
                     variants={staggerContainer}
                     initial="hidden"
@@ -41,15 +60,8 @@ const ProductosDestacados = () => {
                         Productos destacados
                     </motion.h2>
 
-                    <motion.p
-                        className="home__destacados-texto"
-                        variants={fadeDelayed(0.2)}
-                    >
-                        Una selección de nuestras plantas y accesorios más elegidos 🌿
-                    </motion.p>
                 </motion.div>
 
-                {/* 🌱 Lista de productos */}
                 <motion.div
                     variants={fadeIn}
                     initial="hidden"
@@ -67,7 +79,6 @@ const ProductosDestacados = () => {
                     )}
                 </motion.div>
 
-                {/* 🌸 Botón de acción */}
                 <motion.div
                     variants={fadeDelayed(0.3)}
                     initial="hidden"

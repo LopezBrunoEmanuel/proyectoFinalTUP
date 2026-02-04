@@ -1,7 +1,7 @@
 import connection from "../config/DB.js";
 
 
-// OBTENER TODOS LOS PRODUCTOS (con tamaños si existen) - ya modificado
+// GET - OBTENER TODOS LOS PRODUCTOS
 export const obtenerProductos = (req, res) => {
   const queryProductos = `
     SELECT 
@@ -72,7 +72,7 @@ export const obtenerProductos = (req, res) => {
   });
 };
 
-// OBTENER UN PRODUCTO POR ID (con tamaños agrupados) - ya modificado
+// GET x ID - OBTENER UN PRODUCTO POR ID
 export const obtenerProductoPorID = (req, res) => {
   const { id } = req.params;
 
@@ -136,7 +136,7 @@ export const obtenerProductoPorID = (req, res) => {
   });
 };
 
-// AGREGAR UN PRODUCTO NUEVO - ya modificado
+// POST - AGREGAR NUEVO PRODUCTO
 export const agregarProducto = async (req, res) => {
   const {
     nombreProducto,
@@ -248,7 +248,7 @@ export const agregarProducto = async (req, res) => {
   }
 };
 
-// EDITAR UN PRODUCTO EXISTENTE (versión corregida)
+// UPDATE - EDITAR UN PRODUCTO
 export const editarProducto = async (req, res) => {
   const idProducto = req.params.id;
   const {
@@ -422,33 +422,7 @@ export const editarProducto = async (req, res) => {
   }
 };
 
-// ELIMINAR PRODUCTO - perfecto, no necesitaba modificacion
-export const eliminarProducto = async (req, res) => {
-  const { id } = req.params;
-
-  const conn = connection.promise();
-
-  try {
-    await conn.beginTransaction();
-
-    // 1️⃣ Eliminar stock asociado
-    await conn.query("DELETE FROM Producto_Tamanio WHERE idProducto = ?", [id]);
-
-    // 2️⃣ Eliminar producto principal
-    await conn.query("DELETE FROM Productos WHERE idProducto = ?", [id]);
-
-    await conn.commit();
-
-    console.log(`🗑️ Producto ID ${id} eliminado correctamente`);
-    res.json({ message: "✅ Producto eliminado correctamente", idProducto: id });
-  } catch (error) {
-    await conn.rollback();
-    console.error("❌ Error al eliminar producto:", error);
-    res.status(500).json({ error: "Error al eliminar producto o sus tamaños" });
-  }
-};
-
-// CAMBIAR ESTADO ACTIVO/INACTIVO - ya modificado
+// UPDATE (state) - CAMBIAR DE ESTADO ACTIVO/INACTIVO
 export const cambiarEstadoProducto = (req, res) => {
   const { id } = req.params;
   const { activo } = req.body;
@@ -482,67 +456,28 @@ export const cambiarEstadoProducto = (req, res) => {
   });
 };
 
+// DELETE - ELIMINAR PRODUCTO
+export const eliminarProducto = async (req, res) => {
+  const { id } = req.params;
 
+  const conn = connection.promise();
 
-// controlers anteriores
-// import connection from "../config/DB.js";
+  try {
+    await conn.beginTransaction();
 
-// //obtener todos los productos
-// export const obtenerProductos = (req, res) => {
-//     connection.query("SELECT * from productos;", (error,results) => {
-//         if (error) throw error;
-//         res.json(results)
-//     })
-// }
+    // se eliminan los stock del producto
+    await conn.query("DELETE FROM Producto_Tamanio WHERE idProducto = ?", [id]);
 
-// //obtener un producto unico por id
-// export const obtenerProductoPorID = (req, res) => {
-//     const id = req.params.id
+    // se elimina el producto
+    await conn.query("DELETE FROM Productos WHERE idProducto = ?", [id]);
 
-//     connection.query("SELECT * from productos WHERE idProducto=?", [id], (error, results) => {
-//         if (error) throw error;
-//         res.json(results[0])
-//     })
-// }
+    await conn.commit();
 
-// //agrergar un producto
-// export const agregarProducto = (req, res) => {
-//     const {nombreProducto, descripcionProducto, precioProducto, stockProducto, categoriaProducto, imagenProducto, dimensionProducto} = req.body
-//     const query = "INSERT into productos (nombreProducto, descripcionProducto, precioProducto, stockProducto, categoriaProducto, imagenProducto, dimensionProducto) VALUES (?,?,?,?,?,?,?)"
-//     const values = [nombreProducto, descripcionProducto, precioProducto, stockProducto, categoriaProducto, imagenProducto, dimensionProducto]
-
-//     connection.query(query, values, (error, results) => {
-//         if (error) throw error;
-//         const nuevoId = results.insertId;
-//             connection.query("SELECT * from productos where idProducto=?", [nuevoId], (error, data) => {
-//                 if (error) throw error;
-//                 res.json(data[0])
-//             }
-//         );
-//     });
-// }
-
-// //editar un producto
-// export const editarProducto = (req, res) => {
-//     const id = req.params.id
-//     const {nombreProducto, descripcionProducto, precioProducto, stockProducto, categoriaProducto, imagenProducto, dimensionProducto} = req.body
-//     const query = "UPDATE productos SET nombreProducto=? , descripcionProducto=?, precioProducto=?, stockProducto=?, categoriaProducto=?, imagenProducto=?, dimensionProducto=? WHERE idProducto=?"
-//     const values = [nombreProducto, descripcionProducto, precioProducto, stockProducto, categoriaProducto, imagenProducto, dimensionProducto, id]
-
-//     connection.query(query, values, (error, results) => {
-//         if (error) throw error;
-//         res.json(results)
-//     })
-// }
-
-
-// //eliminar un producto
-// export const eliminarProducto = (req, res) => {
-//     const id = req.params.id
-//     const query = "DELETE from productos WHERE idProducto=?";
-
-//     connection.query(query, [id], (error, results) => {
-//         if (error) throw error;
-//         res.json(results)
-//     })
-// }
+    console.log(`Producto ID ${id} eliminado correctamente`);
+    res.json({ message: "Producto eliminado correctamente", idProducto: id });
+  } catch (error) {
+    await conn.rollback();
+    console.error("Error al eliminar producto:", error);
+    res.status(500).json({ error: "Error al eliminar producto o sus tamaños" });
+  }
+};

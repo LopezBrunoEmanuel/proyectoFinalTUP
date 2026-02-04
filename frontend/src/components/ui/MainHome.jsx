@@ -10,7 +10,6 @@ const MainHome = () => {
 
     return (
         <main className="home__main bg-light">
-            {/* 🪴 Sección 1 - Introducción */}
             <section className="home__intro text-center py-5">
                 <Container>
                     <motion.div
@@ -31,7 +30,6 @@ const MainHome = () => {
                 </Container>
             </section>
 
-            {/* 🌿 Sección 2 - Categorías destacadas */}
             <section className="home__categorias py-5">
                 <Container>
                     <motion.h3
@@ -41,7 +39,7 @@ const MainHome = () => {
                         whileInView="visible"
                         viewport={{ once: true }}
                     >
-                        Categorías destacadas
+                        Categorías
                     </motion.h3>
 
                     <motion.div
@@ -54,22 +52,22 @@ const MainHome = () => {
                             {[
                                 {
                                     nombre: "Plantas",
-                                    categoria: "planta",
+                                    categoria: "1",
                                     img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRip7IjQ47SH4_AP2wW8n4LycLV7FmGtODduw&s",
                                 },
                                 {
                                     nombre: "Macetas",
-                                    categoria: "maceta",
+                                    categoria: "2",
                                     img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTTU02NOrRTmSRVAVDq5fXPhQ2XVoqeOmhH4w&s",
                                 },
                                 {
                                     nombre: "Fertilizantes",
-                                    categoria: "fertilizante",
+                                    categoria: "3",
                                     img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4nr1XsOX2GSXp4G24UwjJQM4bjTFul-IuGw&s",
                                 },
                                 {
                                     nombre: "Herramientas",
-                                    categoria: "herramienta",
+                                    categoria: "4",
                                     img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRpMKE07ZrQ2slIfG6Wd0XXpsa0gIWD--vSYA&s",
                                 },
                             ].map((cat, i) => (
@@ -101,7 +99,6 @@ const MainHome = () => {
                 </Container>
             </section>
 
-            {/* 🌻 Sección 3 - Beneficios */}
             <section className="home__beneficios py-5 bg-white">
                 <Container>
                     <motion.h3
