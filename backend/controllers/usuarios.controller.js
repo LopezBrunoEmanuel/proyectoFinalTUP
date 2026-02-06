@@ -81,21 +81,43 @@ export const editarUsuario = (req, res) => {
       activo
     } = req.body
 
-    if (!nombre || !apellido || !email) {
-      return res.status(400).json({error: "Faltan datos obligatorios"})
+    if (!String(nombre ?? "").trim() || !String(apellido ?? "").trim() || !String(email ?? "").trim()) {
+      return res.status(400).json({ error: "Faltan datos obligatorios" });
+    }
+
+    const ROLES_VALIDOS = new Set(["cliente", "empleado", "admin"]);
+    const rolNormalizado = String(rol ?? "cliente").trim().toLowerCase();
+
+    if (!ROLES_VALIDOS.has(rolNormalizado)) {
+      return res.status(400).json({ error: "Rol inválido" });
+    }
+
+    let activoNormalizado;
+    if (typeof activo === "boolean") {
+      activoNormalizado = activo ? 1 : 0;
+    } else if (typeof activo === "number") {
+      activoNormalizado = activo === 1 ? 1 : 0;
+    } else if (typeof activo === "string") {
+      const a = activo.trim();
+      if (a === "1") activoNormalizado = 1;
+      else if (a === "0") activoNormalizado = 0;
+      else activoNormalizado = 1;
+    } else {
+      activoNormalizado = 1;
     }
 
     const query = "UPDATE usuarios SET nombre=?, apellido=?, email=?, telefono=?, direccion=?, rol=?, activo=? WHERE idUsuario=?"
     const values = [
-      nombre,
-      apellido,
-      email,
-      telefono || null,
-      direccion || null,
-      rol || "cliente",
-      typeof activo === "number" ? activo : 1, 
+      String(nombre).trim(),
+      String(apellido).trim(),
+      String(email).trim(),
+      telefono ? String(telefono).trim() : null,
+      direccion ? String(direccion).trim() : null,
+      rolNormalizado,
+      activoNormalizado,
       id
-    ]
+    ];
+
 
     connection.query(query, values, (error, results) => {
         if (error) {
@@ -155,8 +177,16 @@ export const eliminarUsuario = (req, res) => {
     const query = "DELETE from usuarios WHERE idUsuario=?";
 
     connection.query(query, [id], (error, results) => {
-        if (error) throw error;
-        res.json(results)
+        if (error) {
+          console.error("ERROR MYSQL DELETE USUARIO", error);
+          return res.status(500).json({ error: error.message})
+        }
+
+        if (results.affectedRows === 0) {
+          return res.status(404).json({ error: "Usuario no encontrado"})
+        }
+
+        return res.status(200).json({ success: true, message: "Usuario eliminado"})
     })
 }
 

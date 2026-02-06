@@ -5,7 +5,7 @@ import {
   editarUsuario,
   eliminarUsuario,
   actualizarPassword
-} from "../controllers/usuariosController.js";
+} from "../controllers/usuarios.controller.js";
 
 const router = express.Router();
 
@@ -15,11 +15,16 @@ router.get("/", obtenerUsuario);
 // CREAR USUARIO NUEVO
 router.post("/", agregarUsuario);
 
-// EDITAR DATOS DE USUARIO (excepto la contraseña)
-router.put("/:id", editarUsuario);
+router.use((req, res, next) => {
+  console.log("[USUARIOS ROUTER]", req.method, req.originalUrl);
+  next();
+});
 
 // CAMBIAR CONTRASEÑA
 router.put("/actualizar-password", actualizarPassword);
+
+// EDITAR DATOS DE USUARIO (excepto la contraseña)
+router.put("/:id", editarUsuario);
 
 // ELIMINAR USUARIO
 router.delete("/:id", eliminarUsuario);
