@@ -28,4 +28,3 @@ export const swalCustom = Swal.mixin({
     content: "fs-6",  // opcional: tamaño del contenido
   },
 });
-
