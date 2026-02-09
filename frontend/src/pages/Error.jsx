@@ -1,5 +1,5 @@
 import React from 'react'
-import BotonesPreview from '../components/BotonesPreview'
+import BotonesPreview from '../components/buttons/BotonesPreview'
 
 
 const Error = () => {

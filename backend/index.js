@@ -8,16 +8,19 @@ import loginRoutes from "./routes/login.routes.js";
 
 const app = express();
 
+app.use((req,res,next)=>{
+  console.log("[REQ]", req.method, req.originalUrl);
+  next();
+});
 app.use(cors());
 app.use(express.json());
 app.use("/productos", productosRoutes)
 app.use("/usuarios", usuariosRoutes)
 app.use("/api/login", loginRoutes);
 
-
 // Ruta de prueba
 app.get("/", (req, res) => {
-  res.send("Bienvenido a la db del vivero Patio1220"); // verificacion de conexion
+  res.send("Bienvenido a la db del vivero Patio1220");
 });
 
 const PORT = process.env.PORT || 3000;

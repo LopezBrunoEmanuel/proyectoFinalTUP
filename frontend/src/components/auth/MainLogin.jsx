@@ -6,7 +6,7 @@ import axios from "axios";
 import Logo from "../../assets/logopatio.png";
 import { swalCustom } from "../../utils/customSwal";
 import RecuperarPasswordModal from "../../components/modals/RecuperarPasswordModal";
-import { BASE_URL } from "../../constants/constants";
+import { LOGIN_URL } from "../../constants/constants";
 
 const MainLogin = () => {
   const navigate = useNavigate();
@@ -27,19 +27,19 @@ const MainLogin = () => {
     e.preventDefault();
 
     try {
-      const { data } = await axios.post(`${BASE_URL}/api/login`, formData);
-      console.log("Respuesta del servidor:", data);
+      const { data } = await axios.post(`${LOGIN_URL}`, formData);
+      // console.log("Respuesta del servidor:", data);
 
-      if (!data?.user) {
+      if (!data?.user || !data.token) {
         swalCustom.fire({
           title: "Error",
-          text: "Credenciales inválidas",
+          text: "Respuesta invalida del servidor (faltan credenciales)",
           icon: "error",
         });
         return;
       }
 
-      login(data.user);
+      login(data.user, data.token);
 
       swalCustom.fire({
         title: "¡Bienvenido!",
@@ -47,20 +47,8 @@ const MainLogin = () => {
         icon: "success",
       });
 
-      // cuando se cree el boton de panel de admin, hay que quitar los navigate asi solo dirija a inicio
-      switch (data.user.rol) {
-        case "admin":
-          navigate("/admin");
-          break;
-        case "empleado":
-          navigate("/admin");
-          break;
-        case "cliente":
-          navigate("/");
-          break;
-        default:
-          swalCustom.fire("Error", "Rol desconocido", "error");
-      }
+      navigate("/")
+
     } catch (error) {
       console.error("Error al iniciar sesión:", error);
 

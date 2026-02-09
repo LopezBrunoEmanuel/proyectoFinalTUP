@@ -5,13 +5,27 @@ const SALT_ROUNDS = 10;
 
 // GET - OBTENER LOS USUARIOS
 export const obtenerUsuario = (req, res) => {
-  const query= `SELECT idUsuario, nombre, apellido, email, telefono, direccion, rol, activo, createdAt, updatedAt FROM usuarios;`
+  const query= `SELECT idUsuario, nombre, apellido, email, telefono, direccion, rol, activo, createdAt, updatedAt FROM Usuarios;`
   connection.query(query, (error, results) => {
     if (error) {
       return res.status(500).json({error: error.message})
     }
     res.status(200).json(results)
   })
+}
+
+// GET - OBTENER UN USARIO POR ID
+export const obtenerUsuarioPorId = (req, res) => {
+  const { id } = req.params;
+
+  const query = `SELECT idUsuario AS id, nombre, apellido, email, telefono, direccion, rol, activo FROM Usuarios WHERE idUsuario = ? LIMIT 1`;
+
+  connection.query(query, [id], (error, results) => {
+    if (error) return res.status(500).json({error: error.message});
+    if (!results.length) return res.status(404).json({error: "Usuario no encontrado"});
+
+    return res.status(200).json({user: results[0]});
+  });
 }
 
 // POST - AGREGAR USUARIO NUEVO
@@ -35,7 +49,7 @@ export const agregarUsuario = async (req, res) => {
     const passwordHash = await bcrypt.hash(password, SALT_ROUNDS)
 
     // se guarda el usuario con el hash
-    const query = "INSERT INTO usuarios (nombre, apellido, email, telefono, direccion, rol, activo, passwordHash) VALUES (?,?,?,?,?,?,?,?)";
+    const query = "INSERT INTO Usuarios (nombre, apellido, email, telefono, direccion, rol, activo, passwordHash) VALUES (?,?,?,?,?,?,?,?)";
 
     const values = [
       nombre,
@@ -55,7 +69,7 @@ export const agregarUsuario = async (req, res) => {
 
       // se devuelve el usuario SIN passwordHash (o sea que no se mande el pass)
       connection.query(
-        "SELECT idUsuario, nombre, apellido, email, telefono, direccion, rol, activo, createdAt, updatedAt FROM usuarios WHERE idUsuario = ?",
+        "SELECT idUsuario, nombre, apellido, email, telefono, direccion, rol, activo, createdAt, updatedAt FROM Usuarios WHERE idUsuario = ?",
         [nuevoId],
         (error2, data) => {
           if (error2) return res.status(500).json({error: error2.message})
@@ -68,7 +82,7 @@ export const agregarUsuario = async (req, res) => {
   }
 }
 
-// UPDATE - EDITAR DATOS DE USUARIO
+// UPDATE - EDITAR DATOS DE USUARIO (para que el admin modifique desde el panel de administracion)
 export const editarUsuario = (req, res) => {
     const id = req.params.id
     const {
@@ -106,7 +120,7 @@ export const editarUsuario = (req, res) => {
       activoNormalizado = 1;
     }
 
-    const query = "UPDATE usuarios SET nombre=?, apellido=?, email=?, telefono=?, direccion=?, rol=?, activo=? WHERE idUsuario=?"
+    const query = "UPDATE Usuarios SET nombre=?, apellido=?, email=?, telefono=?, direccion=?, rol=?, activo=? WHERE idUsuario=?"
     const values = [
       String(nombre).trim(),
       String(apellido).trim(),
@@ -136,7 +150,56 @@ export const editarUsuario = (req, res) => {
     })
 }
 
-// UPDATE (password) - ACTUALIZAR CONTRASEÑA
+// UPDATE - EDITAR MI PERFIL (desde "mi perfil", o sea para usuario logueado)
+export const editarMiUsuario = (req, res) => {
+  const idUsuario = req.user?.idUsuario;
+  const { nombre, apellido, telefono, direccion } = req.body;
+
+  console.log("[EditarMiUsuario] req.user: ", req.user, "| body: ", { nombre, apellido, telefono, direccion});
+
+  if (!idUsuario) {
+    return res.status(401).json({error: "No autenticado"})
+  }
+
+  if (!String(nombre ?? "").trim() || !String(apellido ?? "").trim()) {
+    return res.status(400).json({error: "Faltan datos obligatorios"})
+  }
+
+  const query = `UPDATE Usuarios SET nombre = ?, apellido = ?, telefono = ?, direccion = ? WHERE idUsuario = ?`;
+
+  const values = [
+    String(nombre).trim(),
+    String(apellido).trim(),
+    telefono ? String(telefono).trim() : null,
+    direccion ? String(direccion).trim() : null,
+    idUsuario,
+  ]
+
+  connection.query(query, values, (error, results) => {
+    if (error) {
+      console.log("[editarMiUsuario] MYSQL ERROR:",error);
+      return res.status(500).json({error: error.message})
+    }
+    
+    if (results.affectedRows === 0) {
+      return res.status(404).json({error: "Usuario no encontrado"});
+    }
+
+    //Devolver usario actualizado
+    const selectQuery = `SELECT idUsuario AS id, nombre, apellido, email, telefono, direccion, rol, activo FROM Usuarios WHERE idUsuario = ? LIMIT 1`;
+
+    connection.query(selectQuery, [idUsuario], (error2, rows) => {
+      if (error2) {
+        console.error("[editarMiUsuario MYSQL SELECT ERROR: ", error2);
+        return res.status(500).json({error: error2.message});
+      }
+
+      return res.status(200).json({success: true, user: rows[0]})
+    })
+  })
+}
+
+// UPDATE - ACTUALIZAR CONTRASEÑA (proximamente esta sera la que usaremos para cambiar por mail. POR AHORA FUNCIONA, PERO NO DEBE QUEDAR COMO ESTA EN ESTE MOMENTO)
 export const actualizarPassword = async (req, res) => {
   const { email, nuevaPassword } = req.body;
 
@@ -147,7 +210,7 @@ export const actualizarPassword = async (req, res) => {
   try {
     const password = String(nuevaPassword).trim();
     const passwordHash = await bcrypt.hash(password, SALT_ROUNDS);
-    const query = "UPDATE usuarios SET passwordHash = ?, updatedAt = NOW() WHERE email = ?";
+    const query = "UPDATE Usuarios SET passwordHash = ?, updatedAt = NOW() WHERE email = ?";
 
     connection.query(query, [passwordHash, email], (error, results) => {
   if (error) {
@@ -171,10 +234,66 @@ export const actualizarPassword = async (req, res) => {
 }
 }
 
+// UPDATE - CAMBIAR MI PASSWORD (para cambiar la contraseña desde "mi perfil", usuario logueado)
+export const actualizarMiPassword = (req, res) => {
+  const idUsuario = req.user?.idUsuario;
+  const { passwordActual, nuevaPassword } = req.body || {};
+
+  console.log("[actualizarMiPassword] req.user:", req.user, "| body keys:", Object.keys(req.body || {}));
+
+  if (!idUsuario) return res.status(401).json({error: "No autenticado"});
+
+  if (!passwordActual || !nuevaPassword) return res.status(400).json({error: "Faltan datos"});
+
+  const nueva = String(nuevaPassword).trim();
+  const actual = String(passwordActual).trim();
+
+  //validacion minima para que no entre un password corto - la validacion mas fuerte vendra del front
+  if (nueva.length < 5) return res.status(400).json({error: "La contraseña nueva es muy corta"});
+
+  const qSelect = "SELECT passwordHash FROM Usuarios WHERE idUsuario = ? LIMIT 1";
+  console.log("[actualizarMiPassword] SQL:", qSelect, "| idUsuario:", idUsuario);
+
+  connection.query(qSelect, [idUsuario], async (err, rows) => {
+    if (err) {
+      console.error("[actualizarMiPassword] MYSQL SELECT ERROR", err);
+      return res.status(500).json({error: err.message});
+    }
+
+    if (!rows.length) return res.status(404).json({error: "Usuario no encontrado"});
+
+    const hashDB = rows[0].passwordHash;
+
+    try {
+      const ok = await bcrypt.compare(actual, hashDB);
+
+      if (!ok) return res.status(401).json({error: "Contraseña actual incorrecta"});
+
+      const nuevoHash = await bcrypt.hash(nueva, SALT_ROUNDS);
+      const qUpdate = "UPDATE Usuarios SET passwordHash = ? WHERE idUsuario = ?";
+      console.log("[actualizarMiPassword] SQL:", qUpdate, "| idUsuario:", idUsuario);
+
+      connection.query(qUpdate, [nuevoHash, idUsuario], (err2, results) => {
+        if (err2) {
+          console.error("[actualizarMiPassword] MYSQL UPDATE ERROR: ", err2);
+          return res.status(500).json({error: err2.message});
+        }
+
+        if (!results.affectedRows) return res.status(404).json({error: "Usuario no encontrado"});
+
+        return res.status(200).json({ success: true, message: "Contraseña actualizada con exito"});
+      });
+    } catch (e) {
+      console.error("[actualizarMiPassword] ERROR:",e);
+      return res.status(500).json({error: "Error actualizando contraseña"});
+    }
+  });
+}
+
 // DELETE - ELIMINAR USUARIO
 export const eliminarUsuario = (req, res) => {
     const id = req.params.id
-    const query = "DELETE from usuarios WHERE idUsuario=?";
+    const query = "DELETE from Usuarios WHERE idUsuario=?";
 
     connection.query(query, [id], (error, results) => {
         if (error) {
@@ -189,4 +308,3 @@ export const eliminarUsuario = (req, res) => {
         return res.status(200).json({ success: true, message: "Usuario eliminado"})
     })
 }
-

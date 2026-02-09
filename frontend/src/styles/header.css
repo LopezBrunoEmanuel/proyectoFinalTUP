@@ -119,7 +119,9 @@
 
 .dropdown-item {
   color: var(--color-dorado) !important;
-  transition: background-color 0.2s ease, color 0.2s ease;
+  transition:
+    background-color 0.2s ease,
+    color 0.2s ease;
 }
 
 .dropdown-item:hover {
@@ -184,4 +186,61 @@
   background-color: var(--color-beige);
   color: #2e2e2e;
   /* color más oscuro al pasar el mouse */
+}
+/* === PERFIL DESKTOP: ocultar flechita (caret) del NavDropdown === */
+.perfil-dropdown-desktop .dropdown-toggle::after {
+  display: none !important;
+}
+
+/* Evitar estilos de botón/link raros en el icono */
+.perfil-dropdown-desktop .dropdown-toggle {
+  padding: 0 !important;
+  border: none !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  color: var(--color-beige) !important;
+}
+
+/* Hover coherente con el resto del header */
+.perfil-dropdown-desktop .dropdown-toggle:hover {
+  color: var(--color-dorado) !important;
+}
+
+/* ===============================
+   DROPDOWN PERFIL – DESKTOP
+   =============================== */
+
+/* Fondo general del dropdown */
+.perfil-dropdown-desktop .dropdown-menu {
+  background-color: var(--color-beige);
+  border: none;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+}
+
+/* Ítems del dropdown */
+.perfil-dropdown-desktop .dropdown-item {
+  color: var(--color-verde-bosque) !important;
+  font-weight: 600;
+  transition:
+    background-color 0.2s ease,
+    color 0.2s ease;
+}
+
+/* Hover (eliminamos rosado, usamos dorado suave) */
+.perfil-dropdown-desktop .dropdown-item:hover,
+.perfil-dropdown-desktop .dropdown-item:focus {
+  background-color: rgba(212, 175, 55, 0.15); /* dorado suave */
+  color: var(--color-verde-bosque) !important;
+}
+
+/* Estado active (eliminar azul bootstrap) */
+.perfil-dropdown-desktop .dropdown-item.active,
+.perfil-dropdown-desktop .dropdown-item:active {
+  background-color: transparent !important;
+  color: var(--color-verde-bosque) !important;
+}
+
+/* Divider más sutil */
+.perfil-dropdown-desktop .dropdown-divider {
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
 }

@@ -1,4 +1,4 @@
-import "../styles/buttons.css";
+import "../../styles/buttons.css";
 import { FaLeaf, FaShoppingCart, FaTrash, FaWhatsapp, FaPlus } from "react-icons/fa";
 
 const BotonesPreview = () => {

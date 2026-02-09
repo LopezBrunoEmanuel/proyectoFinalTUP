@@ -7,10 +7,11 @@ import Register from "./pages/Register";
 import CatalogoProductos from "./pages/CatalogoProductos";
 import Carrito from "./components/ui/Carrito";
 import Servicios from "./pages/Servicios";
-import Perfil from "./pages/Perfil";
+import MiPerfil from "./pages/MiPerfil";
 import Error from "./pages/Error";
 import Tips from "./pages/Tips";
-import RutaPrivada from "./components/RutaPrivada";
+import RutaPublica from "./components/rutas/RutaPublica";
+import RutaPrivada from "./components/rutas/RutaPrivada";
 import "./App.css";
 import Admin from "./pages/Admin";
 import { useUIStore } from "./store/useUIStore";
@@ -24,12 +25,26 @@ function App() {
       <div className="main-content">
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/register" element={<Register />} />
+          <Route
+            path="/login"
+            element={
+              <RutaPublica>
+                <Login />
+              </RutaPublica>
+            }
+          />
+          <Route
+            path="/register"
+            element={
+              <RutaPublica>
+                <Register />
+              </RutaPublica>
+            }
+          />
           <Route path="/productos" element={<CatalogoProductos />} />
           <Route path="/tips" element={<Tips />} />
           <Route path="/servicios" element={<Servicios />} />
-          <Route path="/miPerfil" element={<Perfil />} />
+          <Route path="/miPerfil" element={<MiPerfil />} />
           <Route path="*" element={<Error />} />
 
           <Route

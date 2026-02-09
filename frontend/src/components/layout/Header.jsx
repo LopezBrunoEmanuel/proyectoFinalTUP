@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import { useNavigate, NavLink } from "react-router-dom";
-import { Container, Nav, Navbar } from "react-bootstrap";
+import { Container, Nav, Navbar, NavDropdown, Collapse } from "react-bootstrap";
 import { FaShoppingCart, FaUserCircle } from "react-icons/fa";
 // eslint-disable-next-line no-unused-vars
 import { motion } from "framer-motion";
@@ -11,6 +11,7 @@ import { useCarritoStore } from "../../store/useCarritoStore"
 
 const Header = () => {
   const [expanded, setExpanded] = useState(false);
+  const [profileExpanded, setProfileExpanded] = useState(false)
   const navbarRef = useRef(null);
   const navigate = useNavigate();
   const { abrirCarrito } = useUIStore()
@@ -24,6 +25,7 @@ const Header = () => {
     logout();
     vaciarCarrito();
     setExpanded(false);
+    setProfileExpanded(false);
     navigate("/login");
   };
 
@@ -31,10 +33,11 @@ const Header = () => {
     const handleClickOutside = (event) => {
       if (navbarRef.current && !navbarRef.current.contains(event.target)) {
         setExpanded(false);
+        setProfileExpanded(false);
       }
     };
 
-    if (expanded) {
+    if (expanded || profileExpanded) {
       document.addEventListener("click", handleClickOutside);
       document.body.style.overflow = "hidden";
     } else {
@@ -46,16 +49,27 @@ const Header = () => {
       document.removeEventListener("click", handleClickOutside);
       document.body.style.overflow = "auto";
     };
-  }, [expanded]);
+  }, [expanded, profileExpanded]);
 
-  // Animaciones para cada ítem del menú
+  useEffect(() => {
+    const onResize = () => {
+      if (window.innerWidth >= 992) {
+        setProfileExpanded(false); // el menú mobile no debe existir en desktop
+      }
+    };
+
+    window.addEventListener("resize", onResize);
+    return () => window.removeEventListener("resize", onResize);
+  }, []);
+
+
   const navItem = {
     hidden: { y: -20, opacity: 0 },
     visible: (i) => ({
       y: 0,
       opacity: 1,
       transition: {
-        delay: i * 0.15, // pequeño delay progresivo
+        delay: i * 0.15,
         duration: 0.5,
         ease: "easeOut",
       },
@@ -70,7 +84,11 @@ const Header = () => {
         data-bs-theme="dark"
         className="bg-body-tertiary"
         expanded={expanded}
-        onToggle={() => setExpanded(!expanded)}
+        onToggle={(nextExpanded) => {
+          setExpanded(nextExpanded);
+          if (profileExpanded) setProfileExpanded(false);
+        }}
+
       >
         <Container>
           <Navbar.Brand href="/">Patio 1220</Navbar.Brand>
@@ -101,27 +119,63 @@ const Header = () => {
               </button>
             </div>
 
-            {user ? (
-              <>
-                <button
-                  type="button"
-                  className="btn btn-sm btn-outline-light btn-logout"
-                  onClick={handleLogout}
-                >
-                  Logout
-                </button>
-              </>
-            ) : (
-              <Nav.Link href="/miPerfil" className="icon-link">
-                <FaUserCircle />
-              </Nav.Link>
-            )}
+            {/* ✅ PERFIL - MOBILE (abre collapse vertical) */}
+            <button
+              type="button"
+              className="icon-link btn btn-link p-0 border-0 d-lg-none"
+              onClick={() => {
+                setProfileExpanded((prev) => {
+                  const next = !prev;
+                  if (next) setExpanded(false); // regla: nunca ambos abiertos
+                  return next;
+                });
+              }}
+              aria-expanded={profileExpanded}
+            >
+              <FaUserCircle size={22} />
+            </button>
+
+            {/* ✅ PERFIL - DESKTOP (dropdown flotante) */}
+            <div className="d-none d-lg-flex align-items-center">
+              <NavDropdown
+                align="end"
+                id="perfil-dropdown-desktop"
+                className="perfil-dropdown-desktop"
+                title={<FaUserCircle size={22} />}
+              >
+                {user ? (
+                  <>
+                    <NavDropdown.Item as={NavLink} to="/miPerfil">
+                      Mi perfil
+                    </NavDropdown.Item>
+
+                    {(user?.rol === "admin" || user?.rol === "empleado") && (
+                      <NavDropdown.Item as={NavLink} to="/admin">
+                        Admin
+                      </NavDropdown.Item>
+                    )}
+
+                    <NavDropdown.Divider />
+
+                    <NavDropdown.Item onClick={handleLogout}>
+                      Cerrar sesión
+                    </NavDropdown.Item>
+                  </>
+                ) : (
+                  <NavDropdown.Item as={NavLink} to="/login">
+                    Iniciar sesión
+                  </NavDropdown.Item>
+                )}
+              </NavDropdown>
+            </div>
+
+
+
           </div>
 
           <Navbar.Toggle
             aria-controls="basic-navbar-nav"
             className="order-lg-3"
-            onClick={() => setExpanded(expanded ? false : "expanded")}
           />
 
           <Navbar.Collapse id="basic-navbar-nav" className="order-lg-1">
@@ -138,7 +192,7 @@ const Header = () => {
                   variants={navItem}
                   initial="hidden"
                   animate="visible"
-                  style={{ display: "inline-block" }} // 🔑 mantiene el layout horizontal
+                  style={{ display: "inline-block" }}
                 >
                   <NavLink
                     to={item.to}
@@ -152,6 +206,54 @@ const Header = () => {
             </Nav>
 
           </Navbar.Collapse>
+          {/* ✅ PERFIL COLLAPSE SOLO MOBILE: independiente del Navbar */}
+          <Collapse in={profileExpanded} mountOnEnter unmountOnExit>
+            <div className="navbar-collapse d-lg-none">
+              <Nav className="mx-auto flex-column text-center mt-3">
+                {user ? (
+                  <>
+                    <NavLink
+                      to="/miPerfil"
+                      className="nav-link"
+                      onClick={() => setProfileExpanded(false)}
+                    >
+                      Mi perfil
+                    </NavLink>
+
+                    {(user?.rol === "admin" || user?.rol === "empleado") && (
+                      <NavLink
+                        to="/admin"
+                        className="nav-link"
+                        onClick={() => setProfileExpanded(false)}
+                      >
+                        Admin
+                      </NavLink>
+                    )}
+
+                    <button
+                      type="button"
+                      className="nav-link btn btn-link p-0"
+                      onClick={handleLogout}
+                      style={{ textDecoration: "none" }}
+                    >
+                      Cerrar sesión
+                    </button>
+                  </>
+                ) : (
+                  <NavLink
+                    to="/login"
+                    className="nav-link"
+                    onClick={() => setProfileExpanded(false)}
+                  >
+                    Iniciar sesión
+                  </NavLink>
+                )}
+              </Nav>
+
+            </div>
+          </Collapse>
+
+
         </Container>
       </Navbar>
     </div>
