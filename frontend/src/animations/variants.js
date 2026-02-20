@@ -1,6 +1,3 @@
-// 🌿 Animaciones base reutilizables con Framer Motion
-
-// Movimiento vertical suave
 export const fadeInUp = {
   hidden: { opacity: 0, y: 50 },
   visible: {
@@ -19,7 +16,6 @@ export const fadeInDown = {
   },
 };
 
-// Movimiento lateral
 export const fadeInLeft = {
   hidden: { opacity: 0, x: -50 },
   visible: {
@@ -38,7 +34,6 @@ export const fadeInRight = {
   },
 };
 
-// Aparición simple
 export const fadeIn = {
   hidden: { opacity: 0 },
   visible: {
@@ -47,7 +42,6 @@ export const fadeIn = {
   },
 };
 
-// 🌼 Escala sutil (ideal para cards e imágenes)
 export const scaleIn = {
   hidden: { opacity: 0, scale: 0.95 },
   visible: {
@@ -57,7 +51,6 @@ export const scaleIn = {
   },
 };
 
-// ⏳ Fade con delay (útil para títulos + subtítulo secuencial)
 export const fadeDelayed = (delay = 0.3) => ({
   hidden: { opacity: 0, y: 20 },
   visible: {
@@ -67,7 +60,6 @@ export const fadeDelayed = (delay = 0.3) => ({
   },
 });
 
-// 🪴 Contenedor con stagger para hijos animados en secuencia
 export const staggerContainer = {
   hidden: {},
   visible: {

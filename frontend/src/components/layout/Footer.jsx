@@ -1,18 +1,11 @@
-import "../../styles/footer.css";
+import "../../styles/components/footer.css";
 import { FaInstagram, FaFacebook, FaWhatsapp, FaEnvelope, FaMapMarkerAlt } from "react-icons/fa";
-import { WHATSAPP_NUMBER, WHATSAPP_MESSAGES } from "../utils/whatsappMensajes";
+// import { WHATSAPP_NUMBER, WHATSAPP_MESSAGES } from "../../utils/whatsappMensajes";
 
 const Footer = () => {
-    // const handleWhatsAppClick = (mensaje = WHATSAPP_MESSAGES.contactoGeneral) => {
-    //     const encodedMessage = encodeURIComponent(mensaje.trim());
-    //     const whatsappURL = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodedMessage}`;
-    //     window.open(whatsappURL, "_blank");
-    // };
-
     return (
         <footer className="footer">
             <div className="footer-content">
-                {/* Columna 1 - Descripción */}
                 <div className="footer-section footer-about">
                     <h2 className="footer-logo">Patio 1220</h2>
                     <p>
@@ -21,7 +14,6 @@ const Footer = () => {
                     </p>
                 </div>
 
-                {/* Columna 2 - Contacto */}
                 <div className="footer-section footer-contact">
                     <ul>
                         <li><FaMapMarkerAlt className="footer-icon" /> Santa Fe 4600 · San Miguel de Tucumán</li>
@@ -30,7 +22,6 @@ const Footer = () => {
                     </ul>
                 </div>
 
-                {/* Columna 3 - Redes y botón */}
                 <div className="footer-section footer-social">
                     <h3>Seguinos</h3>
                     <div className="social-icons">
@@ -39,10 +30,8 @@ const Footer = () => {
                         <a href="" aria-label="Whatsapp"><FaWhatsapp /></a>
                     </div>
                 </div>
-
             </div>
 
-            {/* Línea inferior */}
             <div className="footer-bottom">
                 <p>© {new Date().getFullYear()} Patio 1220 — Todos los derechos reservados.</p>
             </div>

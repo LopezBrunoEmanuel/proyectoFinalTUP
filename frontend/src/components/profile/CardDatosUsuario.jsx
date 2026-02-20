@@ -1,8 +1,8 @@
 import { Card, Form, Row, Col, Button } from "react-bootstrap";
 
 const CardDatosUsuario = ({
-    isEditing,
-    onEditStart,
+    isOpen,
+    onEdit,
     onCancel,
     onSubmit,
     formData,
@@ -16,22 +16,34 @@ const CardDatosUsuario = ({
                 <div className="mp-card-head">
                     <h5 className="mp-card-h5">Datos personales</h5>
 
-                    {!isEditing && (
+                    {!isOpen && (
                         <button
                             type="button"
                             className="mp-text-action"
-                            onClick={onEditStart}
+                            onClick={onEdit}
                             aria-label="Editar perfil"
                             title="Editar"
                         >
                             Editar
                         </button>
                     )}
+
+                    {isOpen && (
+                        <button
+                            type="button"
+                            className="mp-text-action"
+                            onClick={onCancel}
+                            aria-label="Cancelar"
+                            title="Cancelar"
+                        >
+                            Cancelar
+                        </button>
+                    )}
                 </div>
 
                 <div className="mp-divider" />
 
-                {!isEditing && (
+                {!isOpen && (
                     <div className="mp-security-note mt-3">
                         <small className="text-muted">
                             Modifica tus <b> datos de usuario</b> aquí
@@ -39,7 +51,7 @@ const CardDatosUsuario = ({
                     </div>
                 )}
 
-                {isEditing && (
+                {isOpen && (
                     <Form onSubmit={onSubmit} className="mt-3">
                         <Row className="g-3">
                             <Col md={6}>
@@ -77,19 +89,6 @@ const CardDatosUsuario = ({
                                         onChange={onChange}
                                         className="mp-control-readonly"
                                         placeholder="Numero de teléfono (sin espacios)"
-                                    />
-                                </Form.Group>
-                            </Col>
-
-                            <Col xs={12}>
-                                <Form.Group>
-                                    <Form.Label>Dirección</Form.Label>
-                                    <Form.Control
-                                        name="direccion"
-                                        value={formData.direccion}
-                                        onChange={onChange}
-                                        className="mp-control-readonly"
-                                        placeholder="Calle, número, ciudad..."
                                     />
                                 </Form.Group>
                             </Col>

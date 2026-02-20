@@ -4,10 +4,10 @@ import { Container, Nav, Navbar, NavDropdown, Collapse } from "react-bootstrap";
 import { FaShoppingCart, FaUserCircle } from "react-icons/fa";
 // eslint-disable-next-line no-unused-vars
 import { motion } from "framer-motion";
-import "../../styles/header.css";
-import { useAuthStore } from "../../store/useAuthStore";
-import { useUIStore } from "../../store/useUIStore"
-import { useCarritoStore } from "../../store/useCarritoStore"
+import "../../styles/components/header.css";
+import { useAuthStore } from "../../store/authStore.js";
+import { useUIStore } from "../../store/uiStore.js"
+import { useCarritoStore } from "../../store/carritoStore.js"
 
 const Header = () => {
   const [expanded, setExpanded] = useState(false);
@@ -17,7 +17,6 @@ const Header = () => {
   const { abrirCarrito } = useUIStore()
   const { vaciarCarrito } = useCarritoStore()
   const totalItems = useCarritoStore((state) => (state.carrito || []).reduce((acc, item) => acc + (item?.cantidad || 0), 0))
-
   const user = useAuthStore((state) => state.user);
   const logout = useAuthStore((state) => state.logout);
 
@@ -54,14 +53,13 @@ const Header = () => {
   useEffect(() => {
     const onResize = () => {
       if (window.innerWidth >= 992) {
-        setProfileExpanded(false); // el menú mobile no debe existir en desktop
+        setProfileExpanded(false);
       }
     };
 
     window.addEventListener("resize", onResize);
     return () => window.removeEventListener("resize", onResize);
   }, []);
-
 
   const navItem = {
     hidden: { y: -20, opacity: 0 },
@@ -76,7 +74,6 @@ const Header = () => {
     }),
   };
 
-
   return (
     <div className="header" ref={navbarRef}>
       <Navbar
@@ -88,11 +85,9 @@ const Header = () => {
           setExpanded(nextExpanded);
           if (profileExpanded) setProfileExpanded(false);
         }}
-
       >
         <Container>
           <Navbar.Brand href="/">Patio 1220</Navbar.Brand>
-
           <div className="navbar-icons order-lg-2">
             <div className="cart-icon-container position-relative">
               <button
@@ -118,15 +113,13 @@ const Header = () => {
                 )}
               </button>
             </div>
-
-            {/* ✅ PERFIL - MOBILE (abre collapse vertical) */}
             <button
               type="button"
               className="icon-link btn btn-link p-0 border-0 d-lg-none"
               onClick={() => {
                 setProfileExpanded((prev) => {
                   const next = !prev;
-                  if (next) setExpanded(false); // regla: nunca ambos abiertos
+                  if (next) setExpanded(false);
                   return next;
                 });
               }}
@@ -134,8 +127,6 @@ const Header = () => {
             >
               <FaUserCircle size={22} />
             </button>
-
-            {/* ✅ PERFIL - DESKTOP (dropdown flotante) */}
             <div className="d-none d-lg-flex align-items-center">
               <NavDropdown
                 align="end"
@@ -148,15 +139,12 @@ const Header = () => {
                     <NavDropdown.Item as={NavLink} to="/miPerfil">
                       Mi perfil
                     </NavDropdown.Item>
-
                     {(user?.rol === "admin" || user?.rol === "empleado") && (
                       <NavDropdown.Item as={NavLink} to="/admin">
                         Admin
                       </NavDropdown.Item>
                     )}
-
                     <NavDropdown.Divider />
-
                     <NavDropdown.Item onClick={handleLogout}>
                       Cerrar sesión
                     </NavDropdown.Item>
@@ -168,16 +156,11 @@ const Header = () => {
                 )}
               </NavDropdown>
             </div>
-
-
-
           </div>
-
           <Navbar.Toggle
             aria-controls="basic-navbar-nav"
             className="order-lg-3"
           />
-
           <Navbar.Collapse id="basic-navbar-nav" className="order-lg-1">
             <Nav className="mx-auto">
               {[
@@ -204,9 +187,7 @@ const Header = () => {
                 </motion.div>
               ))}
             </Nav>
-
           </Navbar.Collapse>
-          {/* ✅ PERFIL COLLAPSE SOLO MOBILE: independiente del Navbar */}
           <Collapse in={profileExpanded} mountOnEnter unmountOnExit>
             <div className="navbar-collapse d-lg-none">
               <Nav className="mx-auto flex-column text-center mt-3">
@@ -219,7 +200,6 @@ const Header = () => {
                     >
                       Mi perfil
                     </NavLink>
-
                     {(user?.rol === "admin" || user?.rol === "empleado") && (
                       <NavLink
                         to="/admin"
@@ -229,7 +209,6 @@ const Header = () => {
                         Admin
                       </NavLink>
                     )}
-
                     <button
                       type="button"
                       className="nav-link btn btn-link p-0"
@@ -249,11 +228,8 @@ const Header = () => {
                   </NavLink>
                 )}
               </Nav>
-
             </div>
           </Collapse>
-
-
         </Container>
       </Navbar>
     </div>

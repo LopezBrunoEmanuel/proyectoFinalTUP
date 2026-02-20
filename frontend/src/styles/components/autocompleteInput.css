@@ -1,0 +1,95 @@
+/* Contenedor del autocomplete */
+.autocomplete-container {
+  position: relative;
+  margin-bottom: 1rem;
+}
+
+/* Wrapper del input con spinner */
+.autocomplete-input-wrapper {
+  position: relative;
+}
+
+/* Spinner de carga */
+.autocomplete-spinner {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  pointer-events: none;
+}
+
+/* Dropdown de sugerencias */
+.autocomplete-dropdown {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  background: white;
+  border: 1px solid #dee2e6;
+  border-top: none;
+  border-radius: 0 0 6px 6px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  max-height: 250px;
+  overflow-y: auto;
+  z-index: 1000;
+  margin-top: -1px;
+}
+
+/* Item individual del dropdown */
+.autocomplete-item {
+  padding: 10px 14px;
+  cursor: pointer;
+  transition: background-color 0.15s ease;
+  font-size: 0.95rem;
+}
+
+.autocomplete-item:hover,
+.autocomplete-item.highlighted {
+  background-color: #f8f9fa;
+}
+
+.autocomplete-item:active {
+  background-color: #e9ecef;
+}
+
+/* Mensaje cuando no hay resultados */
+.autocomplete-no-results {
+  color: #6c757d;
+  font-style: italic;
+  cursor: default;
+}
+
+.autocomplete-no-results:hover {
+  background-color: transparent;
+}
+
+/* Scroll personalizado para el dropdown */
+.autocomplete-dropdown::-webkit-scrollbar {
+  width: 8px;
+}
+
+.autocomplete-dropdown::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 0 0 6px 0;
+}
+
+.autocomplete-dropdown::-webkit-scrollbar-thumb {
+  background: #c1c1c1;
+  border-radius: 4px;
+}
+
+.autocomplete-dropdown::-webkit-scrollbar-thumb:hover {
+  background: #a8a8a8;
+}
+
+/* Ajustes responsive */
+@media (max-width: 768px) {
+  .autocomplete-dropdown {
+    max-height: 200px;
+  }
+
+  .autocomplete-item {
+    padding: 12px 14px;
+    font-size: 1rem;
+  }
+}

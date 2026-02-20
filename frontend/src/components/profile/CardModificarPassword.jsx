@@ -1,35 +1,40 @@
 import { Card, Form, Row, Col, Button } from "react-bootstrap";
 
-const CardModificarPassword = ({
-    isChangingPassword,
-    onToggle,
-    onSubmit,
-    security,
-    onChange,
-    className = "",
-}) => {
+const CardModificarPassword = ({ isOpen, onEdit, onCancel, onSubmit, security, onChange, className = "" }) => {
     return (
         <Card className={`mp-card ${className}`}>
             <Card.Body className="mp-card-body">
                 <div className="mp-card-head">
                     <h5 className="mp-card-h5">Cambio de contraseña</h5>
 
-                    {!isChangingPassword && (
+                    {!isOpen && (
                         <button
                             type="button"
                             className="mp-text-action"
-                            onClick={onToggle}
+                            onClick={onEdit}
                             aria-label="Cambiar contraseña"
                             title="Cambiar contraseña"
                         >
                             Editar
                         </button>
                     )}
+
+                    {isOpen && (
+                        <button
+                            type="button"
+                            className="mp-text-action"
+                            onClick={onCancel}
+                            aria-label="Cancelar"
+                            title="Cancelar"
+                        >
+                            Cancelar
+                        </button>
+                    )}
                 </div>
 
                 <div className="mp-divider" />
 
-                {!isChangingPassword && (
+                {!isOpen && (
                     <div className="mp-security-note mt-3">
                         <small className="text-muted">
                             Cambia tu <b>contraseña</b> aqui
@@ -37,7 +42,7 @@ const CardModificarPassword = ({
                     </div>
                 )}
 
-                {isChangingPassword && (
+                {isOpen && (
                     <Form onSubmit={onSubmit} className="mt-3">
                         <Row className="g-3">
                             <Col md={12}>
@@ -48,7 +53,7 @@ const CardModificarPassword = ({
                                         name="passwordActual"
                                         value={security.passwordActual}
                                         onChange={onChange}
-                                        placeholder="••••••••"
+                                        placeholder="Contraseña actual"
                                     />
                                 </Form.Group>
                             </Col>
@@ -61,41 +66,41 @@ const CardModificarPassword = ({
                                         name="nuevaPassword"
                                         value={security.nuevaPassword}
                                         onChange={onChange}
-                                        placeholder="••••••••"
+                                        placeholder="Contraseña nueva"
                                     />
                                 </Form.Group>
                             </Col>
 
                             <Col md={6}>
                                 <Form.Group>
-                                    <Form.Label>Confirmar nueva contraseña</Form.Label>
+                                    <Form.Label>Repetir nueva contraseña</Form.Label>
                                     <Form.Control
                                         type="password"
                                         name="confirmarNuevaPassword"
                                         value={security.confirmarNuevaPassword}
                                         onChange={onChange}
-                                        placeholder="••••••••"
+                                        placeholder="Contraseña nueva"
                                     />
                                 </Form.Group>
                             </Col>
 
                             <Form.Text className="mp-pass-rules text-muted">
-                                Requisitos de contraseña:
+                                La nueva contraseña debe tener:
                                 <ul className="mp-pass-rules-list">
                                     <li>
-                                        Entre <b>8</b> y <b>30</b> caracteres
+                                        Entre <b>6</b> y <b>30</b> caracteres.
                                     </li>
                                     <li>
-                                        Al menos <b>1</b> mayúscula (A–Z)
+                                        Al menos <b>1</b> mayúscula.
                                     </li>
                                     <li>
-                                        Al menos <b>1</b> minúscula (a–z)
+                                        Al menos <b>1</b> minúscula.
                                     </li>
                                     <li>
-                                        Al menos <b>1</b> número (0–9)
+                                        Al menos <b>1</b> número.
                                     </li>
                                     <li>
-                                        Al menos <b>1</b> símbolo (ej: !@#...)
+                                        Al menos <b>1</b> símbolo (ej: !@#...).
                                     </li>
                                     <li>Sin espacios</li>
                                 </ul>
@@ -110,7 +115,7 @@ const CardModificarPassword = ({
                                 variant="secondary"
                                 type="button"
                                 className="mp-btn"
-                                onClick={onToggle}
+                                onClick={onCancel}
                             >
                                 Cancelar
                             </Button>

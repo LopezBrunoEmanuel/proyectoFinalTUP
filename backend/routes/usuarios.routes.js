@@ -1,45 +1,61 @@
 import express from "express";
-import { 
+import { loginUsuario } from "../controllers/auth.controller.js";
+import {
   obtenerUsuario,
   obtenerUsuarioPorId,
   agregarUsuario,
   editarUsuario,
-  eliminarUsuario,
-  actualizarPassword,
   editarMiUsuario,
+  actualizarPassword,
   actualizarMiPassword,
+  eliminarUsuario,
+  cambiarEstadoUsuario,
+  cambiarRolUsuario,
 } from "../controllers/usuarios.controller.js";
-import { auth } from "../middlewares/auth.js";
+import { verificarToken, verificarAdmin } from "../middlewares/auth.middleware.js";
 
 const router = express.Router();
 
-router.use((req, res, next)=>{
-  console.log("[USUARIOS]", req.method, req.originalUrl);
-  next();
-});
+// Rutas publicas
+// POST - Login
+router.post("/login", loginUsuario);
 
-// EDITAR MI PERFIL (usuario logueado)
-router.put("/me", auth, editarMiUsuario);
+// POST - Registro de nuevo usuario
+router.post("/register", agregarUsuario);
 
-// CAMBIAR MI CONTRASEÑA (usuario logueado)
-router.put("/me/password", auth, actualizarMiPassword);
+// Rutas de usuario logueado
+// GET - Obtener mi perfil
+router.get("/me", verificarToken, obtenerUsuarioPorId);
 
-// OBTENER TODOS LOS USUARIOS
-router.get("/", obtenerUsuario);
+// PUT - Editar mi perfil
+router.put("/me", verificarToken, editarMiUsuario);
 
-// OBTENER UN USUARIO POR ID
-router.get("/:id", obtenerUsuarioPorId);
+// PUT - Cambiar mi contraseña
+router.put("/me/password", verificarToken, actualizarMiPassword);
 
-// CREAR USUARIO NUEVO
-router.post("/", agregarUsuario);
+// Rutas de ADMIN
+// GET - Obtener todos los usuarios
+router.get("/", verificarToken, verificarAdmin, obtenerUsuario);
 
-// CAMBIAR CONTRASEÑA
-router.put("/actualizar-password", actualizarPassword);
+// GET - Obtener un usuario por ID
+router.get("/:id", verificarToken, verificarAdmin, obtenerUsuarioPorId);
 
-// EDITAR DATOS DE USUARIO (excepto la contraseña)
-router.put("/:id", editarUsuario);
+// POST - Crear nuevo usuario
+router.post("/", verificarToken, verificarAdmin, agregarUsuario);
 
-// ELIMINAR USUARIO
-router.delete("/:id", eliminarUsuario);
+// PUT - Editar usuario
+router.put("/:id", verificarToken, verificarAdmin, editarUsuario);
+
+// PUT - Actualizar contraseña de cualquier usuario
+router.put("/:id/password", verificarToken, verificarAdmin, actualizarPassword);
+
+// DELETE - Eliminar usuario
+router.delete("/:id", verificarToken, verificarAdmin, eliminarUsuario);
+
+// PATCH - Cambiar estado (activo/inactivo)
+router.patch("/:id/estado", verificarToken, verificarAdmin, cambiarEstadoUsuario);
+
+// PATCH - Cambiar rol
+router.patch("/:id/rol", verificarToken, verificarAdmin, cambiarRolUsuario);
 
 export default router;
