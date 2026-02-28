@@ -4,18 +4,18 @@
 /* ===== Variables globales ===== */
 :root {
   /* 🌿 Colores base */
-  --color-verde-bosque: #46624a; /* verde oscuro principal: header/footer */
-  --color-verde-olivo: #7a9e7e; /* verde medio para acentos suaves */
-  --color-beige: #f5ede4; /* beige neutro de fondo general */
-  --color-beige-claro: #f8f4ed; /* beige claro (como el del carrito) */
-  --color-dorado: #d4af37; /* dorado elegante para hover/detalles */
-  --color-gris-medio: #2d3436; /* texto sobre fondos claros */
-  --color-gris-suave: #e0e0e0; /* bordes, líneas separadoras */
+  --color-verde-bosque: #46624a;
+  --color-verde-olivo: #7a9e7e;
+  --color-beige: #f5ede4;
+  --color-beige-claro: #f8f4ed;
+  --color-dorado: #d4af37;
+  --color-gris-medio: #2d3436;
+  --color-gris-suave: #e0e0e0;
   --color-blanco: #ffffff;
 
   /* 🌸 Colores de acento */
-  --color-rosa: #ca1c73; /* acento puntual (sin stock, detalles) */
-  --color-rosa-hover: #b21764; /* hover o versión más oscura */
+  --color-rosa: #ca1c73;
+  --color-rosa-hover: #b21764;
 
   /* 🧱 Bordes, sombras y transiciones */
   --color-borde: #e4e4e4;
@@ -55,8 +55,6 @@ body {
   color: var(--color-texto);
   background-color: var(--color-beige);
   min-height: 100vh;
-  display: flex;
-  flex-direction: column;
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
 }
@@ -95,37 +93,17 @@ a:hover {
   color: var(--color-dorado);
 }
 
-/* ===== Botones ===== */
+/* ===== Botones — solo cursor y font, Bootstrap maneja el resto ===== */
 button,
 .btn {
   cursor: pointer;
-  border: none;
   font-family: inherit;
-  border-radius: var(--radius);
   transition: var(--transicion);
 }
+
 button:active,
 .btn:active {
   transform: translateY(1px);
-}
-
-/* Personalización de Bootstrap */
-.btn-success {
-  background-color: var(--color-verde-olivo);
-  border-color: var(--color-verde-olivo);
-}
-.btn-success:hover {
-  background-color: var(--color-dorado);
-  border-color: var(--color-dorado);
-}
-.btn-outline-success {
-  color: var(--color-verde-olivo);
-  border-color: var(--color-verde-olivo);
-}
-.btn-outline-success:hover {
-  background-color: var(--color-verde-olivo);
-  border-color: var(--color-verde-olivo);
-  color: var(--color-blanco);
 }
 
 /* ===== Imágenes responsivas ===== */
@@ -133,7 +111,6 @@ img {
   max-width: 100%;
   height: auto;
   display: block;
-  border-radius: calc(var(--radius) - 8px);
 }
 
 /* ===== Foco accesible ===== */

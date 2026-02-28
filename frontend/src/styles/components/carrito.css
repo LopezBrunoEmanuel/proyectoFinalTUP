@@ -48,6 +48,7 @@
   height: 28px;
   line-height: 1;
   padding: 0;
+  border: none;
 }
 
 .cantidad-input {
@@ -95,15 +96,13 @@
   box-shadow: none;
 }
 
-/* Hover */
 .volver button:hover {
   background-color: var(--color-principal, #ca1c73);
   color: #fff;
-  transform: none; /* sin movimiento */
+  transform: none;
   box-shadow: none;
 }
 
-/* Active (clic) */
 .volver button:active {
   background-color: var(--color-principal, #ca1c73);
   color: #fff;
@@ -112,7 +111,6 @@
   box-shadow: none;
 }
 
-/* Focus */
 .volver button:focus {
   outline: none;
   box-shadow: none;
@@ -132,7 +130,7 @@
   background-color: #f8f4ed;
   color: var(--color-principal, #ca1c73);
   border: 1.5px solid var(--color-principal, #ca1c73);
-  border-radius: 50px;
+  border-radius: 5px;
   font-weight: 600;
   font-size: 1rem;
   padding: 0.6rem 1.4rem;

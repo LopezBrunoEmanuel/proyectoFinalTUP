@@ -34,6 +34,7 @@
 
 .detalle-reserva-page .sticky-top {
   position: sticky;
+  z-index: 1;
 }
 
 /* Responsive */

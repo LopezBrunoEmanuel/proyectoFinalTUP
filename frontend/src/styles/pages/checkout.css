@@ -26,7 +26,6 @@
   margin-bottom: 0.25rem;
 }
 
-/* Sección Dirección */
 .seccion-direccion,
 .seccion-pago {
   padding: 0.5rem 0;
@@ -71,7 +70,6 @@
   width: 100%;
 }
 
-/* Formulario nueva dirección */
 .nueva-direccion-form {
   background-color: #f8f9fa;
   padding: 1.5rem;

@@ -204,7 +204,7 @@ const Checkout = () => {
 
                             <div className="checkout-actions">
                                 <Button
-                                    variant="outline-secondary"
+                                    variant="secondary"
                                     size="lg"
                                     onClick={() => navigate("/productos")}
                                     disabled={loading}

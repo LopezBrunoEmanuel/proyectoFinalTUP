@@ -16,9 +16,8 @@
   margin-bottom: 2rem;
 }
 
-/* 🎯 Estilo solo para el botón principal de la sección destacados */
 .home__destacados-boton .btn {
-  border-radius: 40px;
+  border-radius: 5px;
   font-weight: 600;
   padding: 0.6rem 1.6rem;
   color: var(--color-verde-olivo);

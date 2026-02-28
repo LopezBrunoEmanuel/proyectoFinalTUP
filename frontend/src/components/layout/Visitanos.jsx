@@ -9,7 +9,6 @@ import {
     scaleIn,
 } from "../../animations/variants";
 import "../../styles/components/visitanos.css";
-import "../../styles/components/buttons.css"
 import { WHATSAPP_NUMBER, WHATSAPP_MESSAGES } from "../../utils/whatsappMensajes.js";
 
 

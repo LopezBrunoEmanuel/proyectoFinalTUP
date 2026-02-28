@@ -71,7 +71,7 @@
 
 .home__intro {
   text-align: center;
-  background-color: var(--color-beige);
+  background-color: var(--color-beige-claro);
 }
 
 .home__intro h2 {
@@ -87,7 +87,7 @@
 }
 
 .home__categorias {
-  background-color: var(--color-blanco);
+  background-color: var(--color-beige-claro);
 }
 
 .home__categoria-card {
@@ -117,7 +117,7 @@
 }
 
 .home__beneficios {
-  background-color: var(--color-blanco);
+  background-color: var(--color-beige);
 }
 
 .home__beneficio-card {
@@ -139,7 +139,7 @@
 }
 
 .home__destacados {
-  background-color: var(--color-blanco);
+  /* background-color: var(--color-beige); */
   text-align: center;
 }
 
@@ -172,16 +172,6 @@
   font-size: 1.1rem;
   max-width: 700px;
   margin: 0 auto 2rem;
-}
-
-.home__visitanos-boton {
-  border-radius: 50px;
-  font-weight: 600;
-  padding: 0.8rem 1.8rem;
-  transition: var(--transicion);
-  background-color: var(--color-dorado);
-  border-color: var(--color-dorado);
-  color: var(--color-blanco);
 }
 
 .home__visitanos-boton:hover {

@@ -1,4 +1,4 @@
-🌿 CONTENEDOR PRINCIPAL .aside-topbar-container {
+.aside-topbar-container {
   position: relative;
   z-index: 10;
   padding-top: 0.5rem;
@@ -18,7 +18,7 @@
 
 .aside-topbar .form-select,
 .aside-topbar .form-control {
-  border-radius: 8px;
+  border-radius: 5px;
   border: 1px solid #ccc;
   transition: all 0.2s ease;
   font-size: 0.95rem;
@@ -115,7 +115,7 @@
   border: 1.5px solid var(--color-verde-bosque) !important;
   color: var(--color-verde-bosque) !important;
   background-color: #fff !important;
-  border-radius: 50px !important;
+  border-radius: 5px !important;
   font-weight: 600 !important;
   transition: all 0.25s ease-in-out !important;
   padding: 0.6rem 1.4rem !important;

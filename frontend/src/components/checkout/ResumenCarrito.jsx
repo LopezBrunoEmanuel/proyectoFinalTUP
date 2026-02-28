@@ -16,7 +16,7 @@ const ResumenCarrito = ({ carrito, total }) => {
                                     <h6 className="mb-1">{item.nombreProducto}</h6>
                                     {item.nombreTamanio && (
                                         <Badge bg="secondary" className="me-2">
-                                            {item.nombreTamanio}
+                                            {item.dimension || item.nombreTamanio}
                                         </Badge>
                                     )}
                                     <small className="text-muted">Cantidad: {item.cantidad}</small>

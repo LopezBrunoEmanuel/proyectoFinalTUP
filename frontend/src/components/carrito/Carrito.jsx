@@ -110,7 +110,7 @@ const Carrito = ({ show, handleClose }) => {
                         </p>
 
                         <small className="text-muted d-block">
-                          Tamaño: {item.nombreTamanio}
+                          Tamaño: {item.dimension || item.nombreTamanio}
                         </small>
 
                         <small className="text-muted d-block">

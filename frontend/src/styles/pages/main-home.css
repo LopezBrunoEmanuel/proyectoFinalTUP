@@ -4,7 +4,7 @@
   font-family: var(--fuente-titulos);
 }
 
-/* 🪴 Sección Intro */
+/* Sección Intro */
 .home__intro h2 {
   font-family: var(--fuente-titulos);
   font-size: 2.6rem;
@@ -20,23 +20,7 @@
   margin-bottom: 1.8rem;
 }
 
-.home__intro button {
-  border: 2px solid var(--color-dorado) !important;
-  color: var(--color-dorado) !important;
-  font-weight: 600 !important;
-  border-radius: 50px !important;
-  background-color: transparent !important;
-  padding: 0.6rem 1.5rem !important;
-  transition: var(--transicion);
-}
-
-.home__intro button:hover {
-  background-color: var(--color-dorado) !important;
-  color: var(--color-blanco) !important;
-  transform: scale(1.05);
-}
-
-/* 🌿 Sección Categorías */
+/* Sección Categorías */
 .home__categorias {
   background-color: var(--color-blanco);
   border-top: 1px solid var(--color-gris-suave);
@@ -51,8 +35,10 @@
 
 .home__categoria-card {
   border: none;
-  background-color: var(--color-blanco);
-  transition: transform 0.35s ease, box-shadow 0.35s ease;
+  background-color: var(--color-beige);
+  transition:
+    transform 0.35s ease,
+    box-shadow 0.35s ease;
   cursor: pointer;
   overflow: hidden;
   border-radius: 12px;
@@ -82,9 +68,9 @@
   letter-spacing: 0.4px;
 }
 
-/* 🌻 Sección Beneficios */
+/* Sección Beneficios */
 .home__beneficios {
-  background-color: var(--color-beige-claro);
+  background-color: var(--color-beige);
 }
 
 .home__beneficios h3 {
@@ -121,7 +107,6 @@
   color: var(--color-dorado);
 }
 
-/* 📱 Responsive */
 @media (max-width: 768px) {
   .home__intro h2 {
     font-size: 2rem;
