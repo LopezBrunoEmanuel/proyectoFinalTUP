@@ -7,10 +7,9 @@ import {
     fadeDelayed,
     staggerContainer,
     scaleIn,
-} from "../../animations/variants";
+} from "../../animations/variants.js";
 import "../../styles/components/visitanos.css";
 import { WHATSAPP_NUMBER, WHATSAPP_MESSAGES } from "../../utils/whatsappMensajes.js";
-
 
 const Visitanos = () => {
     const handleWhatsAppClick = (mensaje = WHATSAPP_MESSAGES.contactoGeneral) => {

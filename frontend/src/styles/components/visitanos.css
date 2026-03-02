@@ -1,3 +1,7 @@
+/* ════════════════════════════════════
+   VISITANOS
+════════════════════════════════════ */
+
 .home__visitanos {
   background-color: var(--color-verde-bosque);
   color: var(--color-blanco);
@@ -25,17 +29,16 @@
   border: none;
   border-radius: 5px;
   padding: 0.8rem 1.8rem;
+  cursor: pointer;
   transition: var(--transicion);
 }
 
 .home__visitanos-boton:hover {
   opacity: 0.85;
-  background-color: var(--color-dorado) !important;
-  color: var(--color-verde-bosque) !important;
 }
 
 .home__visitanos-boton .whatsapp-icon {
   margin-left: 8px;
-  margin-top: 0px;
   font-size: 1.4rem;
+  vertical-align: middle;
 }

@@ -1,10 +1,9 @@
-.home__main {
+/* .home__main {
   background-color: var(--color-beige);
   color: var(--color-texto);
   font-family: var(--fuente-base);
 }
 
-/* Cada sección del Home */
 .home__intro,
 .home__categorias,
 .home__beneficios,
@@ -18,7 +17,6 @@
   border-bottom: none;
 }
 
-/* Textos principales */
 .home__main h1,
 .home__main h2,
 .home__main h3 {
@@ -139,7 +137,6 @@
 }
 
 .home__destacados {
-  /* background-color: var(--color-beige); */
   text-align: center;
 }
 
@@ -200,4 +197,4 @@
   .home__carrusel-img {
     height: 55vh;
   }
-}
+} */

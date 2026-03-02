@@ -41,8 +41,8 @@ const ProductoCard = ({ prod, onVerProducto }) => {
                 src={prod.imagenPrincipal || "/placeholder.jpg"}
                 alt={prod.nombreProducto}
                 className="card-img-top"
-                style={{ cursor: sinStock ? "default" : "pointer" }}
-                onClick={() => !sinStock && onVerProducto(prod)}
+                style={{ cursor: "pointer" }}
+                onClick={() => onVerProducto(prod)}
             />
 
             <Card.Body className="producto-body text-center">
@@ -68,11 +68,11 @@ const ProductoCard = ({ prod, onVerProducto }) => {
                         className="btn-agregar d-flex align-items-center justify-content-center gap-2"
                         variant="outline-primary"
                         size="sm"
-                        onClick={() => !sinStock && onVerProducto(prod)}
-                        disabled={sinStock}
+                        onClick={() => onVerProducto(prod)}
+                        disabled={false}
                     >
-                        <span>{sinStock ? "Sin stock" : "Agregar"}</span>
-                        <FaShoppingBag />
+                        <span>{sinStock ? "Ver producto" : "Agregar"}</span>
+                        {sinStock ? "" : <FaShoppingBag />}
                     </Button>
                 </div>
             </Card.Body>

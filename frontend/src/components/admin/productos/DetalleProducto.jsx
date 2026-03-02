@@ -4,7 +4,7 @@ import { Container, Row, Col, Card, Badge, Table, Button, Spinner, Alert } from 
 import { FiArrowLeft, FiEdit2, FiDollarSign, FiStar } from "react-icons/fi";
 import axios from "../../../api/axiosConfig";
 import { swalCustom } from "../../../utils/customSwal";
-import { getPrecioMostrar, renderPrecio, getStockMostrar } from "../../../utils/productHelpers";
+import { getPrecioMostrar, renderPrecio, getStockMostrar, getAlertaStock } from "../../../utils/productHelpers";
 import "../../../styles/admin/detalleProducto.css";
 
 const DetalleProducto = () => {
@@ -188,7 +188,15 @@ const DetalleProducto = () => {
                                         </Col>
                                         <Col md={6}>
                                             <strong>Stock:</strong>
-                                            <p className="mb-0 fs-5">{stockMostrar} unidades</p>
+                                            <p className="mb-0 fs-5">
+                                                {stockMostrar} unidades
+                                                {(() => {
+                                                    const alerta = getAlertaStock(producto.tamanios);
+                                                    if (alerta === "critico") return <span title="Stock crítico" style={{ color: "#dc3545", marginLeft: 6 }}>⚠ Crítico</span>;
+                                                    if (alerta === "bajo") return <span title="Stock bajo" style={{ color: "#ffc107", marginLeft: 6 }}>⚠ Bajo</span>;
+                                                    return null;
+                                                })()}
+                                            </p>
                                         </Col>
                                         {producto.tamanios[0].dimension && (
                                             <Col md={12} className="mt-3">
@@ -231,8 +239,11 @@ const DetalleProducto = () => {
                                                                 <td><strong>{tamanio.nombreTamanio}</strong></td>
                                                                 <td>{tamanio.dimension || "-"}</td>
                                                                 <td className="text-success"><strong>${tamanio.precio}</strong></td>
-                                                                <td>{tamanio.stock || 0} unidades</td>
                                                                 <td>
+                                                                    {tamanio.stock || 0} unidades
+                                                                    {Number(tamanio.stock) <= 3 && <span style={{ color: "#dc3545", marginLeft: 6 }}>⚠ Crítico</span>}
+                                                                    {Number(tamanio.stock) > 3 && Number(tamanio.stock) <= 9 && <span style={{ color: "#ffc107", marginLeft: 6 }}>⚠ Bajo</span>}
+                                                                </td>                                                                <td>
                                                                     <Badge bg={tamanio.activo ? "success" : "secondary"}>
                                                                         {tamanio.activo ? "Activo" : "Inactivo"}
                                                                     </Badge>

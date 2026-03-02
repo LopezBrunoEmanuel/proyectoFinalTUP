@@ -6,10 +6,9 @@ import Login from "./pages/public/Login";
 import Register from "./pages/public/Register";
 import CatalogoProductos from "./pages/public/CatalogoProductos";
 import Carrito from "./components/carrito/Carrito";
-import Servicios from "./pages/public/Servicios";
+import GuiaVivero from "./pages/public/GuiaVivero";
 import MiPerfil from "./pages/user/MiPerfil";
 import Error from "./pages/public/Error";
-import Tips from "./pages/public/Tips";
 import RutaPublica from "./routes/PublicRoute";
 import RutaPrivada from "./routes/PrivateRoute";
 import "./App.css";
@@ -56,9 +55,8 @@ function App() {
             }
           />
 
-          <Route path="/productos" element={<CatalogoProductos />} />
-          <Route path="/tips" element={<Tips />} />
-          <Route path="/servicios" element={<Servicios />} />
+          <Route path="/catalogo" element={<CatalogoProductos />} />
+          <Route path="/guia" element={<GuiaVivero />} />
 
           <Route path="/miPerfil" element={<RutaPrivada />}>
             <Route index element={<MiPerfil />} />

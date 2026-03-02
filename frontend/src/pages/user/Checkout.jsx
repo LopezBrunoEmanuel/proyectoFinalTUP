@@ -125,7 +125,7 @@ const Checkout = () => {
                 <Alert variant="warning">
                     <h5>Carrito vacío</h5>
                     <p>No hay productos para finalizar la compra</p>
-                    <Button onClick={() => navigate("/productos")}>
+                    <Button onClick={() => navigate("/catalogo")}>
                         Ver productos
                     </Button>
                 </Alert>

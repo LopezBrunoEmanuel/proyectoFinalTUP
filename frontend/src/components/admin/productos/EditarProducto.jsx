@@ -465,7 +465,11 @@ const EditarProducto = () => {
                                                                     size="sm"
                                                                 />
                                                             ) : (
-                                                                `${tamanio.stock} unid.`
+                                                                <>
+                                                                    {tamanio.stock} unid.
+                                                                    {Number(tamanio.stock) <= 3 && <span style={{ color: "#dc3545", marginLeft: 6 }}>⚠</span>}
+                                                                    {Number(tamanio.stock) > 3 && Number(tamanio.stock) <= 9 && <span style={{ color: "#ffc107", marginLeft: 6 }}>⚠</span>}
+                                                                </>
                                                             )}
                                                         </td>
                                                         <td className="text-center align-middle">

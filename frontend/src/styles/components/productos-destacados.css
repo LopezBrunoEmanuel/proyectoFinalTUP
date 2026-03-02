@@ -1,19 +1,20 @@
+/* ════════════════════════════════════
+   PRODUCTOS DESTACADOS
+════════════════════════════════════ */
+
 .home__destacados {
-  background-color: #fff;
-  border-top: 1px solid #eaeaea;
-  border-bottom: 1px solid #eaeaea;
+  background-color: var(--color-beige);
+  padding-block: var(--section-py);
+  border-top: 1px solid rgba(0, 0, 0, 0.05);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+  text-align: center;
 }
 
-.home__destacados .titulo-seccion {
-  color: #204e37;
+.home__destacados-titulo {
+  font-family: var(--fuente-titulos);
+  color: var(--color-verde-bosque);
   font-weight: 700;
   font-size: 2rem;
-}
-
-.home__destacados .texto-intro {
-  color: #666;
-  font-size: 1.1rem;
-  margin-bottom: 2rem;
 }
 
 .home__destacados-boton .btn {

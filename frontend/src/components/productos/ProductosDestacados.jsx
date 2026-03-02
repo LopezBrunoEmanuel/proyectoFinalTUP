@@ -65,7 +65,7 @@ const ProductosDestacados = () => {
                 </motion.div>
 
                 <motion.div variants={fadeDelayed(0.3)} initial="hidden" whileInView="visible" viewport={{ once: true }} className="home__destacados-boton text-center mt-4">
-                    <Button variant="outline-success" size="lg" onClick={() => navigate("/productos")}> Ver más productos <FaArrowRight /></Button>
+                    <Button variant="outline-success" size="lg" onClick={() => navigate("/catalogo")}> Ver más productos <FaArrowRight /></Button>
                 </motion.div>
             </Container>
         </section>

@@ -1,9 +1,9 @@
-﻿import { useState, useEffect } from "react";
+﻿import { useState, useEffect, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
 import { Container, Card, Table, Button, Form, Row, Col, Badge, Spinner } from "react-bootstrap";
 import { FiEye, FiEdit2, FiTrash2, FiToggleLeft, FiToggleRight, FiPlus } from "react-icons/fi";
 import { useProductosStore } from "../../../store/productosStore";
-import { getPrecioMostrar, renderPrecio, getStockMostrar } from "../../../utils/productHelpers";
+import { getPrecioMostrar, renderPrecio, getStockMostrar, getAlertaStock } from "../../../utils/productHelpers";
 import { toast } from "../../../utils/alerts";
 import Swal from "sweetalert2";
 import Paginador from "../../../components/common/Paginador";
@@ -17,6 +17,7 @@ const AdminProductos = () => {
         texto: "",
         categoria: "",
         estado: "",
+        stock: "",
     });
 
     const [paginaActual, setPaginaActual] = useState(1);
@@ -26,27 +27,46 @@ const AdminProductos = () => {
         fetchProductos();
     }, [fetchProductos]);
 
+    const categorias = useMemo(() => {
+        const mapa = new Map();
+        productos.forEach((p) => {
+            if (p.idCategoria && p.categoriaNombre) {
+                mapa.set(p.idCategoria, p.categoriaNombre);
+            }
+        });
+        return Array.from(mapa.entries()).sort((a, b) => a[1].localeCompare(b[1]));
+    }, [productos]);
+
     const handleFiltroChange = (e) => {
         const { name, value } = e.target;
         setFiltros((prev) => ({ ...prev, [name]: value }));
         setPaginaActual(1);
     };
 
-    const productosFiltrados = productos.filter((producto) => {
-        const coincideTexto =
-            !filtros.texto ||
-            producto.nombreProducto.toLowerCase().includes(filtros.texto.toLowerCase()) ||
-            producto.idProducto.toString().includes(filtros.texto);
+    const productosFiltrados = useMemo(() => {
+        return productos.filter((producto) => {
+            const coincideTexto =
+                !filtros.texto ||
+                producto.nombreProducto.toLowerCase().includes(filtros.texto.toLowerCase()) ||
+                producto.idProducto.toString().includes(filtros.texto);
 
-        const coincideCategoria = !filtros.categoria || producto.idCategoria?.toString() === filtros.categoria;
+            const coincideCategoria =
+                !filtros.categoria || producto.idCategoria?.toString() === filtros.categoria;
 
-        const coincideEstado =
-            filtros.estado === "" ||
-            (filtros.estado === "activo" && producto.activo) ||
-            (filtros.estado === "inactivo" && !producto.activo);
+            const coincideEstado =
+                filtros.estado === "" ||
+                (filtros.estado === "activo" && producto.activo) ||
+                (filtros.estado === "inactivo" && !producto.activo);
 
-        return coincideTexto && coincideCategoria && coincideEstado;
-    });
+            const coincideStock =
+                filtros.stock === "" ||
+                (filtros.stock === "critico" && producto.tamanios?.some(t => Number(t.activo) === 1 && Number(t.stock) <= 3)) ||
+                (filtros.stock === "bajo" && producto.tamanios?.some(t => Number(t.activo) === 1 && Number(t.stock) > 3 && Number(t.stock) <= 9)) ||
+                (filtros.stock === "alerta" && getAlertaStock(producto.tamanios) !== null);
+
+            return coincideTexto && coincideCategoria && coincideEstado && coincideStock;
+        });
+    }, [productos, filtros]);
 
     const totalPaginas = Math.ceil(productosFiltrados.length / productosPorPagina);
     const indiceInicio = (paginaActual - 1) * productosPorPagina;
@@ -111,7 +131,7 @@ const AdminProductos = () => {
                 <Card className="mb-4">
                     <Card.Body>
                         <Row>
-                            <Col md={4}>
+                            <Col md={3}>
                                 <Form.Group>
                                     <Form.Label>Buscar</Form.Label>
                                     <Form.Control
@@ -123,26 +143,35 @@ const AdminProductos = () => {
                                     />
                                 </Form.Group>
                             </Col>
-                            <Col md={4}>
+                            <Col md={3}>
                                 <Form.Group>
                                     <Form.Label>Categoría</Form.Label>
                                     <Form.Select name="categoria" value={filtros.categoria} onChange={handleFiltroChange}>
                                         <option value="">Todas</option>
-                                        <option value="1">Plantas</option>
-                                        <option value="2">Macetas</option>
-                                        <option value="3">Fertilizantes</option>
-                                        <option value="4">Herramientas</option>
-                                        <option value="5">Otros</option>
+                                        {categorias.map(([id, nombre]) => (
+                                            <option key={id} value={id}>{nombre}</option>
+                                        ))}
                                     </Form.Select>
                                 </Form.Group>
                             </Col>
-                            <Col md={4}>
+                            <Col md={3}>
                                 <Form.Group>
                                     <Form.Label>Estado</Form.Label>
                                     <Form.Select name="estado" value={filtros.estado} onChange={handleFiltroChange}>
                                         <option value="">Todos</option>
                                         <option value="activo">Activos</option>
                                         <option value="inactivo">Inactivos</option>
+                                    </Form.Select>
+                                </Form.Group>
+                            </Col>
+                            <Col md={3}>
+                                <Form.Group>
+                                    <Form.Label>Stock</Form.Label>
+                                    <Form.Select name="stock" value={filtros.stock} onChange={handleFiltroChange}>
+                                        <option value="">Todos</option>
+                                        <option value="alerta">Bajo o crítico</option>
+                                        <option value="bajo">Stock bajo</option>
+                                        <option value="critico">Stock crítico</option>
                                     </Form.Select>
                                 </Form.Group>
                             </Col>
@@ -178,7 +207,7 @@ const AdminProductos = () => {
                                             <td>#{producto.idProducto}</td>
                                             <td>
                                                 <strong>{producto.nombreProducto}</strong>
-                                                {producto.destacado && (
+                                                {!!producto.destacado && (
                                                     <Badge bg="warning" text="dark" className="ms-2">
                                                         Destacado
                                                     </Badge>
@@ -187,7 +216,15 @@ const AdminProductos = () => {
                                             <td className="text-success">
                                                 <strong>{renderPrecio(getPrecioMostrar(producto))}</strong>
                                             </td>
-                                            <td>{getStockMostrar(producto)}</td>
+                                            <td>
+                                                {getStockMostrar(producto)}
+                                                {producto.tamanios?.some(t => Number(t.activo) === 1 && Number(t.stock) <= 3) && (
+                                                    <span title="Stock crítico" style={{ color: "#dc3545", marginLeft: 6 }}>⚠</span>
+                                                )}
+                                                {producto.tamanios?.some(t => Number(t.activo) === 1 && Number(t.stock) > 3 && Number(t.stock) <= 9) && (
+                                                    <span title="Stock bajo" style={{ color: "#ffc107", marginLeft: 6 }}>⚠</span>
+                                                )}
+                                            </td>
                                             <td>{producto.categoriaNombre || "-"}</td>
                                             <td>
                                                 {producto.tamanios?.length > 0 ? (
@@ -257,8 +294,13 @@ const AdminProductos = () => {
 
                 <div className="mt-3 text-center text-muted">
                     <small>
-                        Mostrando {indiceInicio + 1} - {Math.min(indiceFin, productosFiltrados.length)} <br /> de {productosFiltrados.length} productos
-                        {productosFiltrados.length !== productos.length && ` (${productos.length} totales)`}
+                        {productosFiltrados.length === 0
+                            ? "Sin resultados"
+                            : <>
+                                Mostrando {indiceInicio + 1} - {Math.min(indiceFin, productosFiltrados.length)} de {productosFiltrados.length} productos
+                                {productosFiltrados.length !== productos.length && ` (${productos.length} totales)`}
+                            </>
+                        }
                     </small>
                 </div>
             </Container>

@@ -1,86 +1,13 @@
-/* 🔹 Contenedor general del carrusel */
+/* ════════════════════════════════════════════
+   CARRUSEL
+════════════════════════════════════════════ */
+
 .home__carrusel {
   position: relative;
-  background-color: #000; /* fondo oscuro durante transiciones */
-  overflow: hidden;
-  border-top-left-radius: 0;
-  border-top-right-radius: 0;
-  border-bottom-left-radius: 20px;
-  border-bottom-right-radius: 20px;
-}
-
-/* Contenedor de cada imagen con degradado */
-.home__carrusel-slide {
-  position: relative;
-}
-
-/* Imagen del carrusel */
-.home__carrusel-img {
-  display: block;
-  width: 100%;
-  height: 75vh;
-  object-fit: cover;
-  filter: brightness(0.8);
-  transition: transform 0.8s ease-in-out, filter 0.8s ease-in-out;
-  z-index: 0;
-}
-
-/* Degradado aplicado sobre la imagen */
-.home__carrusel-slide::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  background: linear-gradient(
-    to top,
-    rgba(0, 0, 0, 0.85) 0%,
-    rgba(0, 0, 0, 0.15) 40%,
-    rgba(0, 0, 0, 0.05) 60%
-  );
-  z-index: 1;
-}
-
-/* Suaviza el paso entre slides */
-.carousel-item {
   background-color: #000;
-  transition: transform 1s ease-in-out;
+  overflow: hidden;
 }
 
-/* Efecto de brillo leve en la imagen activa */
-.carousel-item.active .home__carrusel-img {
-  filter: brightness(0.9);
-}
-
-/* Texto del carrusel */
-.home__carrusel-caption {
-  position: absolute;
-  bottom: 12%;
-  left: 50%;
-  transform: translateX(-50%);
-  text-align: center;
-  max-width: 650px;
-  z-index: 2;
-}
-
-.home__carrusel-caption h3 {
-  font-family: var(--fuente-titulos);
-  color: var(--color-dorado);
-  font-size: clamp(2rem, 5vw, 3rem);
-  font-weight: 700;
-  margin-bottom: 0.5rem;
-  text-shadow: 1px 1px white, 0 2px 6px rgba(0, 0, 0, 0.4);
-  letter-spacing: 0.5px;
-}
-
-.home__carrusel-caption p {
-  color: var(--color-blanco);
-  font-size: clamp(1rem, 2vw, 1.2rem);
-  line-height: 1.6;
-  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
-  margin-top: 0.3rem;
-}
-
-/* Quita cualquier borde redondeado superior o interferencia visual */
 .home__carrusel,
 .carousel,
 .carousel-item,
@@ -88,21 +15,150 @@
   border-radius: 0 !important;
 }
 
+.home__carrusel-slide {
+  position: relative;
+}
+
+.home__carrusel-img {
+  display: block;
+  width: 100%;
+  height: 85vh;
+  object-fit: cover;
+  filter: brightness(0.75);
+}
+
+.home__carrusel-slide-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    105deg,
+    rgba(0, 0, 0, 0.72) 0%,
+    rgba(0, 0, 0, 0.35) 55%,
+    transparent 100%
+  );
+}
+
+.carousel-item {
+  background-color: #000;
+}
+
+/* ── CAPTION ────────────────────────────── */
+.home__carrusel-caption {
+  position: absolute;
+  top: 25%;
+  left: 5%;
+  transform: translateY(-50%);
+  max-width: 100%;
+  z-index: 2;
+  text-align: left;
+}
+
+.home__carrusel-eyebrow {
+  display: inline-block;
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 3.5px;
+  text-transform: uppercase;
+  color: var(--color-dorado);
+  margin-bottom: 0.9rem;
+}
+
+.home__carrusel-title {
+  font-family: var(--fuente-titulos);
+  color: #fff;
+  font-size: clamp(2.2rem, 5vw, 3.5rem);
+  font-weight: 800;
+  line-height: 1.1;
+  margin-bottom: 0.85rem;
+  letter-spacing: -0.5px;
+}
+
+.home__carrusel-text {
+  color: rgba(255, 255, 255, 0.82);
+  font-size: clamp(0.95rem, 1.5vw, 1.1rem);
+  line-height: 1.65;
+  margin-bottom: 1.75rem;
+}
+
+/* ── BOTONES ────────────────────────────── */
+.home__carrusel-actions {
+  display: flex;
+  gap: 0.85rem;
+  flex-wrap: wrap;
+}
+
+.home__carrusel-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.7rem 1.6rem;
+  border-radius: 6px;
+  font-family: var(--fuente-titulos);
+  font-weight: 700;
+  font-size: 0.9rem;
+  cursor: pointer;
+  border: 2px solid transparent;
+  transition: all 0.22s ease;
+  letter-spacing: 0.2px;
+}
+
+.home__carrusel-btn--primary {
+  background-color: transparent;
+  color: var(--color-dorado);
+  border-color: var(--color-dorado);
+}
+
+.home__carrusel-btn--primary:hover {
+  background-color: rgba(255, 255, 194, 0.12);
+  border-color: var(--color-dorado);
+}
+
+.home__carrusel-btn--ghost {
+  background-color: transparent;
+  color: #fff;
+  border-color: rgba(255, 255, 255, 0.6);
+}
+
+.home__carrusel-btn--ghost:hover {
+  background-color: rgba(255, 255, 255, 0.12);
+  border-color: #fff;
+}
+
+/* ── INDICADORES ────────────────────────── */
+.carousel-indicators [data-bs-target] {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: rgba(255, 255, 255, 0.45);
+  border: none;
+  transition:
+    background-color 0.3s ease,
+    transform 0.3s ease;
+}
+
+.carousel-indicators .active {
+  background-color: var(--color-dorado);
+  transform: scale(1.3);
+}
+
+/* ── RESPONSIVE ─────────────────────────── */
 @media (max-width: 768px) {
   .home__carrusel-img {
-    height: 55vh;
+    height: 72vh;
   }
 
   .home__carrusel-caption {
-    bottom: 8%;
+    left: 5%;
     max-width: 90%;
+    top: 25%;
   }
 
-  .home__carrusel-caption h3 {
-    font-size: 1.8rem;
+  .home__carrusel-title {
+    font-size: 2rem;
   }
 
-  .home__carrusel-caption p {
-    font-size: 1rem;
+  .home__carrusel-btn {
+    padding: 0.6rem 1.2rem;
+    font-size: 0.85rem;
   }
 }

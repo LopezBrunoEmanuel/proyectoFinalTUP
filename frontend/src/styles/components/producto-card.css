@@ -1,6 +1,3 @@
-/* ==========================
-   VARIABLES
-========================== */
 :root {
   --color-principal: var(--color-verde-bosque);
   --color-acento: var(--color-dorado);
@@ -8,9 +5,6 @@
   --sombra-hover: var(--sombra-suave);
 }
 
-/* ==========================
-   CONTENEDOR GENERAL
-========================== */
 .cards-container {
   width: 100%;
   max-width: 1200px;
@@ -25,9 +19,6 @@
   }
 }
 
-/* ==========================
-   CARD BASE
-========================== */
 .producto-card {
   border: 1px solid var(--color-borde);
   border-radius: 12px;
@@ -41,45 +32,34 @@
     box-shadow 0.5s ease;
 }
 
-/* ==========================
-   CUERPO DE LA CARD (flex)
-========================== */
-
-/* ==========================
-   CARDS SIN STOCK
-========================== */
 .producto-card.sin-stock {
   position: relative;
-  opacity: 0.55;
-  filter: grayscale(20%);
+}
+
+.producto-card.sin-stock img {
+  position: relative;
+  opacity: 0.8;
 }
 
 .producto-card.sin-stock::before {
   content: "SIN STOCK";
   position: absolute;
-  top: 10px;
-  left: 0;
-  right: 0;
+  top: 18%;
+  left: -30%;
+  right: -30%;
   text-align: center;
-  background-color: rgba(122, 158, 126, 0.9);
-  color: var(--color-blanco);
+  background-color: var(--color-verde-bosque);
+  color: var(--color-beige-claro);
   font-weight: 700;
-  font-size: 0.95rem;
-  padding: 6px 0;
+  font-size: 1rem;
+  padding: 9px 0;
   text-transform: uppercase;
   letter-spacing: 1px;
   z-index: 20;
   backdrop-filter: blur(5px);
+  transform: rotate(-25deg);
 }
 
-.producto-card.sin-stock * {
-  pointer-events: none;
-  user-select: none;
-}
-
-/* ==========================
-   IMAGEN
-========================== */
 .card-img-top {
   width: 100%;
   aspect-ratio: 4 / 3;
@@ -88,24 +68,28 @@
   transition: transform 0.3s ease;
 }
 
-/* ==========================
-   INFORMACIÓN
-========================== */
 .nombre-producto {
   font-weight: 600;
   font-size: 1rem;
+  line-height: 1.4rem;
   color: var(--color-texto);
   text-align: center;
-  overflow: hidden;
   display: -webkit-box;
   line-clamp: 2;
   -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-height: calc(1.4rem * 2);
+  margin-top: 0.5rem;
+  margin-bottom: 0.4rem;
 }
 
 .precio-producto {
+  margin-top: 0.15rem;
+  margin-bottom: 0.45rem;
   font-size: 1.1rem;
-  color: var(--color-verde-olivo);
   font-weight: 600;
+  color: var(--color-verde-olivo);
 }
 
 .stock-producto {
@@ -113,212 +97,6 @@
   color: var(--color-gris-medio);
 }
 
-/* ==========================
-  CONTROL DE CANTIDAD
-========================== */
-
-.cantidad-container .btn {
-  border: none;
-  background: transparent;
-  color: var(--color-gris-medio);
-  font-weight: bold;
-  width: 36px;
-  height: 36px;
-  transition: 0.2s ease;
-}
-
-.cantidad-container .btn:hover:not(:disabled) {
-  background-color: rgba(0, 0, 0, 0.05);
-}
-
-.cantidad-container .btn:active {
-  transform: scale(1.05) translateY(1px);
-}
-
-.cantidad-container .btn:disabled {
-  color: #bbb;
-  cursor: not-allowed;
-}
-
-/* ==========================
-  ESPACIO RESERVADO PARA SELECT
-========================== */
-
-/* ==========================
-  SELECT TAMAÑOS
-========================== */
-
-.select-tamanios:hover {
-  border-color: var(--color-verde-bosque);
-}
-
-.select-tamanios:focus,
-.select-tamanios:focus-visible,
-.select-tamanios:active {
-  outline: none !important;
-  box-shadow: none !important;
-  border-color: var(--color-verde-bosque) !important;
-}
-
-/* ==========================
-  BOTÓN AGREGAR
-========================== */
-
-.btn-agregar:hover:not(:disabled) {
-  background: var(--color-verde-bosque);
-  color: var(--color-blanco);
-}
-
-.btn-agregar:focus,
-.btn-agregar:active {
-  outline: none !important;
-  box-shadow: none !important;
-}
-
-.btn-agregar:disabled {
-  opacity: 0.45;
-  cursor: not-allowed;
-  border-color: var(--color-gris-suave) !important;
-  color: var(--color-gris-suave) !important;
-  background: transparent !important;
-}
-
-/* ==========================
-  MENSAJE SIN RESULTADOS
-========================== */
-.no-resultados {
-  text-align: center;
-  padding: 3rem;
-  background-color: var(--color-beige-claro);
-  border-radius: 12px;
-  border: 1px solid var(--color-borde);
-  animation: fadeIn 0.6s ease-in-out;
-}
-
-.no-resultados h5 {
-  color: var(--color-verde-bosque);
-  font-weight: 600;
-}
-
-.no-resultados p {
-  color: var(--color-gris-medio);
-}
-
-/* ==========================
-  ANIMACIONES
-========================== */
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(10px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-/* ==========================
-  RESPONSIVE
-========================== */
-@media (max-width: 576px) {
-  .card-img-top {
-    aspect-ratio: 1 / 1;
-  }
-
-  .botones-cards {
-    flex-direction: column;
-    gap: 8px;
-  }
-
-  .btn-agregar {
-    width: 100%;
-  }
-}
-
-@media (max-width: 768px) {
-  .producto-card:hover {
-    transform: none !important;
-    box-shadow: none !important;
-  }
-}
-/* ==========================
-  CUERPO DE LA CARD (estructura flex)
-========================== */
-.producto-body {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  height: 100%;
-  padding: 0.75rem 1rem !important;
-}
-
-/* Zona superior que se estira */
-.zona-superior-flex {
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  flex-grow: 1;
-}
-
-/* Zona inferior SIEMPRE pegada al fondo */
-.zona-inferior {
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 0.5rem;
-  margin-top: auto;
-}
-
-/* ==========================
-  SELECT TAMAÑOS / ESPACIO RESERVADO
-========================== */
-.select-tamanios,
-.espacio-reservado-select {
-  width: 100%;
-  max-width: 190px;
-  height: 40px;
-}
-
-/* Select visible */
-.select-tamanios {
-  border-radius: 40px;
-  border: 1px solid var(--color-borde);
-  background-color: var(--color-blanco);
-  font-size: 0.9rem;
-  font-weight: 500;
-  padding: 0 0.9rem;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  appearance: none;
-  transition: border-color 0.2s ease;
-  /* margin-top: -10px; */
-  margin-bottom: 6px;
-}
-
-.select-tamanios:hover {
-  border-color: var(--color-verde-bosque);
-}
-
-.select-tamanios:focus,
-.select-tamanios:focus-visible,
-.select-tamanios:active {
-  outline: none !important;
-  box-shadow: none !important;
-  border-color: var(--color-verde-bosque) !important;
-}
-
-/* Espacio vacío cuando NO hay select */
-.espacio-reservado-select {
-  display: block;
-}
-
-/* ==========================
-  CONTROL DE CANTIDAD
-========================== */
 .cantidad-container {
   width: 100%;
   max-width: 190px;
@@ -332,7 +110,6 @@
   overflow: hidden;
 }
 
-/* Botones +/- */
 .cantidad-container .btn {
   width: 45px;
   height: 100%;
@@ -358,28 +135,22 @@
   color: #bbb;
 }
 
-/* Input numérico */
 .cantidad-input {
   flex: 1;
   height: 100%;
-  border: none;
-  border-left: 1px solid var(--color-borde);
-  border-right: 1px solid var(--color-borde);
   text-align: center;
   font-weight: 600;
   font-size: 0.95rem;
   background: transparent;
+  border: none !important;
+  border-left: 1px solid var(--color-borde) !important;
+  border-right: 1px solid var(--color-borde) !important;
+  border-top: none !important;
+  border-bottom: none !important;
+  border-radius: 0 !important;
+  outline: none !important;
+  box-shadow: none !important;
 }
-
-.cantidad-input:focus {
-  outline: none;
-  box-shadow: none;
-}
-
-/* ==========================================
-   INPUT DE CANTIDAD — SIN FLECHITAS, SIN SOMBREADO,
-   Y SOLO CON BORDES LATERALES
-========================================== */
 
 .cantidad-input::-webkit-outer-spin-button,
 .cantidad-input::-webkit-inner-spin-button {
@@ -392,28 +163,50 @@
   box-shadow: none !important;
 }
 
-.cantidad-input {
-  border: none !important;
-  border-left: 1px solid var(--color-borde) !important;
-  border-right: 1px solid var(--color-borde) !important;
-  border-top: none !important;
-  border-bottom: none !important;
-  border-radius: 0 !important;
-  background: transparent;
-  outline: none !important;
-  box-shadow: none !important;
+.espacio-reservado-select,
+.select-tamanios {
+  width: 100%;
+  max-width: 190px;
+  height: 40px;
 }
 
-/* ==========================
-  BOTÓN AGREGAR
-========================== */
+.select-tamanios {
+  border-radius: 40px;
+  border: 1px solid var(--color-borde);
+  background-color: var(--color-blanco);
+  font-size: 0.9rem;
+  font-weight: 500;
+  padding: 0 0.9rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  appearance: none;
+  transition: border-color 0.2s ease;
+  margin-bottom: 6px;
+}
+
+.select-tamanios:hover {
+  border-color: var(--color-verde-bosque);
+}
+
+.select-tamanios:focus,
+.select-tamanios:focus-visible,
+.select-tamanios:active {
+  outline: none !important;
+  box-shadow: none !important;
+  border-color: var(--color-verde-bosque) !important;
+}
+
+.espacio-reservado-select {
+  display: block;
+}
+
 .btn-agregar {
   width: 80%;
   max-width: 190px;
   height: 40px;
   border: 1px solid var(--color-verde-bosque) !important;
   color: var(--color-verde-bosque);
-  background-color: var(--color-verde-bosque);
   background: transparent;
   font-weight: 600;
   font-size: 0.95rem;
@@ -428,7 +221,7 @@
   margin-bottom: 10px;
 }
 
-.btn-agregar:hover:not(:disabled) {
+.btn-agregar:hover {
   background-color: var(--color-verde-bosque);
   color: var(--color-blanco);
 }
@@ -440,35 +233,78 @@
   transform: scale(0.98);
 }
 
-.btn-agregar:disabled {
-  opacity: 0.45;
-  cursor: not-allowed;
-  border-color: var(--color-gris-suave) !important;
-  color: var(--color-gris-medio) !important;
-  background: transparent !important;
-}
-
-/* Nombre del producto — 2 líneas exactas, sin que se asome nada */
-.nombre-producto {
-  font-weight: 600;
-  font-size: 1rem;
-  line-height: 1.4rem;
-  color: var(--color-texto);
+.no-resultados {
   text-align: center;
-  display: -webkit-box;
-  line-clamp: 2;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  max-height: calc(1.4rem * 2);
-  margin-top: 0.5rem;
-  margin-bottom: 0.4rem;
+  padding: 3rem;
+  background-color: var(--color-beige-claro);
+  border-radius: 12px;
+  border: 1px solid var(--color-borde);
+  animation: fadeIn 0.6s ease-in-out;
 }
 
-.precio-producto {
-  margin-top: 0.15rem;
-  margin-bottom: 0.45rem;
-  font-size: 1.1rem;
+.no-resultados h5 {
+  color: var(--color-verde-bosque);
   font-weight: 600;
-  color: var(--color-verde-olivo);
+}
+
+.no-resultados p {
+  color: var(--color-gris-medio);
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.producto-body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100%;
+  padding: 0.75rem 1rem !important;
+}
+
+.zona-superior-flex {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex-grow: 1;
+}
+
+.zona-inferior {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: auto;
+}
+
+@media (max-width: 576px) {
+  .card-img-top {
+    aspect-ratio: 1 / 1;
+  }
+
+  .botones-cards {
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .btn-agregar {
+    width: 100%;
+  }
+}
+
+@media (max-width: 768px) {
+  .producto-card:hover {
+    transform: none !important;
+    box-shadow: none !important;
+  }
 }

@@ -1,4 +1,3 @@
-/* === Asegurar misma fuente global === */
 .header,
 .navbar,
 .navbar-nav,
@@ -27,16 +26,16 @@
   justify-content: center;
 }
 
-.navbar-nav {
-  display: flex;
-  justify-content: center;
-  gap: 1.5rem;
-}
-
 .navbar-brand {
   color: var(--color-beige) !important;
   font-weight: 700;
   font-size: 1.5rem;
+}
+
+.nav-unified {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
 }
 
 .nav-link {
@@ -44,6 +43,9 @@
   font-weight: 600;
   position: relative;
   transition: all 0.3s ease;
+  padding: 0.4rem 0 !important;
+  display: inline-flex;
+  align-items: center;
 }
 
 .nav-link::after {
@@ -53,14 +55,17 @@
   bottom: -3px;
   width: 0;
   height: 2px;
-  background-color: var(--color-dorado); /* ← ahora dorado */
+  background-color: var(--color-dorado);
   transition: width 0.3s ease;
 }
 
 .nav-link.active {
   color: var(--color-dorado) !important;
-  /* transform: scale(1.15); */
-  /* display: none; */
+}
+
+.nav-link.active::after {
+  width: 100%;
+  background-color: var(--color-dorado);
 }
 
 @media (min-width: 992px) {
@@ -74,30 +79,18 @@
   }
 }
 
-.nav-link.active {
-  color: var(--color-dorado) !important;
-}
-
-.nav-link.active::after {
-  width: 100%;
-  background-color: var(--color-dorado); /* ← agregalo aquí también */
-}
-
 .navbar-icons {
   display: flex;
   align-items: center;
   gap: 1rem;
   margin-left: auto;
+  height: 100%;
 }
 
 .icon-link {
   color: var(--color-beige) !important;
   font-size: 1.4rem;
   transition: color 0.3s ease;
-}
-
-.icon-link:hover {
-  color: var(--color-dorado) !important;
 }
 
 .icon-link::after {
@@ -117,28 +110,70 @@
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
-.dropdown-item {
-  color: var(--color-dorado) !important;
-  transition:
-    background-color 0.2s ease,
-    color 0.2s ease;
-}
-
-.dropdown-item:hover {
-  background-color: #ca1c73;
-  color: #faf6f2 !important;
-}
-
-/* con este background se vuelve gris oscuro */
-/* .navbar-toggler-icon {
-  background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgba(46,46,46, 0.9)' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E");
-} */
-
 .navbar-toggler {
   border: none;
   background: transparent;
   outline: none;
   box-shadow: none;
+}
+
+.nav-icon {
+  opacity: 0.75;
+  font-size: 0.95rem;
+}
+
+.perfil-dropdown-desktop .dropdown-toggle::after {
+  display: none !important;
+}
+
+.perfil-dropdown-desktop .dropdown-toggle {
+  padding: 0 !important;
+  border: none !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  color: var(--color-beige) !important;
+}
+
+.perfil-dropdown-desktop .dropdown-toggle:hover {
+  color: var(--color-dorado) !important;
+}
+
+.perfil-dropdown-desktop .dropdown-menu {
+  background-color: var(--color-beige);
+  border: none;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+}
+
+.perfil-dropdown-desktop .dropdown-item {
+  color: var(--color-verde-bosque) !important;
+  font-weight: 600;
+  transition:
+    background-color 0.2s ease,
+    color 0.2s ease;
+}
+
+.perfil-dropdown-desktop .dropdown-item:hover,
+.perfil-dropdown-desktop .dropdown-item:focus {
+  background-color: rgba(212, 175, 55, 0.15);
+  color: var(--color-verde-bosque) !important;
+}
+
+.perfil-dropdown-desktop .dropdown-item.active,
+.perfil-dropdown-desktop .dropdown-item:active {
+  background-color: transparent !important;
+  color: var(--color-verde-bosque) !important;
+}
+
+.perfil-dropdown-desktop .dropdown-divider {
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.perfil-dropdown-desktop .dropdown-toggle {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center;
+  height: 100%;
+  padding: 0 !important;
 }
 
 @media (max-width: 992px) {
@@ -154,93 +189,28 @@
     margin-left: 0.5rem;
   }
 
-  .nav-link:hover,
-  .icon-link:hover {
-    transform: none;
+  .nav-unified {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0;
+    width: 100%;
+    padding: 0.5rem 0;
   }
 
-  .nav-link::after {
-    bottom: -2px;
+  .nav-unified .nav-link,
+  .nav-unified button.nav-link {
+    width: 100%;
+    padding: 0.6rem 1rem !important;
+    display: flex;
+    align-items: center;
   }
-}
 
-/* header.css */
-.btn-logout {
-  background-color: var(--color-beige);
-  /* color de fondo rosa/rojo */
-  color: var(--color-verde-bosque);
-  /* texto blanco */
-  border: none;
-  /* sin borde */
-  padding: 5px 12px;
-  /* tamaño del botón */
-  border-radius: 5px;
-  /* esquinas redondeadas */
-  cursor: pointer;
-  /* cursor puntero */
-  transition: background-color 0.3s ease;
-}
+  .nav-unified .nav-link::after {
+    display: none;
+  }
 
-.btn-logout:hover {
-  opacity: 0.8;
-  background-color: var(--color-beige);
-  color: #2e2e2e;
-  /* color más oscuro al pasar el mouse */
-}
-/* === PERFIL DESKTOP: ocultar flechita (caret) del NavDropdown === */
-.perfil-dropdown-desktop .dropdown-toggle::after {
-  display: none !important;
-}
-
-/* Evitar estilos de botón/link raros en el icono */
-.perfil-dropdown-desktop .dropdown-toggle {
-  padding: 0 !important;
-  border: none !important;
-  background: transparent !important;
-  box-shadow: none !important;
-  color: var(--color-beige) !important;
-}
-
-/* Hover coherente con el resto del header */
-.perfil-dropdown-desktop .dropdown-toggle:hover {
-  color: var(--color-dorado) !important;
-}
-
-/* ===============================
-   DROPDOWN PERFIL – DESKTOP
-   =============================== */
-
-/* Fondo general del dropdown */
-.perfil-dropdown-desktop .dropdown-menu {
-  background-color: var(--color-beige);
-  border: none;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
-}
-
-/* Ítems del dropdown */
-.perfil-dropdown-desktop .dropdown-item {
-  color: var(--color-verde-bosque) !important;
-  font-weight: 600;
-  transition:
-    background-color 0.2s ease,
-    color 0.2s ease;
-}
-
-/* Hover (eliminamos rosado, usamos dorado suave) */
-.perfil-dropdown-desktop .dropdown-item:hover,
-.perfil-dropdown-desktop .dropdown-item:focus {
-  background-color: rgba(212, 175, 55, 0.15); /* dorado suave */
-  color: var(--color-verde-bosque) !important;
-}
-
-/* Estado active (eliminar azul bootstrap) */
-.perfil-dropdown-desktop .dropdown-item.active,
-.perfil-dropdown-desktop .dropdown-item:active {
-  background-color: transparent !important;
-  color: var(--color-verde-bosque) !important;
-}
-
-/* Divider más sutil */
-.perfil-dropdown-desktop .dropdown-divider {
-  border-top: 1px solid rgba(0, 0, 0, 0.1);
+  .nav-unified .nav-link.active {
+    border-left: 3px solid var(--color-dorado);
+    padding-left: calc(1rem - 3px) !important;
+  }
 }

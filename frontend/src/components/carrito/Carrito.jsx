@@ -78,7 +78,7 @@ const Carrito = ({ show, handleClose }) => {
               className="btn-volver"
               onClick={() => {
                 handleClose();
-                setTimeout(() => navigate("/productos"), 300);
+                setTimeout(() => navigate("/catalogo"), 300);
               }}
             >
               Visita la tienda
@@ -131,7 +131,11 @@ const Carrito = ({ show, handleClose }) => {
                         <FaRegTrashAlt />
                       </Button>
                     </div>
-
+                    {item.cantidad >= item.stockDisponible && (
+                      <small style={{ color: "#b8860b", fontSize: "0.75rem", marginTop: 4, display: "block" }}>
+                        ¡Límite de unidades alcanzado!
+                      </small>
+                    )}
                     <div className="d-flex align-items-center justify-content-between mt-2">
                       <div className="d-flex align-items-center gap-2">
                         <Button

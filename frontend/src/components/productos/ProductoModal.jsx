@@ -128,10 +128,20 @@ const ProductoModal = ({ prod, show, onHide, onAgregado }) => {
                             </div>
 
                             <small className="pm-stock">
+                                {stockDisponible > 0 && stockDisponible <= 5 && (
+                                    <small className="pm-stock--alerta" style={{ display: "block" }}>
+                                        ¡Últimas unidades!
+                                    </small>
+                                )}
                                 Stock disponible:{" "}
                                 <strong className={stockDisponible === 0 ? "pm-stock--agotado" : "pm-stock--ok"}>
                                     {stockDisponible}
                                 </strong>
+                                {enCarrito && enCarrito.cantidad > 0 && (
+                                    <small className="pm-stock--info" style={{ display: "block" }}>
+                                        Ya tenés {enCarrito.cantidad} unidad{enCarrito.cantidad > 1 ? "es" : ""} de este tamaño en tu carrito
+                                    </small>
+                                )}
                             </small>
 
                             {tamaniosActivos.length > 0 && (
@@ -164,6 +174,9 @@ const ProductoModal = ({ prod, show, onHide, onAgregado }) => {
                                 <div className="pm-cantidad-row">
                                     <div className="pm-cantidad">
                                         <span className="pm-section-label">Cantidad</span>
+                                        {cantidad >= stockDisponible && stockDisponible > 0 && !agregado && cantidad > 1 && (
+                                            <small className="pm-stock--info">¡Llegaste al límite de unidades disponibles!</small>
+                                        )}
                                         <div className="cantidad-container">
                                             <Button variant="outline-secondary" size="sm"
                                                 onClick={() => cambiarCantidad("restar")} disabled={cantidad <= 1}>−</Button>

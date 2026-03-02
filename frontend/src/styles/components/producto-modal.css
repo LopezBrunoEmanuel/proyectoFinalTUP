@@ -334,3 +334,16 @@
     max-height: calc(92dvh - 60px);
   }
 }
+
+.pm-stock--alerta {
+  color: #b8860b;
+  opacity: 0.8;
+  font-weight: 600;
+  font-size: small;
+}
+.pm-stock--info {
+  color: var(--color-gris-medio);
+  opacity: 0.5;
+  font-weight: 500;
+  font-size: small;
+}

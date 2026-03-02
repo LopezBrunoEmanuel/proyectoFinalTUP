@@ -1,20 +1,314 @@
-﻿import { useNavigate } from "react-router-dom";
-import { Container, Row, Col } from "react-bootstrap";
-// eslint-disable-next-line no-unused-vars
-import { motion } from "framer-motion";
-import { fadeInUp, fadeDelayed, staggerContainer, scaleIn } from "../../animations/variants";
-import "../../styles/pages/main-home.css";
-import { FiTruck } from "react-icons/fi";
-import { GiSprout } from "react-icons/gi";
-import { FiUserCheck } from "react-icons/fi";
+﻿// import { useNavigate } from "react-router-dom";
+// import { Container, Row, Col } from "react-bootstrap";
+// // eslint-disable-next-line no-unused-vars
+// import { motion } from "framer-motion";
+// import { fadeInUp, fadeDelayed, staggerContainer, scaleIn } from "../../animations/variants";
+// import "../../styles/pages/main-home.css";
+// import { FiTruck, FiUserCheck, FiScissors, FiBookOpen } from "react-icons/fi";
+// import { GiSprout, GiGardeningShears, GiPlantWatering } from "react-icons/gi";
 
+// const servicios = [
+//     {
+//         id: "paisajismo",
+//         titulo: "Paisajismo",
+//         descripcion: "Diseño y planificación de espacios verdes estéticos y funcionales, adaptados a cada ambiente.",
+//         icono: <GiGardeningShears size={28} />,
+//         imagen: "https://plus.unsplash.com/premium_photo-1664299231556-57f570023f87?auto=format&fit=crop&w=800&q=80",
+//     },
+//     {
+//         id: "jardineria",
+//         titulo: "Jardinería",
+//         descripcion: "Mantenimiento integral, podas y cuidado profesional de jardines en toda su dimensión.",
+//         icono: <GiPlantWatering size={28} />,
+//         imagen: "https://images.unsplash.com/photo-1734079692160-fcbe4be6ab96?auto=format&fit=crop&w=800&q=80",
+//     },
+//     {
+//         id: "talleres",
+//         titulo: "Talleres",
+//         descripcion: "Actividades educativas y prácticas para aprender sobre plantas, cultivo y naturaleza.",
+//         icono: <GiSprout size={28} />,
+//         imagen: "https://images.unsplash.com/photo-1549448046-b89e7214060d?auto=format&fit=crop&w=800&q=80",
+//     },
+//     {
+//         id: "capacitaciones",
+//         titulo: "Capacitaciones",
+//         descripcion: "Formaciones especializadas para profundizar en botánica, huerta urbana y cuidado vegetal.",
+//         icono: <FiBookOpen size={28} />,
+//         imagen: "https://plus.unsplash.com/premium_photo-1664299228258-8890ef6dc22c?auto=format&fit=crop&w=800&q=80",
+//     },
+// ];
+
+// const MainHome = () => {
+//     const navigate = useNavigate();
+
+//     return (
+//         <main className="home__main bg-light">
+
+//             <section className="home__intro text-center py-5">
+//                 <Container>
+//                     <motion.div
+//                         variants={staggerContainer}
+//                         initial="hidden"
+//                         whileInView="visible"
+//                         viewport={{ once: true }}
+//                     >
+//                         <motion.h2 variants={fadeInUp}>
+//                             Bienvenido a Patio 1220
+//                         </motion.h2>
+//                         <motion.p variants={fadeDelayed(0.2)}>
+//                             Donde cada planta cuenta una historia. Ofrecemos productos
+//                             naturales, asesoramiento profesional y un espacio para que
+//                             conectes con la naturaleza.
+//                         </motion.p>
+//                     </motion.div>
+//                 </Container>
+//             </section>
+
+//             <section className="home__beneficios py-5 bg-white">
+//                 <Container>
+//                     <motion.div
+//                         variants={staggerContainer}
+//                         initial="hidden"
+//                         whileInView="visible"
+//                         viewport={{ once: true }}
+//                     >
+//                         <Row className="g-4">
+//                             {[
+//                                 {
+//                                     titulo: "ATENCIÓN PERSONALIZADA",
+//                                     desc: "Te ayudamos a elegir las plantas ideales para tu hogar o jardín.",
+//                                     icono: <FiUserCheck />,
+//                                 },
+//                                 {
+//                                     titulo: "CREÁ TU PROPIA HUERTA",
+//                                     desc: "Seleccionamos cuidadosamente cada especie y accesorio para vos.",
+//                                     icono: <GiSprout />,
+//                                 },
+//                                 {
+//                                     titulo: "ENVÍOS A DOMICILIO",
+//                                     desc: "Llevamos la naturaleza directamente hasta tu puerta.",
+//                                     icono: <FiTruck />,
+//                                 },
+//                             ].map((item, i) => (
+//                                 <Col xs={12} md={4} key={i}>
+//                                     <motion.div
+//                                         className="home__beneficio-card text-center p-4 rounded shadow-sm h-100"
+//                                         variants={fadeInUp}
+//                                     >
+//                                         <div className="home__beneficio-icono fs-1 mb-3">
+//                                             {item.icono}
+//                                         </div>
+//                                         <h5 className="fw-semibold mb-2">{item.titulo}</h5>
+//                                         <p className="text-muted">{item.desc}</p>
+//                                     </motion.div>
+//                                 </Col>
+//                             ))}
+//                         </Row>
+//                     </motion.div>
+//                 </Container>
+//             </section>
+
+//             <section className="home__servicios py-5">
+//                 <Container>
+//                     <motion.div
+//                         variants={staggerContainer}
+//                         initial="hidden"
+//                         whileInView="visible"
+//                         viewport={{ once: true }}
+//                     >
+//                         <motion.div className="text-center mb-5" variants={fadeInUp}>
+//                             <h3 className="fw-semibold">Lo que hacemos</h3>
+//                             <p className="text-muted" style={{ maxWidth: 500, margin: "0.5rem auto 0" }}>
+//                                 Más que un vivero: un espacio para aprender, diseñar y conectar con la naturaleza.
+//                             </p>
+//                         </motion.div>
+
+//                         <Row className="g-4">
+//                             {servicios.map((serv, i) => (
+//                                 <Col xs={12} sm={6} lg={3} key={serv.id}>
+//                                     <motion.div
+//                                         className="home__servicio-card"
+//                                         variants={fadeInUp}
+//                                         custom={i}
+//                                     >
+//                                         <div
+//                                             className="home__servicio-img"
+//                                             style={{ backgroundImage: `url(${serv.imagen})` }}
+//                                         >
+//                                             <div className="home__servicio-overlay" />
+//                                             <div className="home__servicio-icono">{serv.icono}</div>
+//                                         </div>
+//                                         <div className="home__servicio-body">
+//                                             <h5 className="home__servicio-titulo">{serv.titulo}</h5>
+//                                             <p className="home__servicio-desc">{serv.descripcion}</p>
+//                                         </div>
+//                                     </motion.div>
+//                                 </Col>
+//                             ))}
+//                         </Row>
+//                     </motion.div>
+//                 </Container>
+//             </section>
+
+//             <section className="home__categorias py-5">
+//                 <Container>
+//                     <motion.h3
+//                         className="text-center mb-5 fw-semibold"
+//                         variants={fadeInUp}
+//                         initial="hidden"
+//                         whileInView="visible"
+//                         viewport={{ once: true }}
+//                     >
+//                         Lo que buscás, lo encontrás en nuestras categorías.
+//                     </motion.h3>
+
+//                     <motion.div
+//                         variants={staggerContainer}
+//                         initial="hidden"
+//                         whileInView="visible"
+//                         viewport={{ once: true }}
+//                     >
+//                         <Row className="g-4 justify-content-center">
+//                             {[
+//                                 {
+//                                     nombre: "Plantas",
+//                                     categoria: "1",
+//                                     img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRip7IjQ47SH4_AP2wW8n4LycLV7FmGtODduw&s",
+//                                 },
+//                                 {
+//                                     nombre: "Macetas",
+//                                     categoria: "2",
+//                                     img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTTU02NOrRTmSRVAVDq5fXPhQ2XVoqeOmhH4w&s",
+//                                 },
+//                                 {
+//                                     nombre: "Fertilizantes",
+//                                     categoria: "3",
+//                                     img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4nr1XsOX2GSXp4G24UwjJQM4bjTFul-IuGw&s",
+//                                 },
+//                                 {
+//                                     nombre: "Herramientas",
+//                                     categoria: "4",
+//                                     img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRpMKE07ZrQ2slIfG6Wd0XXpsa0gIWD--vSYA&s",
+//                                 },
+//                             ].map((cat, i) => (
+//                                 <Col xs={12} sm={6} md={3} key={i}>
+//                                     <motion.div
+//                                         className="home__categoria-card shadow-sm rounded overflow-hidden"
+//                                         variants={scaleIn}
+//                                         onClick={() => {
+//                                             const categoria = cat.categoria;
+//                                             navigate("/productos", { state: { categoria } });
+//                                         }}
+//                                     >
+//                                         <div
+//                                             className="home__categoria-img"
+//                                             style={{
+//                                                 backgroundImage: `url(${cat.img})`,
+//                                                 backgroundSize: "cover",
+//                                                 backgroundPosition: "center",
+//                                                 height: "180px",
+//                                             }}
+//                                         />
+//                                         <div className="text-center py-3 bg-white">
+//                                             <h5 className="fw-semibold">{cat.nombre}</h5>
+//                                         </div>
+//                                     </motion.div>
+//                                 </Col>
+//                             ))}
+//                         </Row>
+//                     </motion.div>
+//                 </Container>
+//             </section>
+
+//         </main>
+//     );
+// };
+
+// export default MainHome;
+
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { Container, Row, Col } from "react-bootstrap";
+//eslint-disable-next-line
+import { motion } from "framer-motion";
+import { fadeInUp, staggerContainer } from "../../animations/variants";
+import { FiTruck, FiUserCheck, FiBookOpen } from "react-icons/fi";
+import { GiSprout, GiGardeningShears, GiPlantWatering } from "react-icons/gi";
+import { WHATSAPP_NUMBER } from "../../utils/whatsappMensajes.js";
+import "../../styles/pages/main-home.css";
+
+const beneficios = [
+    { titulo: "Atención personalizada", icono: <FiUserCheck size={20} /> },
+    { titulo: "Envíos a domicilio", icono: <FiTruck size={20} /> },
+    { titulo: "Asesoramiento experto", icono: <GiSprout size={20} /> },
+];
+
+const servicios = [
+    {
+        id: "paisajismo",
+        titulo: "Paisajismo",
+        descripcion: "Diseño y planificación de espacios verdes estéticos y funcionales, adaptados a cada ambiente.",
+        icono: <GiGardeningShears size={26} />,
+        imagen: "https://plus.unsplash.com/premium_photo-1664299231556-57f570023f87?auto=format&fit=crop&w=800&q=80",
+        whatsapp: "Hola! Me interesa saber más sobre el servicio de Paisajismo.",
+    },
+    {
+        id: "jardineria",
+        titulo: "Jardinería",
+        descripcion: "Mantenimiento integral, podas y cuidado profesional de jardines en toda su dimensión.",
+        icono: <GiPlantWatering size={26} />,
+        imagen: "https://images.unsplash.com/photo-1734079692160-fcbe4be6ab96?auto=format&fit=crop&w=800&q=80",
+        whatsapp: "Hola! Me interesa saber más sobre el servicio de Jardinería.",
+    },
+    {
+        id: "talleres",
+        titulo: "Talleres",
+        descripcion: "Actividades educativas y prácticas para aprender sobre plantas, cultivo y naturaleza.",
+        icono: <GiSprout size={26} />,
+        imagen: "https://images.unsplash.com/photo-1549448046-b89e7214060d?auto=format&fit=crop&w=800&q=80",
+        whatsapp: "Hola! Me interesa saber más sobre los Talleres que ofrecen.",
+    },
+    {
+        id: "capacitaciones",
+        titulo: "Capacitaciones",
+        descripcion: "Formaciones especializadas para profundizar en botánica, huerta urbana y cuidado vegetal.",
+        icono: <FiBookOpen size={26} />,
+        imagen: "https://plus.unsplash.com/premium_photo-1664299228258-8890ef6dc22c?auto=format&fit=crop&w=800&q=80",
+        whatsapp: "Hola! Me interesa saber más sobre las Capacitaciones que ofrecen.",
+    },
+];
+
+const categorias = [
+    { nombre: "Plantas", categoria: "1", img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRip7IjQ47SH4_AP2wW8n4LycLV7FmGtODduw&s" },
+    { nombre: "Macetas", categoria: "2", img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTTU02NOrRTmSRVAVDq5fXPhQ2XVoqeOmhH4w&s" },
+    { nombre: "Fertilizantes", categoria: "3", img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4nr1XsOX2GSXp4G24UwjJQM4bjTFul-IuGw&s" },
+    { nombre: "Herramientas", categoria: "4", img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRpMKE07ZrQ2slIfG6Wd0XXpsa0gIWD--vSYA&s" },
+    { nombre: "Explorar todo", categoria: null, img: "https://images.unsplash.com/photo-1416879595882-3373a0480b5b?auto=format&fit=crop&w=800&q=80", esExplorar: true },
+];
 
 const MainHome = () => {
     const navigate = useNavigate();
+    const [flippedCard, setFlippedCard] = useState(null);
 
     return (
-        <main className="home__main bg-light">
-            <section className="home__intro text-center py-5">
+        <main className="home__main">
+
+            {/* ── FRANJA BENEFICIOS ── */}
+            <div className="home__franja">
+                <Container>
+                    <div className="home__franja-inner">
+                        {beneficios.map((b, i) => (
+                            <div key={i} className="home__franja-item">
+                                <span className="home__franja-icono">{b.icono}</span>
+                                <span className="home__franja-texto">{b.titulo}</span>
+                            </div>
+                        ))}
+                    </div>
+                </Container>
+            </div>
+
+            {/* ── CATEGORÍAS ── */}
+            <section className="home__categorias">
                 <Container>
                     <motion.div
                         variants={staggerContainer}
@@ -22,19 +316,40 @@ const MainHome = () => {
                         whileInView="visible"
                         viewport={{ once: true }}
                     >
-                        <motion.h2 variants={fadeInUp}>
-                            Bienvenido a Patio 1220
-                        </motion.h2>
-                        <motion.p variants={fadeDelayed(0.2)}>
-                            Donde cada planta cuenta una historia. Ofrecemos productos
-                            naturales, asesoramiento profesional y un espacio para que
-                            conectes con la naturaleza.
-                        </motion.p>
+                        <motion.div className="home__section-head" variants={fadeInUp}>
+                            <span className="home__eyebrow">Explorá el catálogo</span>
+                            <h2 className="home__section-title">Encontrá lo que buscás</h2>
+                        </motion.div>
+
+                        <div className="home__cats-grid">
+                            {categorias.map((cat, i) => (
+                                <motion.div
+                                    key={i}
+                                    className={`home__cat-card ${i === 0 ? "home__cat-card--featured" : ""} ${cat.esExplorar ? "home__cat-card--explorar" : ""}`}
+                                    variants={fadeInUp}
+                                    onClick={() => {
+                                        if (cat.esExplorar) {
+                                            navigate("/catalogo");
+                                        } else {
+                                            navigate("/catalogo", { state: { categoria: cat.categoria } });
+                                        }
+                                    }}
+                                    style={!cat.esExplorar ? { backgroundImage: `url(${cat.img})` } : {}}
+                                >
+                                    {!cat.esExplorar && <div className="home__cat-overlay" />}
+                                    <span className="home__cat-nombre">{cat.nombre}</span>
+                                    {cat.esExplorar && (
+                                        <span className="home__cat-explorar-sub">Ver todos los productos</span>
+                                    )}
+                                </motion.div>
+                            ))}
+                        </div>
                     </motion.div>
                 </Container>
             </section>
 
-            <section className="home__beneficios py-5 bg-white">
+            {/* ── SERVICIOS ── */}
+            <section className="home__servicios">
                 <Container>
                     <motion.div
                         variants={staggerContainer}
@@ -42,102 +357,54 @@ const MainHome = () => {
                         whileInView="visible"
                         viewport={{ once: true }}
                     >
+                        <motion.div className="home__section-head" variants={fadeInUp}>
+                            <span className="home__eyebrow">Más que un vivero</span>
+                            <h2 className="home__section-title">Lo que hacemos</h2>
+                            <p className="home__section-sub">
+                                Un espacio para aprender, diseñar y conectar con la naturaleza.
+                            </p>
+                        </motion.div>
+
                         <Row className="g-4">
-                            {[
-                                {
-                                    titulo: "ATENCIÓN PERSONALIZADA",
-                                    desc: "Te ayudamos a elegir las plantas ideales para tu hogar o jardín.",
-                                    icono: <FiUserCheck />,
-                                },
-                                {
-                                    titulo: "CREÁ TU PROPIA HUERTA",
-                                    desc: "Seleccionamos cuidadosamente cada especie y accesorio para vos.",
-                                    icono: <GiSprout />,
-                                },
-                                {
-                                    titulo: "ENVÍOS A DOMICILIO",
-                                    desc: "Llevamos la naturaleza directamente hasta tu puerta.",
-                                    icono: <FiTruck />,
-                                },
-                            ].map((item, i) => (
-                                <Col xs={12} md={4} key={i}>
+                            {servicios.map((serv, i) => (
+                                <Col xs={12} sm={6} lg={3} key={serv.id}>
                                     <motion.div
-                                        className="home__beneficio-card text-center p-4 rounded shadow-sm h-100"
+                                        className={`home__servicio-flip ${flippedCard === serv.id ? "is-flipped" : ""}`}
                                         variants={fadeInUp}
+                                        custom={i}
+                                        onClick={() => setFlippedCard(flippedCard === serv.id ? null : serv.id)}
                                     >
-                                        <div className="home__beneficio-icono fs-1 mb-3">
-                                            {item.icono}
-                                        </div>
-                                        <h5 className="fw-semibold mb-2">{item.titulo}</h5>
-                                        <p className="text-muted">{item.desc}</p>
-                                    </motion.div>
-                                </Col>
-                            ))}
-                        </Row>
-                    </motion.div>
-                </Container>
-            </section>
+                                        <div className="home__servicio-flip-inner">
 
-            <section className="home__categorias py-5">
-                <Container>
-                    <motion.h3
-                        className="text-center mb-5 fw-semibold"
-                        variants={fadeInUp}
-                        initial="hidden"
-                        whileInView="visible"
-                        viewport={{ once: true }}
-                    >
-                        Lo que buscás, lo encontrás en nuestras categorías.
-                    </motion.h3>
+                                            {/* FRENTE */}
+                                            <div
+                                                className="home__servicio-front"
+                                                style={{ backgroundImage: `url(${serv.imagen})` }}
+                                            >
+                                                <div className="home__servicio-front-overlay" />
+                                                <div className="home__servicio-front-content">
+                                                    <span className="home__servicio-front-icono">{serv.icono}</span>
+                                                    <h5 className="home__servicio-front-titulo">{serv.titulo}</h5>
+                                                </div>
+                                            </div>
 
-                    <motion.div
-                        variants={staggerContainer}
-                        initial="hidden"
-                        whileInView="visible"
-                        viewport={{ once: true }}
-                    >
-                        <Row className="g-4 justify-content-center">
-                            {[
-                                {
-                                    nombre: "Plantas",
-                                    categoria: "1",
-                                    img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRip7IjQ47SH4_AP2wW8n4LycLV7FmGtODduw&s",
-                                },
-                                {
-                                    nombre: "Macetas",
-                                    categoria: "2",
-                                    img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTTU02NOrRTmSRVAVDq5fXPhQ2XVoqeOmhH4w&s",
-                                },
-                                {
-                                    nombre: "Fertilizantes",
-                                    categoria: "3",
-                                    img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4nr1XsOX2GSXp4G24UwjJQM4bjTFul-IuGw&s",
-                                },
-                                {
-                                    nombre: "Herramientas",
-                                    categoria: "4",
-                                    img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRpMKE07ZrQ2slIfG6Wd0XXpsa0gIWD--vSYA&s",
-                                },
-                            ].map((cat, i) => (
-                                <Col xs={12} sm={6} md={3} key={i}>
-                                    <motion.div
-                                        className="home__categoria-card shadow-sm rounded overflow-hidden"
-                                        variants={scaleIn}
-                                        onClick={() => {
-                                            const categoria = cat.categoria; navigate("/productos", { state: { categoria } })
-                                        }}
-                                    >
-                                        <div
-                                            className="home__categoria-img"
-                                            style={{
-                                                backgroundImage: `url(${cat.img})`,
-                                                backgroundSize: "cover",
-                                                backgroundPosition: "center",
-                                                height: "180px",
-                                            }}
-                                        ></div>
-                                        <div className="text-center py-3 bg-white">
-                                            <h5 className="fw-semibold">{cat.nombre}</h5>
+                                            {/* DORSO */}
+                                            <div className="home__servicio-back">
+                                                <div className="home__servicio-back-icono">{serv.icono}</div>
+                                                <h5 className="home__servicio-back-titulo">{serv.titulo}</h5>
+                                                <p className="home__servicio-back-desc">{serv.descripcion}</p>
+                                                <button
+                                                    className="home__servicio-back-btn"
+                                                    onClick={(e) => {
+                                                        e.stopPropagation();
+                                                        const url = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(serv.whatsapp)}`;
+                                                        window.open(url, "_blank");
+                                                    }}
+                                                >
+                                                    + Info por WhatsApp
+                                                </button>
+                                            </div>
+
                                         </div>
                                     </motion.div>
                                 </Col>
@@ -146,6 +413,7 @@ const MainHome = () => {
                     </motion.div>
                 </Container>
             </section>
+
         </main>
     );
 };

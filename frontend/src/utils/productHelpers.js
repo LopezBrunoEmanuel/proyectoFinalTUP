@@ -4,21 +4,15 @@ export const getPrecioMostrar = (producto) => {
     return null;
   }
 
-  // Filtrar tamaños activos
   const tamaniosActivos = producto.tamanios.filter((t) => t.activo);
 
-  // Si NO tiene tamaños activos → retornar null (no mostrar precio)
-  if (tamaniosActivos.length === 0) {
-    return null;
-  }
+  if (tamaniosActivos.length === 0) return null;
 
-  // Si tiene 1 solo tamaño activo → retornar su precio
   if (tamaniosActivos.length === 1) {
     const precio = parseFloat(tamaniosActivos[0].precio);
     return isNaN(precio) || precio <= 0 ? null : precio;
   }
 
-  // Si tiene múltiples tamaños activos → calcular rango
   const precios = tamaniosActivos
     .map((t) => parseFloat(t.precio))
     .filter((p) => !isNaN(p) && p > 0);
@@ -28,23 +22,23 @@ export const getPrecioMostrar = (producto) => {
   const min = Math.min(...precios);
   const max = Math.max(...precios);
 
-  // Si todos tienen el mismo precio
   if (min === max) return min;
 
-  // Retornar objeto con rango
-  return { min, max, texto: `Desde $${min.toFixed(2)} hasta $${max.toFixed(2)}` };
+  return {
+    min,
+    max,
+    texto: `Desde $${min.toLocaleString("es-AR", { minimumFractionDigits: 2, maximumFractionDigits: 2 })} hasta $${max.toLocaleString("es-AR", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`,
+  };
 };
 
 // Helper para renderizar precio (usar en JSX)
 export const renderPrecio = (precio) => {
   if (precio === null || precio === undefined) return "N/A";
 
-  // Si es un número simple
   if (typeof precio === "number") {
-    return `$${precio.toFixed(2)}`;
+    return `$${precio.toLocaleString("es-AR", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
   }
 
-  // Si es un objeto con rango
   if (precio && precio.texto) {
     return precio.texto;
   }
@@ -69,4 +63,13 @@ export const tieneTamaniosActivos = (producto) => {
     return false;
   }
   return producto.tamanios.some((t) => t.activo);
+};
+
+// Helper para validar la cantidad de stock bajo/critico
+export const getAlertaStock = (tamanios) => {
+  const activos = tamanios?.filter((t) => Number(t.activo) === 1) ?? [];
+  const stocks = activos.map((t) => Number(t.stock));
+  if (stocks.some((s) => s <= 3)) return "critico";
+  if (stocks.some((s) => s <= 9)) return "bajo";
+  return null;
 };

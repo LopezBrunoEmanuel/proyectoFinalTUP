@@ -1,22 +1,23 @@
 import { useState, useEffect, useRef } from "react";
 import { useNavigate, NavLink } from "react-router-dom";
-import { Container, Nav, Navbar, NavDropdown, Collapse } from "react-bootstrap";
-import { FaShoppingCart, FaUserCircle } from "react-icons/fa";
+import { Container, Nav, Navbar, NavDropdown } from "react-bootstrap";
+import { FaShoppingCart, FaUserCircle, FaSignInAlt, FaSignOutAlt, FaUserCog } from "react-icons/fa";
 // eslint-disable-next-line no-unused-vars
 import { motion } from "framer-motion";
 import "../../styles/components/header.css";
 import { useAuthStore } from "../../store/authStore.js";
-import { useUIStore } from "../../store/uiStore.js"
-import { useCarritoStore } from "../../store/carritoStore.js"
+import { useUIStore } from "../../store/uiStore.js";
+import { useCarritoStore } from "../../store/carritoStore.js";
 
 const Header = () => {
   const [expanded, setExpanded] = useState(false);
-  const [profileExpanded, setProfileExpanded] = useState(false)
   const navbarRef = useRef(null);
   const navigate = useNavigate();
-  const { abrirCarrito } = useUIStore()
-  const { vaciarCarrito } = useCarritoStore()
-  const totalItems = useCarritoStore((state) => (state.carrito || []).reduce((acc, item) => acc + (item?.cantidad || 0), 0))
+  const { abrirCarrito } = useUIStore();
+  const { vaciarCarrito } = useCarritoStore();
+  const totalItems = useCarritoStore((state) =>
+    (state.carrito || []).reduce((acc, item) => acc + (item?.cantidad || 0), 0)
+  );
   const user = useAuthStore((state) => state.user);
   const logout = useAuthStore((state) => state.logout);
 
@@ -24,7 +25,6 @@ const Header = () => {
     logout();
     vaciarCarrito();
     setExpanded(false);
-    setProfileExpanded(false);
     navigate("/login");
   };
 
@@ -32,11 +32,10 @@ const Header = () => {
     const handleClickOutside = (event) => {
       if (navbarRef.current && !navbarRef.current.contains(event.target)) {
         setExpanded(false);
-        setProfileExpanded(false);
       }
     };
 
-    if (expanded || profileExpanded) {
+    if (expanded) {
       document.addEventListener("click", handleClickOutside);
       document.body.style.overflow = "hidden";
     } else {
@@ -48,18 +47,7 @@ const Header = () => {
       document.removeEventListener("click", handleClickOutside);
       document.body.style.overflow = "auto";
     };
-  }, [expanded, profileExpanded]);
-
-  useEffect(() => {
-    const onResize = () => {
-      if (window.innerWidth >= 992) {
-        setProfileExpanded(false);
-      }
-    };
-
-    window.addEventListener("resize", onResize);
-    return () => window.removeEventListener("resize", onResize);
-  }, []);
+  }, [expanded]);
 
   const navItem = {
     hidden: { y: -20, opacity: 0 },
@@ -74,6 +62,12 @@ const Header = () => {
     }),
   };
 
+  const navLinks = [
+    { to: "/", text: "Inicio" },
+    { to: "/catalogo", text: "Catálogo" },
+    { to: "/guia", text: "Guía del vivero" },
+  ];
+
   return (
     <div className="header" ref={navbarRef}>
       <Navbar
@@ -81,13 +75,11 @@ const Header = () => {
         data-bs-theme="dark"
         className="bg-body-tertiary"
         expanded={expanded}
-        onToggle={(nextExpanded) => {
-          setExpanded(nextExpanded);
-          if (profileExpanded) setProfileExpanded(false);
-        }}
+        onToggle={(nextExpanded) => setExpanded(nextExpanded)}
       >
         <Container>
           <Navbar.Brand href="/">Patio 1220</Navbar.Brand>
+
           <div className="navbar-icons order-lg-2">
             <div className="cart-icon-container position-relative">
               <button
@@ -113,20 +105,7 @@ const Header = () => {
                 )}
               </button>
             </div>
-            <button
-              type="button"
-              className="icon-link btn btn-link p-0 border-0 d-lg-none"
-              onClick={() => {
-                setProfileExpanded((prev) => {
-                  const next = !prev;
-                  if (next) setExpanded(false);
-                  return next;
-                });
-              }}
-              aria-expanded={profileExpanded}
-            >
-              <FaUserCircle size={22} />
-            </button>
+
             <div className="d-none d-lg-flex align-items-center">
               <NavDropdown
                 align="end"
@@ -157,18 +136,12 @@ const Header = () => {
               </NavDropdown>
             </div>
           </div>
-          <Navbar.Toggle
-            aria-controls="basic-navbar-nav"
-            className="order-lg-3"
-          />
+
+          <Navbar.Toggle aria-controls="basic-navbar-nav" className="order-lg-3" />
+
           <Navbar.Collapse id="basic-navbar-nav" className="order-lg-1">
-            <Nav className="mx-auto">
-              {[
-                { to: "/", text: "Inicio" },
-                { to: "/productos", text: "Productos" },
-                { to: "/servicios", text: "Servicios" },
-                { to: "/tips", text: "Tips y cuidados" },
-              ].map((item, i) => (
+            <Nav className="mx-auto nav-unified">
+              {navLinks.map((item, i) => (
                 <motion.div
                   key={item.to}
                   custom={i}
@@ -186,50 +159,49 @@ const Header = () => {
                   </NavLink>
                 </motion.div>
               ))}
+
+              {user ? (
+                <>
+                  <NavLink
+                    to="/miPerfil"
+                    className="nav-link d-lg-none"
+                    onClick={() => setExpanded(false)}
+                  >
+                    <FaUserCircle className="me-2 nav-icon" />
+                    Mi perfil
+                  </NavLink>
+                  {(user?.rol === "admin" || user?.rol === "empleado") && (
+                    <NavLink
+                      to="/admin"
+                      className="nav-link d-lg-none"
+                      onClick={() => setExpanded(false)}
+                    >
+                      <FaUserCog className="me-2 nav-icon" />
+                      Panel administrador
+                    </NavLink>
+                  )}
+                  <button
+                    type="button"
+                    className="nav-link d-lg-none btn btn-link p-0 text-start"
+                    onClick={handleLogout}
+                    style={{ textDecoration: "none" }}
+                  >
+                    <FaSignOutAlt className="me-2 nav-icon" />
+                    Cerrar sesión
+                  </button>
+                </>
+              ) : (
+                <NavLink
+                  to="/login"
+                  className="nav-link d-lg-none"
+                  onClick={() => setExpanded(false)}
+                >
+                  <FaSignInAlt className="me-2 nav-icon" />
+                  Iniciar sesión
+                </NavLink>
+              )}
             </Nav>
           </Navbar.Collapse>
-          <Collapse in={profileExpanded} mountOnEnter unmountOnExit>
-            <div className="navbar-collapse d-lg-none">
-              <Nav className="mx-auto flex-column text-center mt-3">
-                {user ? (
-                  <>
-                    <NavLink
-                      to="/miPerfil"
-                      className="nav-link"
-                      onClick={() => setProfileExpanded(false)}
-                    >
-                      Mi perfil
-                    </NavLink>
-                    {(user?.rol === "admin" || user?.rol === "empleado") && (
-                      <NavLink
-                        to="/admin"
-                        className="nav-link"
-                        onClick={() => setProfileExpanded(false)}
-                      >
-                        Admin
-                      </NavLink>
-                    )}
-                    <button
-                      type="button"
-                      className="nav-link btn btn-link p-0"
-                      onClick={handleLogout}
-                      style={{ textDecoration: "none" }}
-                    >
-                      Cerrar sesión
-                    </button>
-                  </>
-                ) : (
-                  <NavLink
-                    to="/login"
-                    className="nav-link"
-                    onClick={() => setProfileExpanded(false)}
-                  >
-                    Iniciar sesión
-                  </NavLink>
-                )}
-              </Nav>
-            </div>
-          </Collapse>
         </Container>
       </Navbar>
     </div>
