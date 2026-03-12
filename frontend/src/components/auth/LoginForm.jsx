@@ -21,18 +21,34 @@ const LoginForm = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setSubmitting(true);
+
+    const payload = {
+      email: formData.email.toLowerCase().trim(),
+      password: formData.password,
+    };
     try {
-      const { data } = await axios.post(LOGIN_URL, formData);
+      const { data } = await axios.post(LOGIN_URL, payload);
       if (!data?.user || !data.token) {
-        swalCustom.fire({ title: "Error", text: "Respuesta inválida del servidor", icon: "error" });
+        swalCustom.fire({
+          title: "Error",
+          text: "Respuesta inválida del servidor",
+          icon: "error",
+        });
         return;
       }
       login(data.user, data.token);
-      swalCustom.fire({ title: "¡Bienvenido!", text: `Hola ${data.user.nombre}`, icon: "success" });
+      swalCustom.fire({
+        title: "¡Bienvenido!",
+        text: `Hola ${data.user.nombre}`,
+        icon: "success",
+      });
       navigate("/");
     } catch (error) {
       const status = error?.response?.status;
-      const msg = status === 401 ? "Credenciales inválidas" : "Credenciales incorrectas o error del servidor";
+      const msg =
+        status === 401
+          ? "Credenciales inválidas"
+          : "Credenciales incorrectas o error del servidor";
       swalCustom.fire({ icon: "error", title: "Error", text: msg });
     } finally {
       setSubmitting(false);
@@ -42,14 +58,15 @@ const LoginForm = () => {
   return (
     <div className="auth-page">
       <div className="auth-card">
-
         <div className="auth-brand">
           <img src={Logo} alt="Patio 1220" className="auth-logo" />
           <span className="auth-brand-name">Patio 1220</span>
         </div>
 
         <h1 className="auth-title">
-          Bienvenido<br /><em>de vuelta</em>
+          Bienvenido
+          <br />
+          <em>de vuelta</em>
         </h1>
 
         <div className="auth-divider">
@@ -58,7 +75,9 @@ const LoginForm = () => {
 
         <form onSubmit={handleSubmit}>
           <div className="auth-field">
-            <label className="auth-label" htmlFor="email">Correo electrónico</label>
+            <label className="auth-label" htmlFor="email">
+              Correo electrónico
+            </label>
             <input
               className="auth-input"
               type="text"
@@ -72,7 +91,9 @@ const LoginForm = () => {
           </div>
 
           <div className="auth-field">
-            <label className="auth-label" htmlFor="password">Contraseña</label>
+            <label className="auth-label" htmlFor="password">
+              Contraseña
+            </label>
             <input
               className="auth-input"
               type="password"
@@ -91,7 +112,11 @@ const LoginForm = () => {
             </button>
           </div>
 
-          <button type="submit" className="auth-btn-primary" disabled={submitting}>
+          <button
+            type="submit"
+            className="auth-btn-primary"
+            disabled={submitting}
+          >
             {submitting ? "Ingresando..." : "Ingresar"}
           </button>
 

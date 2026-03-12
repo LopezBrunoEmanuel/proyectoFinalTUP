@@ -101,7 +101,7 @@
 
 .mp-card-head {
   position: relative;
-  padding-right: 44px; /* espacio para el icono */
+  padding-right: 44px;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -114,7 +114,8 @@
   letter-spacing: -0.2px;
 }
 
-/* Botón de acción (Editar) */
+/* Botón editar */
+
 .mp-text-action {
   position: absolute;
   top: 0;
@@ -136,7 +137,6 @@
   line-height: 1;
 
   cursor: pointer;
-  user-select: none;
 }
 
 .mp-text-action:hover {
@@ -149,7 +149,7 @@
 }
 
 /* =========================
-   Dividers
+   Divider
    ========================= */
 
 .mp-divider {
@@ -159,7 +159,7 @@
 }
 
 /* =========================
-   Identity (avatar + name + email)
+   Identity
    ========================= */
 
 .mp-identity {
@@ -180,35 +180,18 @@
   border: 1px solid rgba(0, 0, 0, 0.08);
 }
 
-.mp-identity-text {
-  min-width: 0;
-}
-
 .mp-name {
   font-size: 1.05rem;
   font-weight: 700;
-  line-height: 1.2;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
 }
 
 .mp-email {
   font-size: 0.92rem;
   color: rgba(0, 0, 0, 0.6);
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-/* Email siempre minúsculas (y sin capitalize) */
-.mp-email,
-.mp-email-value {
-  text-transform: none !important;
 }
 
 /* =========================
-   Readonly rows (col izquierda)
+   Readonly rows
    ========================= */
 
 .mp-readonly {
@@ -231,42 +214,16 @@
 .mp-value {
   font-weight: 600;
   font-size: 0.9rem;
-  text-transform: capitalize;
-}
-
-.mp-hint {
-  margin-top: 0.9rem;
 }
 
 /* =========================
-   Notes / hints
-   ========================= */
-
-.mp-security-note {
-  padding: 0.65rem 0.75rem;
-  border-radius: 12px;
-  background: rgba(0, 0, 0, 0.03);
-  border: 1px dashed rgba(0, 0, 0, 0.15);
-}
-
-.mp-security-actions {
-  display: flex;
-  justify-content: flex-end;
-}
-
-.mp-footer-hint {
-  margin-top: 0.75rem;
-}
-
-/* =========================
-   Actions (buttons row)
+   Actions
    ========================= */
 
 .mp-actions {
   display: flex;
   justify-content: flex-end;
   gap: 0.75rem;
-  margin-top: 0.25rem;
 }
 
 .mp-btn {
@@ -276,109 +233,102 @@
 }
 
 /* =========================
-   Form controls (readonly look)
+   PASSWORD INPUT
    ========================= */
 
-/* Modo lectura: MISMA pinta que edición, solo no editable */
-.mp-control-readonly {
-  background-color: #fff !important; /* igual que input normal */
-  cursor: default;
+.password-input {
+  position: relative;
+  width: 100%;
 }
 
-/* Evita foco/caret para que se sienta lectura (pero se ve igual) */
-.mp-control-readonly:focus {
-  box-shadow: none !important;
-  border-color: #ced4da !important; /* borde normal bootstrap */
-  outline: none !important;
+.password-input input {
+  padding-right: 42px;
+}
+
+/* boton ojo */
+
+.password-toggle {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+
+  border: none;
+  background: transparent;
+  cursor: pointer;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  color: #6c757d;
+}
+
+.password-toggle:hover {
+  color: #0d6efd;
+}
+
+.password-toggle svg {
+  width: 18px;
+  height: 18px;
 }
 
 /* =========================
-   Password rules
+   PASSWORD RULES
    ========================= */
 
 .mp-pass-rules {
-  display: block;
   margin-top: 0.4rem;
   font-size: 0.82rem;
 }
 
 .mp-pass-rules-list {
   margin: 0.35rem 0 0;
-  padding-left: 1.1rem;
+  padding-left: 0;
+  list-style: none;
 }
 
-.mp-pass-rules-list li {
-  margin: 0.15rem 0;
+.mp-pass-rule-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.85rem;
+  margin: 3px 0;
+}
+
+.mp-rule-ok {
+  color: #198754;
+}
+
+.mp-rule-fail {
+  color: #dc3545;
+}
+
+.mp-rule-icon {
+  width: 14px;
+  font-weight: bold;
 }
 
 /* =========================
-   Optional / legacy blocks
-   (no afectan si no se usan)
+   PASSWORD STRENGTH
    ========================= */
 
-/* Titles (alternativa vieja para headers) */
-.mp-card-title {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-
-.mp-card-title h5 {
-  margin: 0;
-  font-weight: 800;
-  letter-spacing: -0.2px;
-}
-
-.mp-chip {
-  font-size: 0.78rem;
-  font-weight: 700;
-  padding: 0.25rem 0.55rem;
-  border-radius: 999px;
-  border: 1px solid rgba(0, 0, 0, 0.1);
-  background: rgba(0, 0, 0, 0.04);
-}
-
-/* Accordion (si lo usas en algún momento) */
-.mp-accordion .accordion-item {
-  border-radius: 16px;
-  overflow: hidden;
-  border: 1px solid rgba(0, 0, 0, 0.08);
-}
-
-.mp-accordion .accordion-button {
-  font-weight: 800;
-}
-
-/* Resumen (modo lectura, estilo tipo input) */
-.mp-summary .mp-field {
-  display: flex;
-  flex-direction: column;
-}
-
-.mp-field-label {
+.mp-password-strength {
+  margin-top: 6px;
   font-size: 0.85rem;
   font-weight: 600;
-  margin-bottom: 0.35rem;
-  color: #495057; /* similar a label bootstrap */
 }
 
-.mp-field-value {
-  min-height: 38px; /* igual que Form.Control */
-  padding: 0.375rem 0.75rem;
-  border-radius: 0.375rem;
-  background-color: #f8f9fa; /* fondo claro, no gris fuerte */
-  border: 1px solid #ced4da;
-  font-size: 0.95rem;
-  font-weight: 400;
-  color: #212529;
-  display: flex;
-  align-items: center;
+.strength-débil {
+  color: #dc3545;
 }
 
-/* placeholder visual cuando está vacío */
-.mp-field-value:empty,
-.mp-field-value:has(:only-child:empty) {
-  color: #adb5bd;
+.strength-media {
+  color: #ffc107;
+}
+
+.strength-fuerte {
+  color: #198754;
 }
 
 /* =========================
@@ -395,11 +345,6 @@
   .mi-perfil-header {
     flex-direction: column;
     align-items: flex-start;
-  }
-
-  .mi-perfil-status {
-    width: 100%;
-    justify-content: flex-start;
   }
 
   .mp-actions {

@@ -20,8 +20,17 @@ const CatalogoProductos = () => {
   const location = useLocation();
   const productosPorPagina = 12;
 
+  // const getStockTotal = (prod) => {
+  //   if (prod.tieneTamanios && Array.isArray(prod.tamanios)) {
+  //     return prod.tamanios
+  //       .filter((t) => Number(t.activo) === 1)
+  //       .reduce((acc, t) => acc + Number(t.stock || 0), 0);
+  //   }
+  //   return Number(prod.stock || 0);
+  // };
+
   const getStockTotal = (prod) => {
-    if (prod.tieneTamanios && Array.isArray(prod.tamanios)) {
+    if (Array.isArray(prod.tamanios) && prod.tamanios.length > 0) {
       return prod.tamanios
         .filter((t) => Number(t.activo) === 1)
         .reduce((acc, t) => acc + Number(t.stock || 0), 0);
@@ -29,13 +38,26 @@ const CatalogoProductos = () => {
     return Number(prod.stock || 0);
   };
 
+  // const getPrecioBaseOrden = (prod) => {
+  //   if (!prod.tieneTamanios || !Array.isArray(prod.tamanios)) {
+  //     return Number(prod.precioBase);
+  //   }
+  //   const tamaniosActivos = prod.tamanios.filter((t) => Number(t.activo) === 1);
+  //   if (tamaniosActivos.length === 0) return Number(prod.precioBase);
+  //   return Math.min(...tamaniosActivos.map((t) => Number(t.precio)));
+  // };
+
   const getPrecioBaseOrden = (prod) => {
-    if (!prod.tieneTamanios || !Array.isArray(prod.tamanios)) {
-      return Number(prod.precioBase);
+    if (Array.isArray(prod.tamanios) && prod.tamanios.length > 0) {
+      const precios = prod.tamanios
+        .filter((t) => Number(t.activo) === 1)
+        .map((t) => Number(t.precio))
+        .filter((p) => !isNaN(p) && p > 0);
+
+      if (precios.length > 0) return Math.min(...precios);
     }
-    const tamaniosActivos = prod.tamanios.filter((t) => Number(t.activo) === 1);
-    if (tamaniosActivos.length === 0) return Number(prod.precioBase);
-    return Math.min(...tamaniosActivos.map((t) => Number(t.precio)));
+
+    return Number(prod.stock) || 0;
   };
 
   const productosFiltrados = useMemo(() => {
@@ -44,15 +66,15 @@ const CatalogoProductos = () => {
 
       const coincideBusqueda = filtros.busqueda
         ? prod.nombreProducto
-          .toLowerCase()
-          .normalize("NFD")
-          .replace(/[\u0300-\u036f]/g, "")
-          .includes(
-            filtros.busqueda
-              .toLowerCase()
-              .normalize("NFD")
-              .replace(/[\u0300-\u036f]/g, "")
-          )
+            .toLowerCase()
+            .normalize("NFD")
+            .replace(/[\u0300-\u036f]/g, "")
+            .includes(
+              filtros.busqueda
+                .toLowerCase()
+                .normalize("NFD")
+                .replace(/[\u0300-\u036f]/g, ""),
+            )
         : true;
 
       const coincideCategoria = filtros.categoria
@@ -63,7 +85,12 @@ const CatalogoProductos = () => {
         ? getStockTotal(prod) > 0
         : true;
 
-      return activo && coincideBusqueda && coincideCategoria && coincideDisponibilidad;
+      return (
+        activo &&
+        coincideBusqueda &&
+        coincideCategoria &&
+        coincideDisponibilidad
+      );
     });
   }, [productos, filtros]);
 
@@ -83,8 +110,13 @@ const CatalogoProductos = () => {
 
   const indiceUltimo = paginaActual * productosPorPagina;
   const indicePrimero = indiceUltimo - productosPorPagina;
-  const totalPaginas = Math.ceil(productosOrdenados.length / productosPorPagina);
-  const productosVisibles = productosOrdenados.slice(indicePrimero, indiceUltimo);
+  const totalPaginas = Math.ceil(
+    productosOrdenados.length / productosPorPagina,
+  );
+  const productosVisibles = productosOrdenados.slice(
+    indicePrimero,
+    indiceUltimo,
+  );
 
   useEffect(() => {
     fetchProductos();
@@ -109,6 +141,8 @@ const CatalogoProductos = () => {
         setFiltros={setFiltros}
         productos={productos}
         setPaginaActual={setPaginaActual}
+        totalResultados={productosOrdenados.length}
+        cargando={productos.length === 0}
       />
 
       <div className="productos-main">

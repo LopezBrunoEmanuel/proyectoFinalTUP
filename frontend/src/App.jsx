@@ -26,6 +26,8 @@ import DetalleReserva from "./components/admin/reservas/DetalleReserva";
 import DetalleProducto from "./components/admin/productos/DetalleProducto";
 import EditarProducto from "./components/admin/productos/EditarProducto";
 import NuevoProducto from "./components/admin/productos/NuevoProducto";
+import AdminReportes from "./components/admin/reportes/AdminReportes";
+import ResetPasswordPage from "./components/auth/ResetPasswordPage";
 
 function App() {
   const { showCarrito, cerrarCarrito } = useUIStore();
@@ -57,6 +59,7 @@ function App() {
 
           <Route path="/catalogo" element={<CatalogoProductos />} />
           <Route path="/guia" element={<GuiaVivero />} />
+          <Route path="/reset-password" element={<ResetPasswordPage />} />
 
           <Route path="/miPerfil" element={<RutaPrivada />}>
             <Route index element={<MiPerfil />} />
@@ -83,6 +86,7 @@ function App() {
               <Route path="usuarios" element={<AdminUsuarios />} />
               <Route path="reservas" element={<AdminReservas />} />
               <Route path="reservas/:id" element={<DetalleReserva />} />
+              <Route path="reportes" element={<AdminReportes />} />
             </Route>
           </Route>
 
