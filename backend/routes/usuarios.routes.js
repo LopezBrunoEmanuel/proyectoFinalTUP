@@ -1,5 +1,5 @@
 import express from "express";
-import { loginUsuario } from "../controllers/auth.controller.js";
+import { loginUsuario,  registrarUsuario,solicitarRecuperacionPassword, resetearPassword } from "../controllers/auth.controller.js";
 import {
   obtenerUsuario,
   obtenerUsuarioPorId,
@@ -21,7 +21,16 @@ const router = express.Router();
 router.post("/login", loginUsuario);
 
 // POST - Registro de nuevo usuario
-router.post("/register", agregarUsuario);
+router.post("/register",  registrarUsuario);
+
+// PUT - Recuperar contraseña 
+router.put("/actualizar-password", actualizarPassword);
+
+// CAMBIO: rutas nuevas para el flujo de recuperar contraseña por mail
+// POST - el usuario manda su email y le llega el link
+router.post("/forgot-password", solicitarRecuperacionPassword);
+// POST - el usuario manda el token del mail y su nueva password
+router.post("/reset-password", resetearPassword);
 
 // Rutas de usuario logueado
 // GET - Obtener mi perfil

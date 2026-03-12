@@ -9,6 +9,7 @@ import metodosPagoRoutes from "./metodos_pago.routes.js";
 import reservasRoutes from "./reservas.routes.js";
 import configuracionRoutes from "./configuracion.routes.js";
 import estadosRoutes from "./estado_reservas.routes.js";
+import dashboardReportesRoutes from "./dashboardReportes.routes.js";
 
 const router = express.Router();
 
@@ -36,6 +37,9 @@ router.use("/metodos-pago", metodosPagoRoutes); // /api/metodos-pago
 
 // Configuracion de datos generales del vivero
 router.use("/configuracion", configuracionRoutes); // /api/configuracion
+
+//  router.use("/dashboardReportes",      dashboardReportesRoutes);
+ router.use("/dashboardReportes", dashboardReportesRoutes);
 
 router.get("/health", (req, res) => {
   res.status(200).json({

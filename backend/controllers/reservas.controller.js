@@ -1,4 +1,5 @@
 import connection from "../config/DB.js";
+import { enviarEmailReserva } from "../service/email.service.js";
 
 // GET - Obtener mis reservas (usuario logeado)
 export const obtenerMisReservas = async (req, res) => {
@@ -312,6 +313,22 @@ export const crearReserva = async (req, res) => {
     }
 
     await conn.commit();
+
+    try {
+  await enviarEmailReserva(
+    emailCliente,                // email del usuario
+    nombreCliente,               // nombre
+    idReserva,                   // ID recién generado por MySQL
+    productosValidados,          // array con nombre, cantidad y precio de cada item
+    totalReserva,                // total calculado en el controller
+    tipoEntrega,                 // "retiro_local" o "envio_domicilio"
+    req.body.metodoPago || ""    // nombre del método (si lo mandás desde el frontend)
+  );
+} catch (emailError) {
+  // Si el mail falla, lo logueamos pero NO interrumpimos la respuesta
+  console.error("Reserva creada OK, pero falló el email:", emailError.message);
+}
+
 
     res.status(201).json({
       success: true,
