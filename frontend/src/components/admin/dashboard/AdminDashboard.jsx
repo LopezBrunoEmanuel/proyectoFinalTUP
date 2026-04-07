@@ -1,7 +1,7 @@
 ﻿import { useNavigate } from "react-router-dom";
+import { useAuthStore } from "../../../store/authStore";
 import "../../../styles/admin/admin.css";
 import { FiTag, FiClipboard, FiUsers, FiBarChart2 } from "react-icons/fi";
-// import { FaHandsHelping } from "react-icons/fa";
 
 const CARDS = [
   {
@@ -10,23 +10,15 @@ const CARDS = [
     Icon: FiTag,
     to: "/admin/productos",
     desc: "Gestionar catálogo",
-    enabled: true,
+    soloAdmin: false,
   },
-  //   {
-  //     key: "servicios",
-  //     title: "Servicios",
-  //     Icon: FaHandsHelping,
-  //     to: "/admin/servicios",
-  //     desc: "Gestionar servicios",
-  //     enabled: false,
-  //   },
   {
     key: "usuarios",
     title: "Usuarios",
     Icon: FiUsers,
     to: "/admin/usuarios",
     desc: "Roles y accesos",
-    enabled: true,
+    soloAdmin: true,
   },
   {
     key: "reservas",
@@ -34,7 +26,7 @@ const CARDS = [
     Icon: FiClipboard,
     to: "/admin/reservas",
     desc: "Gestionar reservas",
-    enabled: true,
+    soloAdmin: false,
   },
   {
     key: "reportes",
@@ -42,33 +34,34 @@ const CARDS = [
     Icon: FiBarChart2,
     to: "/admin/reportes",
     desc: "Métricas clave",
-    enabled: true,
+    soloAdmin: true,
   },
 ];
 
 const AdminDashboardPage = () => {
   const navigate = useNavigate();
+  const { user } = useAuthStore();
+  const esAdmin = user?.rol === "admin";
+
+  const cardsFiltradas = CARDS.filter((c) => !c.soloAdmin || esAdmin);
 
   return (
     <section className="admin-page">
       <div className="admin-cardsGrid">
-        {CARDS.map((card) => {
-          const { key, title, Icon, to, desc, enabled } = card;
+        {cardsFiltradas.map((card) => {
+          const { key, title, Icon, to, desc } = card;
           return (
             <button
               key={key}
               type="button"
-              className={`admin-squareCard ${enabled ? "" : "is-disabled"}`}
-              onClick={() => enabled && navigate(to)}
-              disabled={!enabled}
-              title={enabled ? `Ir a ${title}` : "Próximamente"}
+              className="admin-squareCard"
+              onClick={() => navigate(to)}
+              title={`Ir a ${title}`}
             >
               <div className="admin-squareCard__iconWrap" aria-hidden="true">
                 <Icon className="admin-squareCard__icon" />
               </div>
-
               <div className="admin-squareCard__title">{title}</div>
-
               <div className="admin-squareCard__desc">{desc}</div>
             </button>
           );

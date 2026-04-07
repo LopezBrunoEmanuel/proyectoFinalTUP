@@ -49,6 +49,7 @@ export const loginUsuario = (req, res) => {
             telefono: user.telefono,
             rol: user.rol,
             activo: user.activo,
+            fechaRegistro: user.createdAt,
             },
         });
         } catch (error) {

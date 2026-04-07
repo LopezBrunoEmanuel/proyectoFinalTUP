@@ -93,3 +93,12 @@
     font-size: 1rem;
   }
 }
+
+.autocomplete-con-boton .form-control {
+  border-radius: 8px 0 0 8px !important;
+  border-right: none;
+}
+
+.autocomplete-con-boton {
+  margin-bottom: 0px;
+}

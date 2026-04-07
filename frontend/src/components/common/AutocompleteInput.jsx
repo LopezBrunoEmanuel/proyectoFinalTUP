@@ -15,6 +15,7 @@ const AutocompleteInput = ({
   onSelect = null,
   onConfirm = null,
   renderSuggestion = null,
+  className = "",
 }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [filteredSuggestions, setFilteredSuggestions] = useState([]);
@@ -126,7 +127,7 @@ const AutocompleteInput = ({
   };
 
   return (
-    <FormGroup className="autocomplete-container">
+    <FormGroup className={`autocomplete-container ${className}`}>
       {label && (
         <Form.Label>
           {label}
@@ -142,9 +143,6 @@ const AutocompleteInput = ({
           onChange={handleInputChange}
           onKeyDown={handleKeyDown}
           onFocus={handleFocus}
-          onBlur={() => {
-            if (onConfirm) onConfirm(value);
-          }}
           placeholder={placeholder}
           disabled={disabled}
           isInvalid={!!error}
@@ -161,9 +159,8 @@ const AutocompleteInput = ({
               filteredSuggestions.map((suggestion, index) => (
                 <div
                   key={suggestion.id}
-                  className={`autocomplete-item ${
-                    index === highlightedIndex ? "highlighted" : ""
-                  }`}
+                  className={`autocomplete-item ${index === highlightedIndex ? "highlighted" : ""
+                    }`}
                   onClick={() => handleSelectSuggestion(suggestion)}
                   onMouseEnter={() => setHighlightedIndex(index)}
                 >

@@ -27,7 +27,8 @@ export const getPrecioMostrar = (producto) => {
   return {
     min,
     max,
-    texto: `Desde $${min.toLocaleString("es-AR", { minimumFractionDigits: 2, maximumFractionDigits: 2 })} hasta $${max.toLocaleString("es-AR", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`,
+    // texto: `Desde $${min.toLocaleString("es-AR", { minimumFractionDigits: 2, maximumFractionDigits: 2 })} hasta $${max.toLocaleString("es-AR", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`,
+    texto: `$${min.toLocaleString("es-AR", { minimumFractionDigits: 2, maximumFractionDigits: 2 })} / $${max.toLocaleString("es-AR", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`,
   };
 };
 

@@ -68,17 +68,24 @@ const DetalleProducto = () => {
             <Container className="py-4">
 
                 {/* Barra de navegación */}
-                <div className="d-flex justify-content-between align-items-center mb-4">
-                    <Button variant="secondary" onClick={() => navigate("/admin/productos")}>
+                <div className="d-flex justify-content-between align-items-center mb-3">
+                    <Button variant="secondary" onClick={() => navigate(producto.eliminado ? "/admin/productos/papelera" : "/admin/productos")}>
                         <FiArrowLeft className="me-2" />
                         Volver
                     </Button>
 
-                    <Button variant="primary" onClick={() => navigate(`/admin/productos/${id}/editar`)}>
-                        <FiEdit2 className="me-2" />
-                        Editar
-                    </Button>
+                    {!producto.eliminado && (
+                        <Button variant="primary" onClick={() => navigate(`/admin/productos/${id}/editar`)}>
+                            <FiEdit2 className="me-2" />
+                            Editar
+                        </Button>
+                    )}
                 </div>
+                {!!producto.eliminado && (
+                    <Alert variant="warning" className="mb-3">
+                        Este producto se encuentra en la papelera. Para poder hacer cambios en él primero debes restaurarlo.
+                    </Alert>
+                )}
 
                 <Row>
                     <Col lg={12}>
@@ -93,7 +100,7 @@ const DetalleProducto = () => {
                                     </h5>
 
                                     <div className="d-flex flex-column align-items-end gap-1">
-                                        <Badge bg={producto.activo ? "success" : "secondary"}>
+                                        <Badge bg={producto.activo ? "success" : "danger"}>
                                             {producto.activo ? "Activo" : "Inactivo"}
                                         </Badge>
                                         {!!producto.destacado && (

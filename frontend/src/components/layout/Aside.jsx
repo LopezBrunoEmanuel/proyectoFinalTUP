@@ -1,6 +1,7 @@
 import { useState, useMemo } from "react";
 import { Form, Button, InputGroup, Row, Col, Container } from "react-bootstrap";
 import { FaTimesCircle } from "react-icons/fa";
+import { FiSearch } from "react-icons/fi";
 import AutocompleteInput from "../common/AutocompleteInput";
 import "../../styles/components/aside.css";
 
@@ -47,34 +48,51 @@ const Aside = ({ filtros, setFiltros, productos = [], setPaginaActual }) => {
     <Container fluid className="aside-topbar-container">
       <div
         id="filtros-collapse"
-        className="aside-topbar shadow-sm bg-light rounded py-3 px-4"
+        className="aside-topbar shadow-sm bg-light rounded py-3 px-4 mt-2"
       >
-        <Row className="gy-3 gx-3 align-items-center justify-content-between">
+        <Row className="gy-3 gx-3 align-items-start justify-content-between">
           <Col xs={12} md={4} lg={3}>
-            <AutocompleteInput
-              value={busquedaLocal}
-              onChange={(value) => setBusquedaLocal(value)}
-              onSelect={(sugerencia) => {
-                setBusquedaLocal(sugerencia.nombre);
-                handleFiltroChange("busqueda", sugerencia.nombre);
-              }}
-              onConfirm={(value) => {
-                handleFiltroChange("busqueda", value);
-              }}
-              suggestions={sugerencias}
-              placeholder="Buscar producto..."
-              disabled={!!filtros.busqueda}
-              renderSuggestion={(sugerencia) => (
-                <div className="d-flex justify-content-between align-items-center w-100">
-                  <span>{sugerencia.nombre}</span>
-                  {sugerencia.categoria && (
-                    <small className="text-muted ms-2">
-                      {sugerencia.categoria}
-                    </small>
+            <div style={{ display: "flex", alignItems: "stretch" }}>
+              <div style={{ flex: 1 }}>
+                <AutocompleteInput
+                  className="autocomplete-con-boton"
+                  value={busquedaLocal}
+                  onChange={(value) => setBusquedaLocal(value)}
+                  onSelect={(sugerencia) => {
+                    setBusquedaLocal(sugerencia.nombre);
+                    handleFiltroChange("busqueda", sugerencia.nombre);
+                  }}
+                  onConfirm={(value) => {
+                    handleFiltroChange("busqueda", value);
+                  }}
+                  suggestions={sugerencias}
+                  placeholder="Buscar producto..."
+                  renderSuggestion={(sugerencia) => (
+                    <div className="d-flex justify-content-between align-items-center w-100">
+                      <span>{sugerencia.nombre}</span>
+                      {sugerencia.categoria && (
+                        <small className="text-muted ms-2">{sugerencia.categoria}</small>
+                      )}
+                    </div>
                   )}
-                </div>
-              )}
-            />
+                />
+              </div>
+              <Button
+                variant="outline-secondary"
+                onClick={() => handleFiltroChange("busqueda", busquedaLocal)}
+                title="Buscar"
+                style={{
+                  borderRadius: "0 8px 8px 0",
+                  borderLeft: "none",
+                  marginTop: "0",
+                  height: "36px",
+                  width: "36px",
+                  alignSelf: "flex-end",
+                }}
+              >
+                <FiSearch style={{ marginTop: "-10px", marginLeft: "-8px" }} />
+              </Button>
+            </div>
           </Col>
 
           <Col xs={6} md={3} lg={2}>
@@ -135,7 +153,7 @@ const Aside = ({ filtros, setFiltros, productos = [], setPaginaActual }) => {
             <div className="d-flex flex-wrap align-items-center gap-2">
               {filtros.busqueda && (
                 <span className="chip-filtro">
-                  {busquedaLocal}
+                  {filtros.busqueda}
                   <button
                     onClick={() => {
                       setBusquedaLocal("");

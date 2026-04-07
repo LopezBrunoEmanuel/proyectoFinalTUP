@@ -28,6 +28,7 @@ import EditarProducto from "./components/admin/productos/EditarProducto";
 import NuevoProducto from "./components/admin/productos/NuevoProducto";
 import AdminReportes from "./components/admin/reportes/AdminReportes";
 import ResetPasswordPage from "./components/auth/ResetPasswordPage";
+import PapeleraProductos from "./components/admin/productos/PapeleraProductos";
 
 function App() {
   const { showCarrito, cerrarCarrito } = useUIStore();
@@ -78,15 +79,20 @@ function App() {
             element={<RutaPrivada rolesPermitidos={["admin", "empleado"]} />}
           >
             <Route element={<AdminLayout />}>
+              {/* accesos de admin y empleado */}
               <Route index element={<AdminDashboard />} />
               <Route path="productos" element={<AdminProductos />} />
               <Route path="productos/nuevo" element={<NuevoProducto />} />
               <Route path="productos/:id" element={<DetalleProducto />} />
               <Route path="productos/:id/editar" element={<EditarProducto />} />
-              <Route path="usuarios" element={<AdminUsuarios />} />
               <Route path="reservas" element={<AdminReservas />} />
               <Route path="reservas/:id" element={<DetalleReserva />} />
-              <Route path="reportes" element={<AdminReportes />} />
+              <Route element={<RutaPrivada rolesPermitidos={["admin"]} />}>
+                {/* accesos solo admin */}
+                <Route path="usuarios" element={<AdminUsuarios />} />
+                <Route path="reportes" element={<AdminReportes />} />
+                <Route path="productos/papelera" element={<PapeleraProductos />} />
+              </Route>
             </Route>
           </Route>
 

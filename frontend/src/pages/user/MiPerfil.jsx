@@ -212,7 +212,6 @@ const MiPerfil = () => {
               Administrá tu información personal y de contacto.
             </p>
           </div>
-
         </div>
 
         {uiMsg.text && (
@@ -266,9 +265,16 @@ const MiPerfil = () => {
 
                 <div className="mp-readonly">
                   <div className="mp-readonly-row">
-                    <span className="mp-label">Email</span>
-                    <span className="mp-value mp-email-value">
-                      {String(user.email || "").toLowerCase()}
+                    <span className="mp-label">Tipo de usuario</span>
+                    <span className="mp-value" style={{ textTransform: "capitalize" }}>
+                      {user.rol || "-"}
+                    </span>
+                  </div>
+
+                  <div className="mp-readonly-row">
+                    <span className="mp-label">Teléfono</span>
+                    <span className="mp-value">
+                      {user.telefono || "No especificado"}
                     </span>
                   </div>
 

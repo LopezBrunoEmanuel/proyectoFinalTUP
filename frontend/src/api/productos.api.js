@@ -58,6 +58,20 @@ export const deleteProducto = async (idProducto) => {
   }
 };
 
+// PATCH - Cambiar destacado
+export const toggleDestacadoProducto = async (idProducto, destacadoActual) => {
+  try {
+    const nuevoEstado = !destacadoActual;
+    const response = await axios.patch(`/productos/${idProducto}/destacado`, {
+      destacado: nuevoEstado,
+    });
+    return { idProducto, destacado: nuevoEstado, mensaje: response.data.message };
+  } catch (error) {
+    console.error("Error al cambiar destacado del producto:", error);
+    throw error;
+  }
+};
+
 // PATCH - Cambiar estado activo/inactivo
 export const toggleActivoProducto = async (idProducto, activoActual) => {
   try {
@@ -68,6 +82,39 @@ export const toggleActivoProducto = async (idProducto, activoActual) => {
     return { idProducto, activo: nuevoEstado, mensaje: response.data.message };
   } catch (error) {
     console.error("Error al cambiar estado del producto:", error);
+    throw error;
+  }
+};
+
+// PATCH - Mover producto a papelera
+export const moverProductoAPapelera = async (idProducto) => {
+  try {
+    const response = await axios.patch(`/productos/${idProducto}/papelera`);
+    return response.data;
+  } catch (error) {
+    console.error("Error al mover producto a papelera:", error);
+    throw error;
+  }
+};
+
+// PATCH - Restaurar producto desde papelera
+export const restaurarProductoDePapelera = async (idProducto) => {
+  try {
+    const response = await axios.patch(`/productos/${idProducto}/restaurar`);
+    return response.data;
+  } catch (error) {
+    console.error("Error al restaurar producto:", error);
+    throw error;
+  }
+};
+
+// GET - Obtener productos en papelera
+export const getProductosPapelera = async () => {
+  try {
+    const response = await axios.get('/productos/papelera/lista');
+    return response.data;
+  } catch (error) {
+    console.error("Error al obtener papelera:", error);
     throw error;
   }
 };

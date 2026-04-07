@@ -66,6 +66,7 @@ export const obtenerProductos = (req, res) => {
     FROM productos p
     LEFT JOIN categorias c ON p.idCategoria = c.idCategoria
     LEFT JOIN producto_tamanio pt ON p.idProducto = pt.idProducto
+    WHERE p.eliminado = 0
     GROUP BY 
       p.idProducto, 
       p.nombreProducto, 
@@ -131,6 +132,7 @@ export const obtenerProductoPorID = (req, res) => {
       p.imagenPrincipal,
       p.destacado,
       p.activo,
+      p.eliminado,
       p.fechaCreacion,
       p.fechaActualizacion,
       c.nombreCategoria AS categoriaProducto
@@ -341,6 +343,31 @@ export const editarProducto = async (req, res) => {
   } catch (error) {
     console.error("Error al editar producto:", error);
     res.status(500).json({ error: error.message });
+  }
+};
+
+// PATCH - CAMBIAR DESTACADO
+export const cambiarDestacadoProducto = async (req, res) => {
+  const { id } = req.params;
+  const { destacado } = req.body;
+
+  const conn = connection.promise();
+
+  try {
+    await conn.query(
+      "UPDATE productos SET destacado = ? WHERE idProducto = ?",
+      [destacado ? 1 : 0, id]
+    );
+
+    const [producto] = await conn.query(
+      "SELECT * FROM productos WHERE idProducto = ?",
+      [id]
+    );
+
+    res.json(producto[0]);
+  } catch (error) {
+    console.error("Error al cambiar destacado:", error);
+    res.status(500).json({ error: "Error al cambiar destacado" });
   }
 };
 
@@ -629,5 +656,75 @@ export const eliminarTamanioDeProducto = async (req, res) => {
     await conn.rollback();
     console.error("Error al eliminar tamaño:", error);
     res.status(500).json({ error: error.message });
+  }
+};
+
+// PATCH - MOVER PRODUCTO A PAPELERA (borrado lógico)
+export const moverAPapelera = async (req, res) => {
+  const { id } = req.params;
+  const conn = connection.promise();
+
+  try {
+    const [result] = await conn.query(
+      "UPDATE productos SET eliminado = 1, activo = 0 WHERE idProducto = ? AND eliminado = 0",
+      [id]
+    );
+
+    if (result.affectedRows === 0) {
+      return res.status(404).json({ error: "Producto no encontrado o ya está en papelera" });
+    }
+
+    res.json({ message: "Producto movido a papelera", idProducto: id });
+  } catch (error) {
+    console.error("Error al mover producto a papelera:", error);
+    res.status(500).json({ error: "Error al mover producto a papelera" });
+  }
+};
+
+// PATCH - RESTAURAR PRODUCTO DESDE PAPELERA
+export const restaurarProducto = async (req, res) => {
+  const { id } = req.params;
+  const conn = connection.promise();
+
+  try {
+    const [result] = await conn.query(
+      "UPDATE productos SET eliminado = 0 WHERE idProducto = ? AND eliminado = 1",
+      [id]
+    );
+
+    if (result.affectedRows === 0) {
+      return res.status(404).json({ error: "Producto no encontrado o no está en papelera" });
+    }
+
+    res.json({ message: "Producto restaurado correctamente", idProducto: id });
+  } catch (error) {
+    console.error("Error al restaurar producto:", error);
+    res.status(500).json({ error: "Error al restaurar producto" });
+  }
+};
+
+// GET - OBTENER PRODUCTOS EN PAPELERA
+export const obtenerPapelera = async (req, res) => {
+  const conn = connection.promise();
+
+  try {
+    const [productos] = await conn.query(
+      `SELECT 
+        p.idProducto,
+        p.nombreProducto,
+        p.idCategoria,
+        c.nombreCategoria AS categoriaNombre,
+        p.imagenPrincipal,
+        p.fechaActualizacion AS fechaEliminacion
+      FROM productos p
+      LEFT JOIN categorias c ON p.idCategoria = c.idCategoria
+      WHERE p.eliminado = 1
+      ORDER BY p.fechaActualizacion DESC`
+    );
+
+    res.json(productos);
+  } catch (error) {
+    console.error("Error al obtener papelera:", error);
+    res.status(500).json({ error: "Error al obtener papelera" });
   }
 };

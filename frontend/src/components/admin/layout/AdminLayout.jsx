@@ -5,6 +5,7 @@ import { MdNavigateNext } from "react-icons/md";
 const LABELS = {
     admin: "Dashboard",
     productos: "Productos",
+    papelera: "Productos archivados",
     servicios: "Servicios",
     pedidos: "Pedidos",
     usuarios: "Usuarios",

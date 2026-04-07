@@ -3,7 +3,7 @@
 ════════════════════════════════════ */
 
 .home__destacados {
-  background-color: var(--color-beige);
+  background-color: var(--color-beige-claro);
   padding-block: var(--section-py);
   border-top: 1px solid rgba(0, 0, 0, 0.05);
   border-bottom: 1px solid rgba(0, 0, 0, 0.05);

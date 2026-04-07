@@ -1,8 +1,7 @@
 import connection from "../config/DB.js";
+import Groq from "groq-sdk"
 
-// ─────────────────────────────────────────────────────────────
 // GET /api/dashboardReportes/clientes
-// ─────────────────────────────────────────────────────────────
 export const getTotalClientes = async (req, res) => {
   try {
     const db = connection.promise();
@@ -55,9 +54,7 @@ export const getTotalClientes = async (req, res) => {
   }
 };
 
-// ─────────────────────────────────────────────────────────────
 // GET /api/dashboardReportes/productos
-// ─────────────────────────────────────────────────────────────
 export const getTotalProductos = async (req, res) => {
   try {
     const db = connection.promise();
@@ -154,11 +151,7 @@ export const getTotalProductos = async (req, res) => {
   }
 };
 
-// ─────────────────────────────────────────────────────────────
 // GET /api/dashboardReportes/reservas
-// idEstado: 1=Pendiente, 2=Confirmada, 3=En preparación,
-//           4=Lista para retiro, 5=Retirada, 6=Cancelada
-// ─────────────────────────────────────────────────────────────
 export const getTotalReservas = async (req, res) => {
   try {
     const db = connection.promise();
@@ -166,16 +159,18 @@ export const getTotalReservas = async (req, res) => {
     const [[{ totalReservas }]] = await db.query(`
       SELECT COUNT(*) AS totalReservas
       FROM reservas
-      WHERE idEstado IN (1, 2)
+      WHERE idEstado IN (1, 2, 3, 4)
     `);
 
     const [grafico] = await db.query(`
       SELECT
         DATE_FORMAT(fechaReserva, '%b') AS mes,
-        MONTH(fechaReserva)             AS nroMes,
+        MONTH(fechaReserva) AS nroMes,
         SUM(CASE WHEN idEstado = 1 THEN 1 ELSE 0 END) AS pendiente,
         SUM(CASE WHEN idEstado = 2 THEN 1 ELSE 0 END) AS confirmada,
-        SUM(CASE WHEN idEstado = 5 THEN 1 ELSE 0 END) AS realizada,
+        SUM(CASE WHEN idEstado = 3 THEN 1 ELSE 0 END) AS enPreparacion,
+        SUM(CASE WHEN idEstado = 4 THEN 1 ELSE 0 END) AS listaParaRetiro,
+        SUM(CASE WHEN idEstado = 5 THEN 1 ELSE 0 END) AS retirada,
         SUM(CASE WHEN idEstado = 6 THEN 1 ELSE 0 END) AS cancelada
       FROM reservas
       WHERE YEAR(fechaReserva) = YEAR(CURDATE())
@@ -186,8 +181,8 @@ export const getTotalReservas = async (req, res) => {
     const [top5Usuarios] = await db.query(`
       SELECT
         CONCAT(u.nombre, ' ', u.apellido) AS nombre,
-        LEFT(u.nombre, 1)                 AS avatar,
-        COUNT(*)                          AS total
+        LEFT(u.nombre, 1) AS avatar,
+        COUNT(*) AS total
       FROM reservas r
       JOIN usuarios u ON u.idUsuario = r.idUsuario
       WHERE r.idEstado = 5
@@ -196,20 +191,14 @@ export const getTotalReservas = async (req, res) => {
       LIMIT 5
     `);
 
-    res.json({
-      kpi: totalReservas,
-      grafico,
-      top5Usuarios,
-    });
+    res.json({ kpi: totalReservas, grafico, top5Usuarios });
   } catch (error) {
     console.error("Error getTotalReservas:", error.message);
     res.status(500).json({ error: error.message });
   }
 };
 
-// ─────────────────────────────────────────────────────────────
 // GET /api/dashboardReportes/usuarios
-// ─────────────────────────────────────────────────────────────
 export const getTotalUsuarios = async (req, res) => {
   try {
     const db = connection.promise();
@@ -240,41 +229,7 @@ export const getTotalUsuarios = async (req, res) => {
   }
 };
 
-// ─────────────────────────────────────────────────────────────
-// GET /api/dashboardReportes/resumen
-// ─────────────────────────────────────────────────────────────
-export const getDashboardResumen = async (req, res) => {
-  try {
-    const db = connection.promise();
-
-    const [[{ totalClientes }]] = await db.query(`
-      SELECT COUNT(*) AS totalClientes FROM usuarios WHERE rol = 'cliente' AND activo = 1
-    `);
-    const [[{ totalProductos }]] = await db.query(`
-      SELECT COUNT(*) AS totalProductos FROM productos WHERE activo = 1
-    `);
-    const [[{ totalReservas }]] = await db.query(`
-      SELECT COUNT(*) AS totalReservas FROM reservas WHERE idEstado IN (1, 2)
-    `);
-    const [[{ totalUsuarios }]] = await db.query(`
-      SELECT COUNT(*) AS totalUsuarios FROM usuarios WHERE activo = 1
-    `);
-
-    res.json({
-      clientes:  { valor: totalClientes,  variacion: 0 },
-      productos: { valor: totalProductos, variacion: 0 },
-      reservas:  { valor: totalReservas,  variacion: 0 },
-      usuarios:  { valor: totalUsuarios,  variacion: 0 },
-    });
-  } catch (error) {
-    console.error("Error getDashboardResumen:", error.message);
-    res.status(500).json({ error: error.message });
-  }
-};
-
-// ─────────────────────────────────────────────────────────────
 // GET /api/dashboardReportes/actividad
-// ─────────────────────────────────────────────────────────────
 export const getDashboardActividad = async (req, res) => {
   try {
     const db = connection.promise();
@@ -282,19 +237,22 @@ export const getDashboardActividad = async (req, res) => {
     const [reservas] = await db.query(`
       SELECT
         r.idReserva,
-        CONCAT(u.nombre, ' ', u.apellido)          AS cliente,
-        e.nombreEstado                             AS estado,
-        DATE_FORMAT(r.fechaReserva, '%d/%m %H:%i') AS fecha
+        CONCAT(u.nombre, ' ', u.apellido) AS cliente,
+        e.nombreEstado AS estado,
+        DATE_FORMAT(r.fechaReserva, '%d/%m %H:%i') AS fecha,
+        dr.nombreProducto AS producto,
+        dr.nombreTamanio AS tamanio
       FROM reservas r
-      JOIN usuarios        u ON u.idUsuario = r.idUsuario
-      JOIN estados_reserva e ON e.idEstado  = r.idEstado
+      JOIN usuarios u ON u.idUsuario = r.idUsuario
+      JOIN estados_reserva e ON e.idEstado = r.idEstado
+      LEFT JOIN detalle_reservas dr ON dr.idReserva = r.idReserva
       ORDER BY r.fechaReserva DESC
       LIMIT 5
     `);
 
     const [clientes] = await db.query(`
       SELECT
-        CONCAT(nombre, ' ', apellido)      AS nombre,
+        CONCAT(nombre, ' ', apellido) AS nombre,
         email,
         DATE_FORMAT(createdAt, '%d/%m/%Y') AS fecha
       FROM usuarios
@@ -307,5 +265,130 @@ export const getDashboardActividad = async (req, res) => {
   } catch (error) {
     console.error("Error getDashboardActividad:", error.message);
     res.status(500).json({ error: error.message });
+  }
+};
+
+// GET /api/dashboardReportes/informe?fechaDesde=YYYY-MM-DD&fechaHasta=YYYY-MM-DD
+export const getInforme = async (req, res) => {
+  const { fechaDesde, fechaHasta } = req.query;
+
+  if (!fechaDesde || !fechaHasta) {
+    return res.status(400).json({ error: "fechaDesde y fechaHasta son obligatorios" });
+  }
+
+  const desde = fechaDesde;
+  const hasta = `${fechaHasta} 23:59:59`;
+
+  try {
+    const db = connection.promise();
+
+    const [[resumen]] = await db.query(`
+      SELECT
+        COUNT(*)                                                        AS cantidadReservas,
+        COALESCE(SUM(totalReserva), 0)                                  AS totalGeneral,
+        COALESCE(SUM(CASE WHEN idEstado = 5 THEN totalReserva END), 0)  AS totalFacturado,
+        COALESCE(SUM(CASE WHEN idEstado != 5 AND idEstado != 6 THEN totalReserva END), 0) AS totalEsperado,
+        COALESCE(SUM(CASE WHEN pagado = 1 THEN totalReserva END), 0)    AS totalPagado,
+        COALESCE(SUM(CASE WHEN pagado = 0 AND idEstado != 6 THEN totalReserva END), 0) AS totalSinPagar,
+        COUNT(CASE WHEN idEstado = 6 THEN 1 END)                        AS cantidadCanceladas
+      FROM reservas
+      WHERE fechaReserva BETWEEN ? AND ?
+    `, [desde, hasta]);
+
+    const tasaCancelacion = resumen.cantidadReservas > 0
+      ? Math.round((resumen.cantidadCanceladas / resumen.cantidadReservas) * 100)
+      : 0;
+
+    const [porEstado] = await db.query(`
+      SELECT
+        e.nombreEstado,
+        e.color,
+        COUNT(*)                       AS cantidad,
+        COALESCE(SUM(r.totalReserva), 0) AS monto
+      FROM reservas r
+      JOIN estados_reserva e ON e.idEstado = r.idEstado
+      WHERE r.fechaReserva BETWEEN ? AND ?
+      GROUP BY e.idEstado, e.nombreEstado, e.color
+      ORDER BY e.ordenVisualizacion ASC
+    `, [desde, hasta]);
+
+    const [productosDestacados] = await db.query(`
+      SELECT
+        dr.nombreProducto,
+        SUM(dr.cantidad)                  AS cantidadVendida,
+        COALESCE(SUM(dr.subtotal), 0)     AS montoTotal
+      FROM detalle_reservas dr
+      JOIN reservas r ON r.idReserva = dr.idReserva
+      WHERE r.fechaReserva BETWEEN ? AND ?
+        AND r.idEstado != 6
+      GROUP BY dr.nombreProducto
+      ORDER BY cantidadVendida DESC
+      LIMIT 10
+    `, [desde, hasta]);
+
+    const [evolucionSemanal] = await db.query(`
+      SELECT
+        DATE_FORMAT(fechaReserva, '%d/%m') AS semana,
+        YEARWEEK(fechaReserva, 1)           AS nroSemana,
+        COUNT(*)                            AS cantidad,
+        COALESCE(SUM(totalReserva), 0)      AS monto
+      FROM reservas
+      WHERE fechaReserva BETWEEN ? AND ?
+        AND idEstado != 6
+      GROUP BY nroSemana, semana
+      ORDER BY nroSemana ASC
+    `, [desde, hasta]);
+
+    res.json({
+      periodo: { desde: fechaDesde, hasta: fechaHasta },
+      resumenFinanciero: {
+        cantidadReservas:    Number(resumen.cantidadReservas),
+        totalGeneral:        Number(resumen.totalGeneral),
+        totalFacturado:      Number(resumen.totalFacturado),
+        totalEsperado:       Number(resumen.totalEsperado),
+        totalPagado:         Number(resumen.totalPagado),
+        totalSinPagar:       Number(resumen.totalSinPagar),
+        cantidadCanceladas:  Number(resumen.cantidadCanceladas),
+        tasaCancelacion,
+      },
+      porEstado: porEstado.map(e => ({ ...e, monto: Number(e.monto) })),
+      productosDestacados: productosDestacados.map(p => ({
+        ...p,
+        cantidadVendida: Number(p.cantidadVendida),
+        montoTotal:      Number(p.montoTotal),
+      })),
+      evolucionSemanal: evolucionSemanal.map(s => ({
+        ...s,
+        cantidad: Number(s.cantidad),
+        monto:    Number(s.monto),
+      })),
+    });
+
+  } catch (error) {
+    console.error("Error getInforme:", error.message);
+    res.status(500).json({ error: error.message });
+  }
+};
+
+export const analizarConIA = async (req, res) => {
+  const { prompt } = req.body;
+
+  if (!prompt) {
+    return res.status(400).json({ error: "El prompt es obligatorio" });
+  }
+
+  try {
+    const groq = new Groq({ apiKey: process.env.GROQ_API_KEY });
+
+    const completion = await groq.chat.completions.create({
+      messages: [{ role: "user", content: prompt }],
+      model: "llama-3.3-70b-versatile",
+      max_tokens: 1024,
+    });
+
+    res.json({ texto: completion.choices[0].message.content });
+  } catch (error) {
+    console.error("Error al llamar a Groq:", error.message);
+    res.status(500).json({ error: "Error al conectar con el asistente de IA" });
   }
 };

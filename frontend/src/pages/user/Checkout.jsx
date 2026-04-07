@@ -123,7 +123,7 @@ const Checkout = () => {
           total,
           tipoEntrega,
           metodoPagoSeleccionado.nombreMetodo,
-          user, // ← ahora lo recibe como parámetro en lugar de leerlo del closure
+          user,
         );
       }
 
@@ -232,7 +232,7 @@ const Checkout = () => {
                 <Button
                   variant="secondary"
                   size="lg"
-                  onClick={() => navigate("/productos")}
+                  onClick={() => navigate("/catalogo")}
                   disabled={loading}
                 >
                   Seguir comprando

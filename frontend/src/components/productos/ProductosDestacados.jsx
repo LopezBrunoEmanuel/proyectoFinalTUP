@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useMemo } from "react";
 import { Container, Row, Button } from "react-bootstrap";
 import { useProductosStore } from "../../store/productosStore.js";
 import ProductosList from "./ProductosList";
@@ -17,31 +17,52 @@ const ProductosDestacados = () => {
         if (productos.length === 0) {
             fetchProductos();
         }
-    }, [productos, fetchProductos]);
+        //eslint-disable-next-line
+    }, []);
 
     // con esto ahora mostramos 4 productos al azar (1 de cada categoria)
     // a futuro se modificara p/ mostrar los que verdaderamente sean mas relevantes o los que se elijan destacar a proposito
-    const obtenerProductoAleatorio = (categoriaId) => {
-        const filtrados = productos.filter(
-            (p) => p.activo && String(p.idCategoria) === String(categoriaId)
-        )
+    // const obtenerProductoAleatorio = (categoriaId) => {
+    //     const filtrados = productos.filter(
+    //         (p) => p.activo && String(p.idCategoria) === String(categoriaId)
+    //     )
 
-        if (filtrados.length === 0) return null;
+    //     if (filtrados.length === 0) return null;
 
-        const randomIndex = Math.floor(Math.random() * filtrados.length)
-        return filtrados[randomIndex]
-    }
+    //     const randomIndex = Math.floor(Math.random() * filtrados.length)
+    //     return filtrados[randomIndex]
+    // }
 
-    const destacados = [
-        obtenerProductoAleatorio(1),
-        obtenerProductoAleatorio(2),
-        obtenerProductoAleatorio(3),
-        obtenerProductoAleatorio(4)
-    ].filter(Boolean)
+    // const destacados = [
+    //     obtenerProductoAleatorio(1),
+    //     obtenerProductoAleatorio(2),
+    //     obtenerProductoAleatorio(3),
+    //     obtenerProductoAleatorio(4)
+    // ].filter(Boolean)
+
+    const destacados = useMemo(() => {
+        const soloDestacados = productos.filter(
+            (p) => p.activo && !p.eliminado && Number(p.destacado) === 1
+        );
+
+        const porCategoria = {};
+        soloDestacados.forEach((p) => {
+            const cat = String(p.idCategoria);
+            if (!porCategoria[cat]) porCategoria[cat] = [];
+            porCategoria[cat].push(p);
+        });
+
+        return Object.values(porCategoria).map((grupo) => {
+            const randomIndex = Math.floor(Math.random() * grupo.length);
+            return grupo[randomIndex];
+        });
+    }, [productos]);
 
     return (
         <section className="home__destacados py-5">
             <Container>
+                <span className="home__eyebrow">Los más pedidos</span>
+
                 <motion.div
                     variants={staggerContainer}
                     initial="hidden"
@@ -49,6 +70,8 @@ const ProductosDestacados = () => {
                     viewport={{ once: true }}
                     className="text-center mb-4"
                 >
+                    {/* <h2 className="home__section-title">Productos destacados</h2> */}
+
                     <motion.h2
                         className="home__destacados-titulo"
                         variants={fadeInUp}

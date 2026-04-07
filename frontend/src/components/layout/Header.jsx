@@ -120,7 +120,7 @@ const Header = () => {
                     </NavDropdown.Item>
                     {(user?.rol === "admin" || user?.rol === "empleado") && (
                       <NavDropdown.Item as={NavLink} to="/admin">
-                        Admin
+                        Administración
                       </NavDropdown.Item>
                     )}
                     <NavDropdown.Divider />

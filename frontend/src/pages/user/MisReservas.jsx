@@ -6,6 +6,7 @@ import axios from "../../api/axiosConfig";
 import { swalCustom } from "../../utils/customSwal";
 import Swal from "sweetalert2";
 import "../../styles/pages/misReservas.css";
+import Paginador from "../../components/common/Paginador";
 
 const getBadgeColor = (nombreEstado) => {
     const colors = {
@@ -265,14 +266,15 @@ const MisReservas = () => {
     const [loading, setLoading] = useState(true);
     const [reservaExpandida, setReservaExpandida] = useState(null);
     const [filtros, setFiltros] = useState(FILTROS_INICIALES);
+    const [paginaActual, setPaginaActual] = useState(1);
+
+    const RESERVAS_POR_PAGINA = 6;
 
     const reservasFiltradas = useMemo(() => {
         let resultado = [...reservas];
 
         if (filtros.estado !== "todos") {
-            resultado = resultado.filter(
-                (r) => r.nombreEstado === filtros.estado
-            );
+            resultado = resultado.filter((r) => r.nombreEstado === filtros.estado);
         }
 
         if (filtros.pago === "pagadas") {
@@ -282,13 +284,19 @@ const MisReservas = () => {
         }
 
         resultado.sort((a, b) => {
-            const diff =
-                new Date(a.fechaReserva) - new Date(b.fechaReserva);
+            const diff = new Date(a.fechaReserva) - new Date(b.fechaReserva);
             return filtros.orden === "nuevas" ? -diff : diff;
         });
 
         return resultado;
     }, [reservas, filtros]);
+
+    const totalPaginas = Math.ceil(reservasFiltradas.length / RESERVAS_POR_PAGINA);
+
+    const reservasPaginadas = useMemo(() => {
+        const inicio = (paginaActual - 1) * RESERVAS_POR_PAGINA;
+        return reservasFiltradas.slice(inicio, inicio + RESERVAS_POR_PAGINA);
+    }, [reservasFiltradas, paginaActual]);
 
     const hayFiltrosActivos =
         filtros.estado !== "todos" ||
@@ -376,11 +384,13 @@ const MisReservas = () => {
     const handleFiltroChange = (campo, valor) => {
         setFiltros((prev) => ({ ...prev, [campo]: valor }));
         setReservaExpandida(null);
+        setPaginaActual(1);
     };
 
     const handleLimpiarFiltros = () => {
         setFiltros(FILTROS_INICIALES);
         setReservaExpandida(null);
+        setPaginaActual(1);
     };
 
     if (loading) {
@@ -399,12 +409,6 @@ const MisReservas = () => {
                 <div className="d-flex justify-content-between align-items-center mb-4">
                     <div>
                         <h2 className="mb-0">Mis Reservas</h2>
-                        <small className="text-muted">
-                            {reservas.length === 0
-                                ? "No tenés reservas"
-                                : `Mostrando ${reservasFiltradas.length} de ${reservas.length} reserva${reservas.length !== 1 ? "s" : ""}`
-                            }
-                        </small>
                     </div>
                 </div>
 
@@ -422,8 +426,7 @@ const MisReservas = () => {
                 ) : (
                     <>
                         <div className="d-flex flex-wrap gap-2 align-items-center mb-3">
-                            <FiFilter size={15} className="text-muted" />
-
+                            {/* <FiFilter size={15} className="text-muted" /> */}
                             <Form.Select
                                 size="sm"
                                 value={filtros.estado}
@@ -486,7 +489,7 @@ const MisReservas = () => {
                             </Alert>
                         ) : (
                             <Row xs={1} lg={2} className="g-3">
-                                {reservasFiltradas.map((reserva) => (
+                                {reservasPaginadas.map((reserva) => (
                                     <Col key={reserva.idReserva}>
                                         <ReservaCard
                                             reserva={reserva}
@@ -497,6 +500,21 @@ const MisReservas = () => {
                                     </Col>
                                 ))}
                             </Row>
+                        )}
+                        <Paginador
+                            paginaActual={paginaActual}
+                            totalPaginas={totalPaginas}
+                            onChangePagina={(pagina) => {
+                                setPaginaActual(pagina);
+                                setReservaExpandida(null);
+                            }}
+                        />
+                        {reservas.length > 0 && (
+                            <div className="mt-2 text-center text-muted">
+                                <small>
+                                    Mostrando {reservasFiltradas.length} de {reservas.length} reserva{reservas.length !== 1 ? "s" : ""}
+                                </small>
+                            </div>
                         )}
                     </>
                 )}

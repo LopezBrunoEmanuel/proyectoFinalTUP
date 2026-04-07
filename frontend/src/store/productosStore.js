@@ -4,7 +4,11 @@ import {
   createProducto,
   updateProducto,
   deleteProducto,
+  toggleDestacadoProducto,
   toggleActivoProducto,
+  moverProductoAPapelera,
+  restaurarProductoDePapelera,
+  getProductosPapelera,
 } from "../api/productos.api.js";
 
 export const useProductosStore = create((set, get) => ({
@@ -145,6 +149,48 @@ export const useProductosStore = create((set, get) => ({
     }
   },
 
+  moverAPapelera: async (idProducto) => {
+  try {
+    set({ isLoading: true, error: null });
+    await moverProductoAPapelera(idProducto);
+    set((state) => ({
+      productos: state.productos.filter(
+        (prod) => Number(prod.idProducto) !== Number(idProducto)
+      ),
+      isLoading: false,
+    }));
+  } catch (error) {
+    console.error("Error al mover a papelera:", error);
+    set({ error: "No se pudo mover el producto a papelera", isLoading: false });
+    throw error;
+  }
+},
+
+restaurarProducto: async (idProducto) => {
+  try {
+    set({ isLoading: true, error: null });
+    await restaurarProductoDePapelera(idProducto);
+    set({ isLoading: false });
+  } catch (error) {
+    console.error("Error al restaurar producto:", error);
+    set({ error: "No se pudo restaurar el producto", isLoading: false });
+    throw error;
+  }
+},
+
+fetchPapelera: async () => {
+  try {
+    set({ isLoading: true, error: null });
+    const data = await getProductosPapelera();
+    set({ isLoading: false });
+    return data;
+  } catch (error) {
+    console.error("Error al obtener papelera:", error);
+    set({ error: "No se pudo cargar la papelera", isLoading: false });
+    throw error;
+  }
+},
+
   toggleActivo: async (idProducto) => {
     try {
       set({ isLoading: true });
@@ -175,6 +221,36 @@ export const useProductosStore = create((set, get) => ({
       throw error;
     }
   },
+
+  toggleDestacado: async (idProducto) => {
+  try {
+    set({ isLoading: true });
+    const { productos } = get();
+
+    const productoActual = productos.find((p) => p.idProducto === idProducto);
+    if (!productoActual) return;
+
+    const productoActualizado = await toggleDestacadoProducto(
+      idProducto,
+      productoActual.destacado
+    );
+
+    set({
+      productos: productos.map((p) =>
+        p.idProducto === idProducto
+          ? { ...p, destacado: productoActualizado.destacado ? 1 : 0 }
+          : p
+      ),
+      isLoading: false,
+    });
+
+    return productoActualizado;
+  } catch (error) {
+    console.error("Error al cambiar destacado:", error);
+    set({ isLoading: false });
+    throw error;
+  }
+},
 
   setProductoSeleccionado: (producto) => {
     set({ productoSeleccionado: producto });
