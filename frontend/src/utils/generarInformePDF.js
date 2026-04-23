@@ -30,8 +30,6 @@ export const generarInformePDF = (datos, analisisIA = "", soloIA = false) => {
   const doc = new jsPDF();
   let y = 0;
 
-  // ── HELPERS ───────────────────────────────────────────────────
-
   const nuevaPagina = () => {
     doc.addPage();
     doc.setFillColor(...VERDE);
@@ -84,7 +82,6 @@ export const generarInformePDF = (datos, analisisIA = "", soloIA = false) => {
     y += 8;
   };
 
-  // ── ENCABEZADO ────────────────────────────────────────────────
   doc.setFillColor(...VERDE);
   doc.rect(0, 0, PAGE_WIDTH, 36, "F");
 
@@ -114,10 +111,8 @@ export const generarInformePDF = (datos, analisisIA = "", soloIA = false) => {
 
   y = 48;
 
-  // ── SECCIONES DE DATOS (solo si no es soloIA) ─────────────────
   if (!soloIA) {
 
-    // RESUMEN FINANCIERO
     seccionTitulo("Resumen financiero");
 
     const rf = datos.resumenFinanciero;
@@ -133,7 +128,6 @@ export const generarInformePDF = (datos, analisisIA = "", soloIA = false) => {
 
     y += 8;
 
-    // DESGLOSE POR ESTADO
     seccionTitulo("Desglose por estado de reserva");
 
     doc.setFillColor(230, 240, 232);
@@ -163,7 +157,6 @@ export const generarInformePDF = (datos, analisisIA = "", soloIA = false) => {
 
     y += 4;
 
-    // PRODUCTOS MÁS SOLICITADOS
     seccionTitulo("Productos más solicitados en el período");
 
     if (datos.productosDestacados.length === 0) {
@@ -205,7 +198,6 @@ export const generarInformePDF = (datos, analisisIA = "", soloIA = false) => {
 
     y += 4;
 
-    // EVOLUCIÓN SEMANAL
     if (datos.evolucionSemanal.length > 0) {
       seccionTitulo("Evolución de reservas por semana");
 
@@ -238,7 +230,6 @@ export const generarInformePDF = (datos, analisisIA = "", soloIA = false) => {
     }
   }
 
-  // ── ANÁLISIS IA ───────────────────────────────────────────────
   if (analisisIA) {
     seccionTitulo("Análisis ejecutivo — Asistente IA");
 
@@ -274,7 +265,6 @@ export const generarInformePDF = (datos, analisisIA = "", soloIA = false) => {
     y += 4;
   }
 
-  // ── PIE DE PÁGINA ─────────────────────────────────────────────
   y = checkPagina(y, 20);
   y += 8;
   doc.setDrawColor(...GRIS_LINEA);

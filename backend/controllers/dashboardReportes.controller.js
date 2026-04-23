@@ -191,7 +191,49 @@ export const getTotalReservas = async (req, res) => {
       LIMIT 5
     `);
 
-    res.json({ kpi: totalReservas, grafico, top5Usuarios });
+    const [ticketPromedio] = await db.query(`
+      SELECT
+        DATE_FORMAT(fechaReserva, '%b') AS mes,
+        MONTH(fechaReserva) AS nroMes,
+        ROUND(AVG(totalReserva), 0) AS promedio,
+        COUNT(*) AS cantidad
+      FROM reservas
+      WHERE YEAR(fechaReserva) = YEAR(CURDATE())
+        AND idEstado != 6
+      GROUP BY mes, nroMes
+      ORDER BY nroMes ASC
+    `);
+
+    const [[tiposEntrega]] = await db.query(`
+      SELECT
+        SUM(CASE WHEN tipoEntrega = 'retiro_local' THEN 1 ELSE 0 END) AS retiroLocal,
+        SUM(CASE WHEN tipoEntrega = 'envio_domicilio' THEN 1 ELSE 0 END) AS envioDomicilio
+      FROM reservas
+      WHERE idEstado != 6
+    `);
+
+    const [porDia] = await db.query(`
+      SELECT
+        DAYOFWEEK(fechaReserva) AS nroDia,
+        DATE_FORMAT(fechaReserva, '%W') AS dia,
+        COUNT(*) AS cantidad
+      FROM reservas
+      WHERE YEAR(fechaReserva) = YEAR(CURDATE())
+        AND idEstado != 6
+      GROUP BY nroDia, dia
+      ORDER BY nroDia ASC
+    `);
+
+    res.json({ 
+      kpi: totalReservas,
+      grafico,
+      top5Usuarios,
+      ticketPromedio: ticketPromedio.map(t => ({ ...t, promedio: Number(t.promedio) })),
+      tiposEntrega: {
+        retiroLocal: Number(tiposEntrega.retiroLocal),
+        envioDomicilio: Number(tiposEntrega.envioDomicilio),
+      },
+      porDia: porDia.map(d => ({ ...d, cantidad: Number(d.cantidad) })), });
   } catch (error) {
     console.error("Error getTotalReservas:", error.message);
     res.status(500).json({ error: error.message });
@@ -240,12 +282,13 @@ export const getDashboardActividad = async (req, res) => {
         CONCAT(u.nombre, ' ', u.apellido) AS cliente,
         e.nombreEstado AS estado,
         DATE_FORMAT(r.fechaReserva, '%d/%m %H:%i') AS fecha,
-        dr.nombreProducto AS producto,
-        dr.nombreTamanio AS tamanio
+        MIN(dr.nombreProducto) AS producto,
+        MIN(dr.nombreTamanio) AS tamanio
       FROM reservas r
       JOIN usuarios u ON u.idUsuario = r.idUsuario
       JOIN estados_reserva e ON e.idEstado = r.idEstado
       LEFT JOIN detalle_reservas dr ON dr.idReserva = r.idReserva
+      GROUP BY r.idReserva, u.nombre, u.apellido, e.nombreEstado, r.fechaReserva
       ORDER BY r.fechaReserva DESC
       LIMIT 5
     `);
@@ -312,19 +355,23 @@ export const getInforme = async (req, res) => {
       ORDER BY e.ordenVisualizacion ASC
     `, [desde, hasta]);
 
-    const [productosDestacados] = await db.query(`
-      SELECT
-        dr.nombreProducto,
-        SUM(dr.cantidad)                  AS cantidadVendida,
-        COALESCE(SUM(dr.subtotal), 0)     AS montoTotal
-      FROM detalle_reservas dr
-      JOIN reservas r ON r.idReserva = dr.idReserva
-      WHERE r.fechaReserva BETWEEN ? AND ?
-        AND r.idEstado != 6
-      GROUP BY dr.nombreProducto
-      ORDER BY cantidadVendida DESC
-      LIMIT 10
-    `, [desde, hasta]);
+const { fechaDesde, fechaHasta, topProductos } = req.query;
+
+const limite = Math.min(Number(topProductos) || 50, 50);
+
+const [productosDestacados] = await db.query(`
+  SELECT
+    dr.nombreProducto,
+    SUM(dr.cantidad) AS cantidadVendida,
+    COALESCE(SUM(dr.subtotal), 0) AS montoTotal
+  FROM detalle_reservas dr
+  JOIN reservas r ON r.idReserva = dr.idReserva
+  WHERE r.fechaReserva BETWEEN ? AND ?
+    AND r.idEstado != 6
+  GROUP BY dr.nombreProducto
+  ORDER BY cantidadVendida DESC
+  LIMIT ?
+`, [desde, hasta, limite]);
 
     const [evolucionSemanal] = await db.query(`
       SELECT
@@ -339,6 +386,19 @@ export const getInforme = async (req, res) => {
       ORDER BY nroSemana ASC
     `, [desde, hasta]);
 
+    const [productosCancelados] = await db.query(`
+  SELECT
+    dr.nombreProducto,
+    COUNT(*) AS vecesEnCanceladas
+  FROM detalle_reservas dr
+  JOIN reservas r ON r.idReserva = dr.idReserva
+  WHERE r.fechaReserva BETWEEN ? AND ?
+    AND r.idEstado = 6
+  GROUP BY dr.nombreProducto
+  ORDER BY vecesEnCanceladas DESC
+  LIMIT 50
+`, [desde, hasta]);
+
     res.json({
       periodo: { desde: fechaDesde, hasta: fechaHasta },
       resumenFinanciero: {
@@ -350,6 +410,7 @@ export const getInforme = async (req, res) => {
         totalSinPagar:       Number(resumen.totalSinPagar),
         cantidadCanceladas:  Number(resumen.cantidadCanceladas),
         tasaCancelacion,
+        productosCancelados,
       },
       porEstado: porEstado.map(e => ({ ...e, monto: Number(e.monto) })),
       productosDestacados: productosDestacados.map(p => ({

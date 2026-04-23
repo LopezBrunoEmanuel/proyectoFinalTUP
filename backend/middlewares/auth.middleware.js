@@ -1,6 +1,5 @@
 import jwt from "jsonwebtoken";
 
-// VERIFICACION DE ROLES/AUTENTICACION
 export const verificarToken = (req, res, next) => {
   const header = req.headers.authorization || "";
   const [scheme, token] = header.split(" ");

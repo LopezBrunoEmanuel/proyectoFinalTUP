@@ -283,7 +283,7 @@
     gap: 10px;
   }
 }
-/* Breadcrumb como TÍTULO (unifica breadcrumb + título) */
+
 .admin-bcTitle {
   display: flex;
   align-items: center;
@@ -291,7 +291,7 @@
   gap: 8px;
 
   margin-top: 6px;
-  font-size: 30px; /* mismo tamaño que tu titleText */
+  font-size: 30px;
   line-height: 1.1;
   letter-spacing: -0.03em;
 }
@@ -323,7 +323,6 @@
   font-weight: 900;
 }
 
-/* Responsive (respetando tu estilo actual) */
 @media (max-width: 720px) {
   .admin-bcTitle {
     font-size: 24px;

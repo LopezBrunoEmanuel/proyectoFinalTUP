@@ -198,7 +198,7 @@ fetchPapelera: async () => {
 
       const productoActual = productos.find((p) => p.idProducto === idProducto);
       if (!productoActual) {
-        console.warn("⚠️ Producto no encontrado en store");
+        console.warn("Producto no encontrado en store");
         return;
       }
 

@@ -18,7 +18,6 @@
 
 .aside-topbar .form-select,
 .aside-topbar .form-control {
-  /* background-color: var(--color-beige-claro) !important; */
   border-radius: 5px;
   border: 1px solid #ccc;
   transition: all 0.2s ease;

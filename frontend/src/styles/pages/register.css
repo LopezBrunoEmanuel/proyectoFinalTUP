@@ -1,10 +1,8 @@
-
 .register-container {
   display: flex;
   min-height: 100vh;
   background-color: var(--color-beige);
 }
-
 
 .register-left {
   flex: 1;
@@ -14,7 +12,6 @@
   align-items: center;
   padding: 3rem;
   background: none;
- 
   color: var(--color-verde-bosque);
   text-align: center;
   transform: translateY(-30px);
@@ -31,7 +28,6 @@
   max-width: 500px;
 }
 
-
 .register-right {
   flex: 1;
   display: flex;
@@ -39,7 +35,6 @@
   align-items: center;
   padding: 3rem;
 }
-
 
 .bg-form {
   background-color: var(--color-beige);
@@ -53,7 +48,6 @@
   border: none !important;
   border-radius: 0;
 }
-
 
 .btn-registrarse {
   background-color: #46624a;
@@ -80,7 +74,6 @@
   background-color: #d4af37;
   color: #000;
 }
-
 
 @media (max-width: 992px) {
   .register-container {

@@ -18,13 +18,11 @@
   max-width: 1200px;
 }
 
-/* Secciones */
 .footer-section {
   flex: 1 1 280px;
   min-width: 250px;
 }
 
-/* Logo y descripción */
 .footer-logo {
   font-family: var(--fuente-titulos);
   color: var(--color-dorado);
@@ -38,7 +36,6 @@
   color: rgba(245, 237, 228, 0.9);
 }
 
-/* Contacto */
 .footer-contact ul {
   list-style: none;
   padding: 0;
@@ -58,7 +55,6 @@
   font-size: 1rem;
 }
 
-/* Redes sociales */
 .footer-social h3 {
   color: var(--color-dorado);
   margin-bottom: 0.8rem;
@@ -82,7 +78,6 @@
   color: var(--color-dorado);
 }
 
-/* Botón "Contáctanos" */
 .footer-btn {
   background-color: var(--color-dorado);
   color: var(--color-verde-bosque);
@@ -99,7 +94,6 @@
   transform: translateY(-2px);
 }
 
-/* Línea inferior */
 .footer-bottom {
   width: 100%;
   text-align: center;

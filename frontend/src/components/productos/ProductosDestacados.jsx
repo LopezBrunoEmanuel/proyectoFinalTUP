@@ -20,26 +20,6 @@ const ProductosDestacados = () => {
         //eslint-disable-next-line
     }, []);
 
-    // con esto ahora mostramos 4 productos al azar (1 de cada categoria)
-    // a futuro se modificara p/ mostrar los que verdaderamente sean mas relevantes o los que se elijan destacar a proposito
-    // const obtenerProductoAleatorio = (categoriaId) => {
-    //     const filtrados = productos.filter(
-    //         (p) => p.activo && String(p.idCategoria) === String(categoriaId)
-    //     )
-
-    //     if (filtrados.length === 0) return null;
-
-    //     const randomIndex = Math.floor(Math.random() * filtrados.length)
-    //     return filtrados[randomIndex]
-    // }
-
-    // const destacados = [
-    //     obtenerProductoAleatorio(1),
-    //     obtenerProductoAleatorio(2),
-    //     obtenerProductoAleatorio(3),
-    //     obtenerProductoAleatorio(4)
-    // ].filter(Boolean)
-
     const destacados = useMemo(() => {
         const soloDestacados = productos.filter(
             (p) => p.activo && !p.eliminado && Number(p.destacado) === 1
@@ -70,7 +50,6 @@ const ProductosDestacados = () => {
                     viewport={{ once: true }}
                     className="text-center mb-4"
                 >
-                    {/* <h2 className="home__section-title">Productos destacados</h2> */}
 
                     <motion.h2
                         className="home__destacados-titulo"

@@ -33,11 +33,9 @@ app.get("/", (req, res) => {
       categorias: "/api/categorias",
       tamanios: "/api/tamanios",
       direcciones: "/api/direcciones",
-      servicios: "/api/servicios",
       reservas: "/api/reservas",
       estadosReserva: "/api/estados-reserva",
       metodosPago: "/api/metodos-pago",
-      configuracion: "/api/configuracion",
       health: "/api/health"
     }
   });

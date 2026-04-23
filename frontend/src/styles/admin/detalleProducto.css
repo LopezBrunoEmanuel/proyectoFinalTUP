@@ -1,4 +1,3 @@
-/* Página Detalle Producto */
 .detalle-producto-page {
   min-height: 80vh;
   background-color: #f8f9fa;
@@ -37,7 +36,6 @@
   z-index: 1;
 }
 
-/* Responsive */
 @media (max-width: 991px) {
   .detalle-producto-page .sticky-top {
     position: relative !important;

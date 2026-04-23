@@ -41,26 +41,38 @@ const DetalleReserva = () => {
         //eslint-disable-next-line
     }, [id]);
 
-    const handleCambiarEstado = async () => {
-        const opcionesEstados = estados.reduce((acc, est) => {
-            acc[est.idEstado] = est.nombreEstado;
-            return acc;
-        }, {});
+    const handleCambiarEstado = async (reserva) => {
+        const estadoActual = reserva.idEstado;
+
+        if (estadoActual === 5 || estadoActual === 6) {
+            swalCustom.fire({
+                icon: "info",
+                title: "Sin transiciones disponibles",
+                text: "Esta reserva no puede cambiar de estado.",
+            });
+            return;
+        }
+
+        const opcionesEstados = estados
+            .filter(est => est.idEstado > estadoActual || est.idEstado === 6)
+            .reduce((acc, est) => {
+                acc[est.idEstado] = est.nombreEstado;
+                return acc;
+            }, {});
 
         const { value: nuevoEstadoId } = await Swal.fire({
             title: "Cambiar estado de reserva",
             input: "select",
             inputOptions: opcionesEstados,
-            inputValue: reserva.idEstado,
             showCancelButton: true,
             confirmButtonText: "Cambiar",
             cancelButtonText: "Cancelar",
         });
 
-        if (!nuevoEstadoId || parseInt(nuevoEstadoId) === reserva.idEstado) return;
+        if (!nuevoEstadoId) return;
 
         try {
-            await axios.patch(`/reservas/${id}/estado`, {
+            await axios.patch(`/reservas/${reserva.idReserva}/estado`, {
                 idEstado: parseInt(nuevoEstadoId),
             });
 
@@ -76,7 +88,7 @@ const DetalleReserva = () => {
             swalCustom.fire({
                 icon: "error",
                 title: "Error",
-                text: "No se pudo cambiar el estado",
+                text: error.response?.data?.error || "No se pudo cambiar el estado",
             });
         }
     };
@@ -151,10 +163,10 @@ const DetalleReserva = () => {
                 <Button
                     variant="outline-secondary"
                     className="mb-4"
-                    onClick={() => navigate("/admin/reservas")}
+                    onClick={() => navigate(-1)}
                 >
                     <FiArrowLeft className="me-2" />
-                    Volver a Reservas
+                    Volver
                 </Button>
 
                 <Row>
@@ -310,7 +322,7 @@ const DetalleReserva = () => {
                                 <Button
                                     variant="outline-primary"
                                     className="w-100 mb-3"
-                                    onClick={handleCambiarEstado}
+                                    onClick={() => handleCambiarEstado(reserva)}
                                 >
                                     <FiEdit2 className="me-2" />
                                     Cambiar estado

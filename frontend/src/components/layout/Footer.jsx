@@ -1,6 +1,5 @@
 import "../../styles/components/footer.css";
 import { FaInstagram, FaFacebook, FaWhatsapp, FaEnvelope, FaMapMarkerAlt } from "react-icons/fa";
-// import { WHATSAPP_NUMBER, WHATSAPP_MESSAGES } from "../../utils/whatsappMensajes";
 
 const Footer = () => {
     return (

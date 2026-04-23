@@ -122,13 +122,7 @@ console.log("INSERT exitoso, id:", results.insertId);
   });
 };
 
-
-
-
-
-// ── RECUPERAR CONTRASEÑA - PASO 1 ─────────────────────────────────────────────
 // POST /api/auth/forgot-password
-// el usuario manda su email y le mandamos un link para cambiar la password
 export const solicitarRecuperacionPassword = (req, res) => {
   const { email } = req.body;
 
@@ -186,9 +180,7 @@ export const solicitarRecuperacionPassword = (req, res) => {
   });
 };
 
-// ── RECUPERAR CONTRASEÑA - PASO 2 ─────────────────────────────────────────────
 // POST /api/auth/reset-password
-// el usuario llega desde el link del mail con el token y cambia su password
 export const resetearPassword = async (req, res) => {
   const { token, nuevaPassword } = req.body;
 

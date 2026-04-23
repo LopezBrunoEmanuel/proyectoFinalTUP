@@ -1,7 +1,3 @@
-/* ════════════════════════════════════════════
-   CARRUSEL
-════════════════════════════════════════════ */
-
 .home__carrusel {
   position: relative;
   background-color: #000;
@@ -42,7 +38,6 @@
   background-color: #000;
 }
 
-/* ── CAPTION ────────────────────────────── */
 .home__carrusel-caption {
   position: absolute;
   top: 25%;
@@ -80,7 +75,6 @@
   margin-bottom: 1.75rem;
 }
 
-/* ── BOTONES ────────────────────────────── */
 .home__carrusel-actions {
   display: flex;
   gap: 0.85rem;
@@ -124,7 +118,6 @@
   border-color: #fff;
 }
 
-/* ── INDICADORES ────────────────────────── */
 .carousel-indicators [data-bs-target] {
   width: 8px;
   height: 8px;
@@ -141,7 +134,6 @@
   transform: scale(1.3);
 }
 
-/* ── RESPONSIVE ─────────────────────────── */
 @media (max-width: 768px) {
   .home__carrusel-img {
     height: 72vh;

@@ -176,7 +176,6 @@ const Checkout = () => {
             </Col>
 
             <Col lg={7}>
-              {/* Sección Dirección */}
               <Card className="mb-4">
                 <Card.Body>
                   <SeccionTipoEntrega

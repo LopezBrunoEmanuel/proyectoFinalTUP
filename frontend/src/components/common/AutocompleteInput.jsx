@@ -76,13 +76,12 @@ const AutocompleteInput = ({
   };
 
   const handleKeyDown = (e) => {
-    // if (!isOpen || filteredSuggestions.length === 0) {
     if (e.key === "Enter") {
       e.preventDefault();
       if (isOpen && highlightedIndex >= 0) {
         handleSelectSuggestion(filteredSuggestions[highlightedIndex]);
       } else {
-        if (onConfirm) onConfirm(value); // 👈 ahora siempre dispara con Enter
+        if (onConfirm) onConfirm(value);
       }
       return;
     }

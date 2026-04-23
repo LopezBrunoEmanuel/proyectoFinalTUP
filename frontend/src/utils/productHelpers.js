@@ -27,12 +27,10 @@ export const getPrecioMostrar = (producto) => {
   return {
     min,
     max,
-    // texto: `Desde $${min.toLocaleString("es-AR", { minimumFractionDigits: 2, maximumFractionDigits: 2 })} hasta $${max.toLocaleString("es-AR", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`,
     texto: `$${min.toLocaleString("es-AR", { minimumFractionDigits: 2, maximumFractionDigits: 2 })} / $${max.toLocaleString("es-AR", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`,
   };
 };
 
-// Helper para renderizar precio (usar en JSX)
 export const renderPrecio = (precio) => {
   if (precio === null || precio === undefined) return "N/A";
 
@@ -47,7 +45,6 @@ export const renderPrecio = (precio) => {
   return "N/A";
 };
 
-// Helper para obtener el stock total (SOLO de tamaños activos)
 export const getStockMostrar = (producto) => {
   if (!producto || !producto.tamanios || producto.tamanios.length === 0) {
     return 0;
@@ -58,7 +55,6 @@ export const getStockMostrar = (producto) => {
     .reduce((sum, t) => sum + (parseInt(t.stock) || 0), 0);
 };
 
-// Helper para verificar si tiene tamaños activos
 export const tieneTamaniosActivos = (producto) => {
   if (!producto || !producto.tamanios || producto.tamanios.length === 0) {
     return false;
@@ -66,7 +62,6 @@ export const tieneTamaniosActivos = (producto) => {
   return producto.tamanios.some((t) => t.activo);
 };
 
-// Helper para validar la cantidad de stock bajo/critico
 export const getAlertaStock = (tamanios) => {
   const activos = tamanios?.filter((t) => Number(t.activo) === 1) ?? [];
   const stocks = activos.map((t) => Number(t.stock));

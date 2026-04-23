@@ -1,14 +1,9 @@
-/* ════════════════════════════════════════════
-   MAIN HOME
-════════════════════════════════════════════ */
-
 .home__main {
   background-color: var(--color-beige);
   color: var(--color-texto);
   font-family: var(--fuente-base);
 }
 
-/* ── CABECERAS DE SECCIÓN ───────────────── */
 .home__section-head {
   text-align: center;
   margin-bottom: 3rem;
@@ -41,7 +36,6 @@
   margin: 0 auto;
 }
 
-/* ── FRANJA BENEFICIOS ──────────────────── */
 .home__franja {
   background-color: var(--color-verde-bosque);
   padding-block: 1.1rem;
@@ -75,7 +69,6 @@
   letter-spacing: 0.3px;
 }
 
-/* ── CATEGORÍAS ─────────────────────────── */
 .home__categorias {
   background-color: var(--color-beige-claro);
   padding-block: 5rem;
@@ -145,7 +138,6 @@
   font-size: 1.7rem;
 }
 
-/* card explorar todo */
 .home__cat-card--explorar {
   background-color: var(--color-verde-bosque);
   justify-content: center;
@@ -166,7 +158,6 @@
   letter-spacing: 0.3px;
 }
 
-/* ── SERVICIOS (flip cards) ─────────────── */
 .home__servicios {
   background-color: var(--color-beige);
   padding-block: 5rem;
@@ -188,12 +179,10 @@
   border-radius: 14px;
 }
 
-/* hover en desktop */
 .home__servicio-flip:hover .home__servicio-flip-inner {
   transform: rotateY(180deg);
 }
 
-/* click en cualquier dispositivo */
 .home__servicio-flip.is-flipped .home__servicio-flip-inner {
   transform: rotateY(180deg);
 }
@@ -208,7 +197,6 @@
   overflow: hidden;
 }
 
-/* FRENTE */
 .home__servicio-front {
   background-size: cover;
   background-position: center;
@@ -248,7 +236,6 @@
   letter-spacing: 0.2px;
 }
 
-/* DORSO */
 .home__servicio-back {
   transform: rotateY(180deg);
   background-color: var(--color-verde-bosque);
@@ -302,7 +289,6 @@
   opacity: 0.85;
 }
 
-/* ── RESPONSIVE ─────────────────────────── */
 @media (max-width: 991px) {
   .home__cats-grid {
     grid-template-columns: 1fr 1fr;

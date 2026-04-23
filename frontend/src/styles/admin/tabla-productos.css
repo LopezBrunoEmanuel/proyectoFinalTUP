@@ -1,4 +1,3 @@
-/* Centrar columna de acciones y prevenir saltos */
 .table td:last-child,
 .table th:last-child {
   text-align: center;

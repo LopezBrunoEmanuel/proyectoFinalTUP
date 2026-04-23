@@ -20,15 +20,6 @@ const CatalogoProductos = () => {
   const location = useLocation();
   const productosPorPagina = 12;
 
-  // const getStockTotal = (prod) => {
-  //   if (prod.tieneTamanios && Array.isArray(prod.tamanios)) {
-  //     return prod.tamanios
-  //       .filter((t) => Number(t.activo) === 1)
-  //       .reduce((acc, t) => acc + Number(t.stock || 0), 0);
-  //   }
-  //   return Number(prod.stock || 0);
-  // };
-
   const getStockTotal = (prod) => {
     if (Array.isArray(prod.tamanios) && prod.tamanios.length > 0) {
       return prod.tamanios
@@ -37,15 +28,6 @@ const CatalogoProductos = () => {
     }
     return Number(prod.stock || 0);
   };
-
-  // const getPrecioBaseOrden = (prod) => {
-  //   if (!prod.tieneTamanios || !Array.isArray(prod.tamanios)) {
-  //     return Number(prod.precioBase);
-  //   }
-  //   const tamaniosActivos = prod.tamanios.filter((t) => Number(t.activo) === 1);
-  //   if (tamaniosActivos.length === 0) return Number(prod.precioBase);
-  //   return Math.min(...tamaniosActivos.map((t) => Number(t.precio)));
-  // };
 
   const getPrecioBaseOrden = (prod) => {
     if (Array.isArray(prod.tamanios) && prod.tamanios.length > 0) {
@@ -66,15 +48,15 @@ const CatalogoProductos = () => {
 
       const coincideBusqueda = filtros.busqueda
         ? prod.nombreProducto
-            .toLowerCase()
-            .normalize("NFD")
-            .replace(/[\u0300-\u036f]/g, "")
-            .includes(
-              filtros.busqueda
-                .toLowerCase()
-                .normalize("NFD")
-                .replace(/[\u0300-\u036f]/g, ""),
-            )
+          .toLowerCase()
+          .normalize("NFD")
+          .replace(/[\u0300-\u036f]/g, "")
+          .includes(
+            filtros.busqueda
+              .toLowerCase()
+              .normalize("NFD")
+              .replace(/[\u0300-\u036f]/g, ""),
+          )
         : true;
 
       const coincideCategoria = filtros.categoria

@@ -79,7 +79,6 @@ function App() {
             element={<RutaPrivada rolesPermitidos={["admin", "empleado"]} />}
           >
             <Route element={<AdminLayout />}>
-              {/* accesos de admin y empleado */}
               <Route index element={<AdminDashboard />} />
               <Route path="productos" element={<AdminProductos />} />
               <Route path="productos/nuevo" element={<NuevoProducto />} />
@@ -88,7 +87,6 @@ function App() {
               <Route path="reservas" element={<AdminReservas />} />
               <Route path="reservas/:id" element={<DetalleReserva />} />
               <Route element={<RutaPrivada rolesPermitidos={["admin"]} />}>
-                {/* accesos solo admin */}
                 <Route path="usuarios" element={<AdminUsuarios />} />
                 <Route path="reportes" element={<AdminReportes />} />
                 <Route path="productos/papelera" element={<PapeleraProductos />} />

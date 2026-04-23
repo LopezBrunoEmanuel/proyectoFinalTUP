@@ -3,7 +3,6 @@
   background-color: #fafafa;
 }
 
-/* ── CARD DE RESERVA ────────────────────────────────────── */
 .reserva-card {
   border: 1px solid #e5e5e5;
   border-radius: 10px;
@@ -17,7 +16,6 @@
   box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
 }
 
-/* Bordes de color según estado */
 .reserva-card:has(.badge.bg-warning) {
   border-left-color: #ffc107;
 }
@@ -34,19 +32,16 @@
   border-left-color: #dc3545;
 }
 
-/* ── HEADER ─────────────────────────────────────────────── */
 .reserva-card-header {
   background-color: #f8f9fa;
   border-bottom: 1px solid #e9ecef;
   padding: 0.75rem 1rem;
 }
 
-/* ── BODY ───────────────────────────────────────────────── */
 .reserva-card .card-body {
   padding: 1.25rem;
 }
 
-/* ── INFO DETALLADA (EXPANDIDA) ─────────────────────────── */
 .detalle-info {
   display: flex;
   flex-direction: column;
@@ -78,7 +73,6 @@
   line-height: 1.4;
 }
 
-/* ── DETALLE DE PRODUCTOS ───────────────────────────────── */
 .detalle-productos h6 {
   font-size: 0.75rem;
   color: #999;
@@ -88,14 +82,12 @@
   margin-bottom: 0.75rem;
 }
 
-/* ── BADGES ─────────────────────────────────────────────── */
 .reserva-card .badge {
   font-weight: 500;
   font-size: 0.75rem;
   letter-spacing: 0.02em;
 }
 
-/* ── BOTONES ────────────────────────────────────────────── */
 .reserva-card .btn-link {
   color: #333;
   font-size: 0.875rem;
@@ -106,7 +98,6 @@
   color: #000;
 }
 
-/* ── RESPONSIVE ─────────────────────────────────────────── */
 @media (max-width: 576px) {
   .reserva-card-header {
     padding: 0.65rem 0.85rem;

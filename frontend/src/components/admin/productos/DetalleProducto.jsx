@@ -67,7 +67,6 @@ const DetalleProducto = () => {
         <div className="detalle-producto-page" style={{ backgroundColor: "transparent" }}>
             <Container className="py-4">
 
-                {/* Barra de navegación */}
                 <div className="d-flex justify-content-between align-items-center mb-3">
                     <Button variant="secondary" onClick={() => navigate(producto.eliminado ? "/admin/productos/papelera" : "/admin/productos")}>
                         <FiArrowLeft className="me-2" />

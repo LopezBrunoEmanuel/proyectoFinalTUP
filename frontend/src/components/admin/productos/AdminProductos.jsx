@@ -19,7 +19,7 @@ const AdminProductos = () => {
     const [filtros, setFiltros] = useState({
         texto: "",
         categoria: "",
-        estado: "",
+        estado: "activo",
         stock: "",
         destacado: "",
     });
@@ -135,6 +135,7 @@ const AdminProductos = () => {
         }
     };
 
+    // el siguiente comentaruio es la funcion que eliminaba logicamente los productos
     // const handleEliminar = async (producto) => {
     //     const result = await Swal.fire({
     //         title: "¿Eliminar producto?",
@@ -349,7 +350,6 @@ const AdminProductos = () => {
                                                         <FiEdit2 />
                                                     </Button>
                                                     <Button
-                                                        // variant={producto.activo ? "outline-dark" : "outline-info"}
                                                         variant="outline-dark"
                                                         size="sm"
                                                         onClick={() => handleToggle(producto)}

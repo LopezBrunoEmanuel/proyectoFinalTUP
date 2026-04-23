@@ -528,28 +528,49 @@ export const obtenerReservaPorId = async (req, res) => {
 };
 
 // PATCH - Cambiar estado de una reserva ADMIN
-export const cambiarEstadoReserva = (req, res) => {
+export const cambiarEstadoReserva = async (req, res) => {
   const { id } = req.params;
-  const { idEstado } = req.body;
+  const { idEstado: nuevoEstado } = req.body;
 
-  if (!idEstado) {
+  if (!nuevoEstado) {
     return res.status(400).json({ error: "idEstado es obligatorio" });
   }
 
-  const query = "UPDATE reservas SET idEstado = ? WHERE idReserva = ?";
+  const ESTADOS_FINALES = [5, 6];
+  const ID_CANCELADA = 6;
 
-  connection.query(query, [idEstado, id], (error, results) => {
-    if (error) {
-      console.error("Error al cambiar estado de reserva:", error);
-      return res.status(500).json({ error: error.message });
-    }
+  try {
+    const conn = connection.promise();
 
-    if (results.affectedRows === 0) {
+    const [reservas] = await conn.query(
+      "SELECT idEstado FROM reservas WHERE idReserva = ?",
+      [id]
+    );
+
+    if (reservas.length === 0) {
       return res.status(404).json({ error: "Reserva no encontrada" });
     }
 
+    const estadoActual = reservas[0].idEstado;
+
+    if (ESTADOS_FINALES.includes(estadoActual)) {
+      return res.status(400).json({ error: "Esta reserva no puede cambiar de estado." });
+    }
+
+    if (parseInt(nuevoEstado) !== ID_CANCELADA && parseInt(nuevoEstado) <= estadoActual) {
+      return res.status(400).json({ error: "Transición de estado no permitida. La reserva solo puede avanzar." });
+    }
+
+    await conn.query(
+      "UPDATE reservas SET idEstado = ? WHERE idReserva = ?",
+      [nuevoEstado, id]
+    );
+
     res.status(200).json({ success: true });
-  });
+  } catch (error) {
+    console.error("Error al cambiar estado de reserva:", error);
+    res.status(500).json({ error: error.message });
+  }
 };
 
 // PATCH - Marcar reserva como pagada ADMIN

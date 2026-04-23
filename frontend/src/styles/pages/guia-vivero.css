@@ -1,12 +1,7 @@
-/* ════════════════════════════════════════════
-   GUÍA DEL VIVERO
-════════════════════════════════════════════ */
-
 .gv {
   background-color: var(--color-beige);
 }
 
-/* ── HERO ───────────────────────────────── */
 .gv__hero {
   position: relative;
   min-height: 420px;
@@ -60,7 +55,6 @@
   margin: 0;
 }
 
-/* ── NAV INTERNA ────────────────────────── */
 .gv__nav {
   background-color: var(--color-beige-claro);
   border-bottom: 1px solid rgba(0, 0, 0, 0.07);
@@ -108,7 +102,6 @@
   border-bottom-color: var(--color-dorado);
 }
 
-/* ── SECCIONES ──────────────────────────── */
 .gv__section {
   padding-block: 5.5rem;
 }
@@ -153,7 +146,6 @@
   margin: 0 auto;
 }
 
-/* ── FAQ CATEGORÍAS ─────────────────────── */
 .gv__faq-cats {
   display: flex;
   flex-direction: column;
@@ -201,7 +193,6 @@
   opacity: 1;
 }
 
-/* ── FAQ LISTA ──────────────────────────── */
 .gv__faq-cat-titulo {
   font-family: var(--fuente-titulos);
   font-size: 1.2rem;
@@ -286,7 +277,6 @@
   border-top: 1px solid rgba(0, 0, 0, 0.05);
 }
 
-/* ── TIPS ROWS ──────────────────────────── */
 .gv__tips-list {
   display: flex;
   flex-direction: column;
@@ -303,7 +293,6 @@
   border-radius: 20px;
   overflow: hidden;
   box-shadow: 0 8px 40px rgba(0, 0, 0, 0.1);
-  /* sin height fijo: crece con el contenido */
   min-height: 320px;
 }
 
@@ -315,7 +304,6 @@
   direction: ltr;
 }
 
-/* imagen cubre toda la altura que tome el contenido */
 .gv-tip__img-wrap {
   position: relative;
   overflow: hidden;
@@ -358,7 +346,6 @@
   letter-spacing: -3px;
 }
 
-/* panel de contenido: crece libremente */
 .gv-tip__content {
   background-color: #fff;
   padding: 2rem 2.25rem;
@@ -400,7 +387,6 @@
   font-style: italic;
 }
 
-/* expandible sin scroll, crece con max-height */
 .gv-tip__detalle {
   max-height: 0;
   overflow: hidden;
@@ -478,7 +464,6 @@
   color: var(--color-beige);
 }
 
-/* ── RESPONSIVE ─────────────────────────── */
 @media (max-width: 991px) {
   .gv__faq-cats {
     flex-direction: row;

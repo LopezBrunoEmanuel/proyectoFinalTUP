@@ -1,11 +1,9 @@
-/* General del carrito */
 .offcanvas-body {
   background-color: #f8f4ed;
   overflow-y: auto;
   padding-bottom: 2rem;
 }
 
-/* Cada producto (card) */
 .carrito-item {
   background-color: #fff;
   border: 1px solid #e0e0e0;
@@ -16,33 +14,24 @@
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
 }
 
-/* .carrito-item-img {
-  max-width: 70px;
-  height: 70px;
-  object-fit: cover;
-} */
-/* Imagen del carrito — cuadrada, uniforme y recortada */
 .carrito-item-img {
   width: 70px !important;
   height: 90px !important;
   object-fit: cover;
   object-position: center;
-  border-radius: 8px; /* opcional, podés eliminarlo */
-  background-color: #f2f2f2; /* fondo neutro para imágenes que carguen lento */
+  border-radius: 8px;
+  background-color: #f2f2f2;
 }
 
-/* Nombre del producto */
 .nombre-prod {
   font-size: 0.95rem;
 }
 
-/* Precio individual */
 .precio-item {
   font-size: 0.9rem;
   color: #2d3436;
 }
 
-/* Botones de cantidad */
 .btn-cantidad {
   width: 28px;
   height: 28px;
@@ -57,7 +46,6 @@
   font-size: 0.9rem;
 }
 
-/* Botón eliminar */
 .btn-eliminar {
   color: #dc3545 !important;
   font-size: 0.9rem;

@@ -120,8 +120,6 @@ const LoginForm = () => {
             {submitting ? "Ingresando..." : "Ingresar"}
           </button>
 
-          {/* <div className="auth-separator"><span>o</span></div> */}
-
           <button
             type="button"
             className="auth-btn-secondary"

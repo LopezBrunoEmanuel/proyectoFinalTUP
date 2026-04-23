@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import {
   AreaChart, Area, BarChart, Bar, LineChart, Line,
   PieChart, Pie, XAxis, YAxis, CartesianGrid, Tooltip,
@@ -81,6 +82,7 @@ function GraficoCard({ titulo, delay = 0, children }) {
 function TabGeneral({ datos, cargando }) {
   const [verMasReservas, setVerMasReservas] = useState(false);
   const [verMasClientes, setVerMasClientes] = useState(false);
+  const navigate = useNavigate();
   const LIMITE = 5;
 
   const estadoColor = {
@@ -122,7 +124,7 @@ function TabGeneral({ datos, cargando }) {
         {kpis.map((k) => <KpiCard key={k.titulo} {...k} />)}
       </div>
 
-      <GraficoCard titulo="Tendencia de clientes — últimos 3 meses" delay={320}>
+      <GraficoCard titulo="Usuarios registrados en los últimos 3 meses" delay={320}>
         <ResponsiveContainer width="100%" height={220}>
           <AreaChart data={(clientes?.grafico || []).slice(-3)}>
             <defs>
@@ -151,7 +153,7 @@ function TabGeneral({ datos, cargando }) {
             {reservasVisibles.map((r) => {
               const est = estadoColor[r.estado] || { bg: "#e0e0e0", color: "#64748b" };
               return (
-                <div key={r.idReserva} className="ar-lista__item">
+                <div key={r.idReserva} className="ar-lista__item" style={{ cursor: "pointer" }} onClick={() => navigate(`/admin/reservas/${r.idReserva}`)}>
                   <div className="ar-lista__info">
                     <span className="ar-lista__nombre">{r.cliente}</span>
                     <span className="ar-lista__sub">
@@ -170,13 +172,14 @@ function TabGeneral({ datos, cargando }) {
               );
             })}
           </div>
-          {reservasList.length > LIMITE && (
-            <button className="ar-btn-ver-mas"
-              style={{ borderColor: PALETA_GENERAL[0], color: PALETA_GENERAL[0] }}
-              onClick={() => setVerMasReservas((v) => !v)}>
-              {verMasReservas ? "Ver menos ▲" : `Ver más (${reservasList.length - LIMITE} más) ▼`}
-            </button>
-          )}
+          <button className="ar-btn-ver-mas"
+            style={{ borderColor: PALETA_GENERAL[0], color: PALETA_GENERAL[0] }}
+            onClick={() => {
+              navigate(`/admin/reservas`);
+              setVerMasReservas((r) => !r)
+            }}>
+            Administrar reservas
+          </button>
         </GraficoCard>
 
         <GraficoCard titulo="Últimos clientes registrados" delay={480}>
@@ -192,13 +195,14 @@ function TabGeneral({ datos, cargando }) {
               </div>
             ))}
           </div>
-          {clientesList.length > LIMITE && (
-            <button className="ar-btn-ver-mas"
-              style={{ borderColor: PALETA_GENERAL[0], color: PALETA_GENERAL[0] }}
-              onClick={() => setVerMasClientes((v) => !v)}>
-              {verMasClientes ? "Ver menos ▲" : `Ver más (${clientesList.length - LIMITE} más) ▼`}
-            </button>
-          )}
+          <button className="ar-btn-ver-mas"
+            style={{ borderColor: PALETA_GENERAL[0], color: PALETA_GENERAL[0] }}
+            onClick={() => {
+              navigate(`/admin/usuarios`);
+              setVerMasClientes((v) => !v)
+            }}>
+            Administrar usuarios
+          </button>
         </GraficoCard>
       </div>
     </div>
@@ -507,11 +511,106 @@ function TabReservas({ datos, cargando }) {
   const { reservas } = datos;
   const maxReservas = reservas.top5Usuarios?.[0]?.total ?? 1;
 
+  const DIAS_ES = {
+    Monday: "Lunes", Tuesday: "Martes", Wednesday: "Miércoles",
+    Thursday: "Jueves", Friday: "Viernes", Saturday: "Sábado", Sunday: "Domingo"
+  };
+
+  const datosEntrega = [
+    { name: "Retiro local", value: reservas.tiposEntrega?.retiroLocal ?? 0 },
+    { name: "Envío a domicilio", value: reservas.tiposEntrega?.envioDomicilio ?? 0 },
+  ];
+  const totalEntrega = datosEntrega.reduce((s, d) => s + d.value, 0);
+
   return (
     <div className="ar-tab-content">
       <KpiCard icono={<FiClipboard size={22} />}
         titulo="Reservas activas (pendiente, confirmada, en preparación, lista para retiro)"
-        valor={reservas.kpi} delay={0} />
+        valor={reservas.kpi}
+        delay={0}
+      />
+
+      <GraficoCard titulo="Retiro vs envío a domicilio" delay={200}>
+        {totalEntrega === 0 ? (
+          <p style={{ color: "#64748b", fontSize: "0.9rem" }}>Sin datos</p>
+        ) : (
+          <div className="ar-pie-layout">
+            <div className="ar-pie-layout__chart">
+              <ResponsiveContainer width="100%" height="100%">
+                <PieChart>
+                  <Pie
+                    data={datosEntrega}
+                    dataKey="value"
+                    nameKey="name"
+                    cx="50%" cy="50%"
+                    innerRadius={55} outerRadius={90}
+                    paddingAngle={3} strokeWidth={0}
+                  >
+                    {datosEntrega.map((_, i) => (
+                      <Cell key={i} fill={PALETA_RESERVAS[i % PALETA_RESERVAS.length]} />
+                    ))}
+                  </Pie>
+                  <Tooltip formatter={(val) => [`${val} reservas`]}
+                    contentStyle={{ background: "#fff", border: "1.5px solid #7c3aed", borderRadius: 10, fontSize: 12 }}
+                  />
+                </PieChart>
+              </ResponsiveContainer>
+            </div>
+            <div className="ar-pie-layout__leyenda">
+              {datosEntrega.map((d, i) => {
+                const pct = Math.round((d.value / totalEntrega) * 100);
+                return (
+                  <div key={i} className="ar-pie-leyenda__item">
+                    <div className="ar-pie-leyenda__punto"
+                      style={{ background: PALETA_RESERVAS[i % PALETA_RESERVAS.length] }} />
+                    <span className="ar-pie-leyenda__nombre">{d.name}</span>
+                    <div className="ar-pie-leyenda__barra-bg">
+                      <div className="ar-pie-leyenda__barra-fill"
+                        style={{ width: `${pct}%`, background: PALETA_RESERVAS[i % PALETA_RESERVAS.length] }} />
+                    </div>
+                    <span className="ar-pie-leyenda__pct"
+                      style={{ color: PALETA_RESERVAS[i % PALETA_RESERVAS.length] }}>
+                      {pct}%
+                    </span>
+                  </div>
+                );
+              })}
+              <p className="ar-pie-leyenda__total">
+                Total: <strong style={{ color: PALETA_RESERVAS[0] }}>
+                  {totalEntrega.toLocaleString("es-AR")} reservas
+                </strong>
+              </p>
+            </div>
+          </div>
+        )}
+      </GraficoCard>
+
+      <GraficoCard titulo="Reservas hechas por día de la semana en este año" delay={350}>
+        {(reservas.porDia ?? []).length === 0 ? (
+          <p style={{ color: "#64748b", fontSize: "0.9rem" }}>Sin datos</p>
+        ) : (
+          <ResponsiveContainer width="100%" height={280}>
+            <BarChart
+              data={(reservas.porDia ?? []).map(d => ({
+                ...d,
+                dia: DIAS_ES[d.dia] ?? d.dia
+              }))}
+              layout="vertical"
+              margin={{ left: 10, right: 40 }}
+            >
+              <CartesianGrid strokeDasharray="3 3" stroke="#e0e0e0" horizontal={false} />
+              <XAxis type="number" tick={{ fontSize: 12 }} allowDecimals={false} />
+              <YAxis type="category" dataKey="dia" tick={{ fontSize: 12 }} width={90} />
+              <Tooltip content={<TooltipVivero />} />
+              <Bar dataKey="cantidad" name="Reservas" radius={[0, 8, 8, 0]}>
+                {(reservas.porDia ?? []).map((_, i) => (
+                  <Cell key={i} fill={PALETA_RESERVAS[i % PALETA_RESERVAS.length]} />
+                ))}
+              </Bar>
+            </BarChart>
+          </ResponsiveContainer>
+        )}
+      </GraficoCard>
 
       <GraficoCard titulo="Reservas por estado — mensual" delay={150}>
         <ResponsiveContainer width="100%" height={300}>
@@ -666,33 +765,112 @@ export default AdminReportes;
 
 function TabInformes() {
   const hoy = new Date().toISOString().split("T")[0];
-  const haceMes = new Date(Date.now() - 30 * 24 * 60 * 60 * 1000).toISOString().split("T")[0];
+  const FECHA_LIMITE = "2020-01-01";
 
-  const [fechaDesde, setFechaDesde] = useState(haceMes);
+  const [fechaDesde, setFechaDesde] = useState(hoy);
   const [fechaHasta, setFechaHasta] = useState(hoy);
   const [datos, setDatos] = useState(null);
+  const [datosCompletos, setDatosCompletos] = useState(null);
+  const [mostrandoInforme, setMostrandoInforme] = useState(false);
   const [cargando, setCargando] = useState(false);
   const [analisisIA, setAnalisisIA] = useState("");
   const [cargandoIA, setCargandoIA] = useState(false);
   const [error, setError] = useState(null);
-  const [presetActivo, setPresetActivo] = useState(null);
+  const [presetActivo, setPresetActivo] = useState("Hoy");
+  const [cantidadProductos, setCantidadProductos] = useState(5);
+  const [verAnalisisCompleto, setVerAnalisisCompleto] = useState(false);
+
+  const LIMITE_IA = 600;
+
+  const productosAMostrar = datosCompletos
+    ? datosCompletos.productosDestacados.slice(
+      0, cantidadProductos === 999 ? undefined : cantidadProductos
+    )
+    : [];
+
+  const reiniciarInforme = () => {
+    setDatos(null);
+    setDatosCompletos(null);
+    setAnalisisIA("");
+    setCantidadProductos(5);
+    setMostrandoInforme(false);
+    setPresetActivo(null);
+    setFechaDesde(hoy);
+    setFechaHasta(hoy);
+    setError(null);
+    setVerAnalisisCompleto(false);
+  };
 
   const PRESETS = [
-    // por algun motivo la busqueda comienza siempre con el dia de mañana. ARREGLAR ESO
-    // hacer que estos presets realmente hagan la busqueda que dicen hacer
-    // nuevos presets: año pasado (del 1/1/año al 31/12/año)
-    // ver si agregamos otros presets
-    // podemos hacer informes personalizados de lo que requiera el dueño, por ejemplo solo ventas, solo reservas, etc.
-    { label: "Última semana", dias: 7 },
-    { label: "Último mes", dias: 30 },
-    { label: "3 meses", dias: 90 },
-    { label: "Este año", dias: 365 },
+    {
+      label: "Hoy",
+      calcular: () => ({ desde: hoy, hasta: hoy }),
+    },
+    {
+      label: "Esta semana",
+      calcular: () => {
+        const ahora = new Date();
+        const dia = ahora.getDay();
+        const lunes = new Date(ahora);
+        lunes.setDate(ahora.getDate() - (dia === 0 ? 6 : dia - 1));
+        return {
+          desde: lunes.toISOString().split("T")[0],
+          hasta: hoy,
+        };
+      },
+    },
+    {
+      label: "Este mes",
+      calcular: () => {
+        const ahora = new Date();
+        const primero = new Date(ahora.getFullYear(), ahora.getMonth(), 1);
+        return {
+          desde: primero.toISOString().split("T")[0],
+          hasta: hoy,
+        };
+      },
+    },
+    {
+      label: "3 meses",
+      calcular: () => {
+        const ahora = new Date();
+        const hace3 = new Date(ahora);
+        hace3.setMonth(ahora.getMonth() - 3);
+        return {
+          desde: hace3.toISOString().split("T")[0],
+          hasta: hoy,
+        };
+      },
+    },
+    {
+      label: "Este año",
+      calcular: () => ({
+        desde: `${new Date().getFullYear()}-01-01`,
+        hasta: hoy,
+      }),
+    },
+    {
+      label: "Año pasado",
+      calcular: () => {
+        const anio = new Date().getFullYear() - 1;
+        return {
+          desde: `${anio}-01-01`,
+          hasta: `${anio}-12-31`,
+        };
+      },
+    },
+    {
+      label: "Desde el inicio",
+      calcular: () => ({ desde: FECHA_LIMITE, hasta: hoy }),
+    },
   ];
 
-  const aplicarPreset = (label, dias) => {
-    const desde = new Date(Date.now() - dias * 24 * 60 * 60 * 1000).toISOString().split("T")[0];
+  const aplicarPreset = (label) => {
+    const preset = PRESETS.find((p) => p.label === label);
+    if (!preset) return;
+    const { desde, hasta } = preset.calcular();
     setFechaDesde(desde);
-    setFechaHasta(hoy);
+    setFechaHasta(hasta);
     setDatos(null);
     setAnalisisIA("");
     setPresetActivo(label);
@@ -712,9 +890,11 @@ function TabInformes() {
       setError(null);
       setAnalisisIA("");
       const { data } = await axios.get(
-        `/dashboardReportes/informe?fechaDesde=${fechaDesde}&fechaHasta=${fechaHasta}`
+        `/dashboardReportes/informe?fechaDesde=${fechaDesde}&fechaHasta=${fechaHasta}&topProductos=50`
       );
       setDatos(data);
+      setDatosCompletos(data);
+      setMostrandoInforme(true);
       if (conIA) {
         await analizarConIA(data);
       }
@@ -733,26 +913,56 @@ function TabInformes() {
       setCargandoIA(true);
       setAnalisisIA("");
 
-      const prompt = `Sos un asistente de análisis de negocio para un vivero llamado Patio 1220.
-Analizá los siguientes datos del período ${d.periodo.desde} al ${d.periodo.hasta} y generá un resumen ejecutivo claro y útil para el dueño del negocio.
-IMPORTANTE: Respondé en texto plano sin Markdown. No uses asteriscos, guiones como viñetas, ni símbolos especiales. Escribí los títulos de sección en MAYÚSCULAS seguidos de dos puntos y salto de línea. Separé los párrafos con una línea en blanco. Sé concreto, directo y útil. Respondé en español.
+      const esMismoDia = d.periodo.desde === d.periodo.hasta;
+      const descripcionPeriodo = esMismoDia
+        ? `el día ${new Date(d.periodo.desde + "T00:00:00").toLocaleDateString("es-AR")}`
+        : `el período del ${new Date(d.periodo.desde + "T00:00:00").toLocaleDateString("es-AR")} al ${new Date(d.periodo.hasta + "T00:00:00").toLocaleDateString("es-AR")}`;
+
+      const prompt = `Sos el asesor de negocios de un vivero llamado Patio 1220, ubicado en Tucumán, Argentina. Tu tarea es analizar los datos de ${descripcionPeriodo} y redactar un informe ejecutivo completo para el dueño del negocio.
+
+INSTRUCCIONES DE FORMATO:
+- Respondé en texto plano, sin Markdown, sin asteriscos, sin guiones como viñetas, sin símbolos especiales.
+- Estructurá el informe en secciones. Cada título de sección debe ir en MAYÚSCULAS seguido de dos puntos y un salto de línea.
+- Separé cada sección con una línea en blanco.
+- Usá un tono profesional pero cercano, como si fuera un contador o asesor de confianza hablándole directamente al dueño.
+- El informe debe ser extenso y detallado. No te limites a repetir los números — interpretálos, comparálos entre sí y sacá conclusiones útiles.
+- Si el período es un solo día, hacé referencia a "hoy". Si es una semana, decí "esta semana". Adaptá el lenguaje al contexto temporal.
 
 DATOS DEL PERÍODO:
-- Total de reservas: ${d.resumenFinanciero.cantidadReservas}
-- Total facturado (reservas retiradas): ${formatPesos(d.resumenFinanciero.totalFacturado)}
-- Total esperado (reservas activas): ${formatPesos(d.resumenFinanciero.totalEsperado)}
-- Total cobrado: ${formatPesos(d.resumenFinanciero.totalPagado)}
+- Total de reservas recibidas: ${d.resumenFinanciero.cantidadReservas}
+- Reservas canceladas: ${d.resumenFinanciero.cantidadCanceladas} (tasa de cancelación: ${d.resumenFinanciero.tasaCancelacion}%)
+- Total facturado (reservas ya retiradas): ${formatPesos(d.resumenFinanciero.totalFacturado)}
+- Total esperado (reservas activas aún no retiradas): ${formatPesos(d.resumenFinanciero.totalEsperado)}
+- Total efectivamente cobrado: ${formatPesos(d.resumenFinanciero.totalPagado)}
 - Total pendiente de cobro: ${formatPesos(d.resumenFinanciero.totalSinPagar)}
-- Reservas canceladas: ${d.resumenFinanciero.cantidadCanceladas} (${d.resumenFinanciero.tasaCancelacion}%)
+- Total general del período (todas las reservas no canceladas): ${formatPesos(d.resumenFinanciero.totalGeneral)}
 
 RESERVAS POR ESTADO:
-${d.porEstado.map(e => `- ${e.nombreEstado}: ${e.cantidad} reservas, ${formatPesos(e.monto)}`).join("\n")}
+${d.porEstado.map(e => `- ${e.nombreEstado}: ${e.cantidad} reservas por un total de ${formatPesos(e.monto)}`).join("\n")}
 
-TOP 10 PRODUCTOS MÁS SOLICITADOS:
-${d.productosDestacados.map((p, i) => `${i + 1}. ${p.nombreProducto}: ${p.cantidadVendida} unidades, ${formatPesos(p.montoTotal)}`).join("\n")}
+PRODUCTOS MÁS SOLICITADOS:
+${d.productosDestacados.length > 0
+          ? d.productosDestacados.map((p, i) => `${i + 1}. ${p.nombreProducto}: ${p.cantidadVendida} unidades vendidas, generando ${formatPesos(p.montoTotal)}`).join("\n")
+          : "No hubo productos vendidos en este período."}
 
-EVOLUCIÓN SEMANAL:
-${d.evolucionSemanal.map(s => `- Semana del ${s.semana}: ${s.cantidad} reservas, ${formatPesos(s.monto)}`).join("\n")}`;
+EVOLUCIÓN DE RESERVAS POR SEMANA:
+${d.evolucionSemanal.length > 0
+          ? d.evolucionSemanal.map(s => `- Semana del ${s.semana}: ${s.cantidad} reservas por ${formatPesos(s.monto)}`).join("\n")
+          : "El período seleccionado no tiene suficiente amplitud para mostrar evolución semanal."}
+
+PRODUCTOS EN RESERVAS CANCELADAS:
+${d.productosCancelados?.length > 0
+          ? d.productosCancelados.map((p, i) => `${i + 1}. ${p.nombreProducto}: presente en ${p.vecesEnCanceladas} reservas canceladas`).join("\n")
+          : "No hubo cancelaciones en este período."}
+
+ESTRUCTURA SUGERIDA PARA EL INFORME:
+1. RESUMEN EJECUTIVO: síntesis general del período en 2-3 párrafos.
+2. ANÁLISIS FINANCIERO: interpretá los números de facturación, cobros y pendientes. Señalá si hay una brecha importante entre lo cobrado y lo esperado.
+3. COMPORTAMIENTO DE RESERVAS: analizá los estados, la tasa de cancelación y qué implica para el negocio.
+4. PRODUCTOS DESTACADOS: comentá cuáles fueron los más solicitados y qué oportunidades o riesgos detectás.
+5. PATRONES DE CANCELACIÓN: si hubo cancelaciones, analizá si hay productos recurrentes y qué podría estar causándolo.
+6. TENDENCIA TEMPORAL: si hay datos semanales, comentá si el negocio estuvo en crecimiento, estable o en caída durante el período.
+7. RECOMENDACIONES: al menos 3 acciones concretas que el dueño podría tomar basándose en estos datos.`;
 
       const { data } = await axios.post("/dashboardReportes/analizar-ia", { prompt });
       setAnalisisIA(data.texto);
@@ -767,7 +977,7 @@ ${d.evolucionSemanal.map(s => `- Semana del ${s.semana}: ${s.cantidad} reservas,
   const exportarSoloIA = () => {
     if (!analisisIA) return;
     generarInformePDF(
-      { ...datos, productosDestacados: [], porEstado: [], evolucionSemanal: [] },
+      { ...datos, productosDestacados: productosAMostrar, porEstado: [], evolucionSemanal: [] },
       analisisIA,
       true
     );
@@ -775,69 +985,86 @@ ${d.evolucionSemanal.map(s => `- Semana del ${s.semana}: ${s.cantidad} reservas,
 
   const exportarPDF = () => {
     if (!datos) return;
-    generarInformePDF(datos, analisisIA);
+    generarInformePDF(
+      { ...datos, productosDestacados: productosAMostrar },
+      analisisIA
+    );
   };
+
+  const opcionesCantidad = [5, 10, 20].filter(
+    (n) => (datosCompletos?.productosDestacados.length ?? 0) > (n === 5 ? 0 : n - 1)
+  );
 
   return (
     <div className="ar-tab-content">
-      {/* Selector de período */}
-      <GraficoCard titulo="Seleccionar período">
-        <div className="d-flex flex-wrap gap-2 mb-3">
-          {PRESETS.map((p) => (
-            <button key={p.label} className="ar-btn-ver-mas"
-              style={{
-                borderColor: PALETA_GENERAL[0],
-                color: presetActivo === p.label ? "#fff" : PALETA_GENERAL[0],
-                background: presetActivo === p.label ? PALETA_GENERAL[0] : "transparent",
-                width: "auto",
-                padding: "4px 14px"
-              }}
-              onClick={() => aplicarPreset(p.label, p.dias)}>
-              {p.label}
+      {!mostrandoInforme ? (
+        <GraficoCard titulo="Seleccionar período">
+          <div className="d-flex flex-wrap gap-2 mb-3">
+            {PRESETS.map((p) => (
+              <button key={p.label} className="ar-btn-ver-mas"
+                style={{
+                  borderColor: PALETA_GENERAL[0],
+                  color: presetActivo === p.label ? "#fff" : PALETA_GENERAL[0],
+                  background: presetActivo === p.label ? PALETA_GENERAL[0] : "transparent",
+                  width: "auto",
+                  padding: "4px 14px"
+                }}
+                onClick={() => aplicarPreset(p.label)}>
+                {p.label}
+              </button>
+            ))}
+          </div>
+          <div className="d-flex flex-wrap gap-3 align-items-end">
+            <div>
+              <label style={{ fontSize: "0.82rem", fontWeight: 700, color: "#64748b", display: "block", marginBottom: 4 }}>
+                Desde
+              </label>
+              <input type="date" value={fechaDesde}
+                min={FECHA_LIMITE} max={fechaHasta}
+                onChange={(e) => { setFechaDesde(e.target.value); setPresetActivo(null); }}
+                style={{ border: "1.5px solid #e0e0e0", borderRadius: 8, padding: "6px 10px", fontSize: "0.9rem" }}
+              />
+            </div>
+            <div>
+              <label style={{ fontSize: "0.82rem", fontWeight: 700, color: "#64748b", display: "block", marginBottom: 4 }}>
+                Hasta
+              </label>
+              <input type="date" value={fechaHasta}
+                min={fechaDesde} max={hoy}
+                onChange={(e) => { setFechaHasta(e.target.value); setPresetActivo(null); }}
+                style={{ border: "1.5px solid #e0e0e0", borderRadius: 8, padding: "6px 10px", fontSize: "0.9rem" }}
+              />
+            </div>
+            <div className="d-flex gap-2 align-items-center mt-3">
+              <button className="ar-btn-primario"
+                onClick={() => generarInforme(false)}
+                disabled={cargando}>
+                {cargando ? "Generando..." : "Ver informe"}
+              </button>
+            </div>
+          </div>
+          {error && <p style={{ color: "#dc2626", fontSize: "0.85rem", marginTop: 8 }}>{error}</p>}
+        </GraficoCard>
+      ) : datos && datos.resumenFinanciero?.cantidadReservas === 0 ? (
+        <GraficoCard titulo="Sin resultados">
+          <div style={{ textAlign: "center", padding: "2rem 1rem" }}>
+            <p style={{ fontWeight: 700, fontSize: "1.1rem", color: "#1a6b3c", marginBottom: "0.5rem" }}>
+              No hay reservas en este período
+            </p>
+            <p style={{ color: "#64748b", fontSize: "0.9rem", marginBottom: "1.5rem" }}>
+              {new Date(datos.periodo.desde + "T00:00:00").toLocaleDateString("es-AR")}
+              {datos.periodo.desde !== datos.periodo.hasta &&
+                ` — ${new Date(datos.periodo.hasta + "T00:00:00").toLocaleDateString("es-AR")}`
+              }
+            </p>
+            <button className="ar-btn-primario" onClick={reiniciarInforme}>
+              ← Seleccionar otro período
             </button>
-          ))}
-        </div>
-        <div className="d-flex flex-wrap gap-3 align-items-end">
-          <div>
-            <label style={{ fontSize: "0.82rem", fontWeight: 700, color: "#64748b", display: "block", marginBottom: 4 }}>
-              Desde
-            </label>
-            <input type="date" value={fechaDesde} max={fechaHasta}
-              onChange={(e) => { setFechaDesde(e.target.value); setDatos(null); setAnalisisIA(""); setPresetActivo(null); }}
-              style={{ border: "1.5px solid #e0e0e0", borderRadius: 8, padding: "6px 10px", fontSize: "0.9rem" }}
-            />
           </div>
-          <div>
-            <label style={{ fontSize: "0.82rem", fontWeight: 700, color: "#64748b", display: "block", marginBottom: 4 }}>
-              Hasta
-            </label>
-            <input type="date" value={fechaHasta} min={fechaDesde} max={hoy}
-              onChange={(e) => { setFechaHasta(e.target.value); setDatos(null); setAnalisisIA(""); setPresetActivo(null); }}
-              style={{ border: "1.5px solid #e0e0e0", borderRadius: 8, padding: "6px 10px", fontSize: "0.9rem" }}
-            />
-          </div>
-          <div className="d-flex flex-wrap gap-2 align-items-center mt-3">
-            <button className="ar-btn-primario"
-              onClick={() => generarInforme(false)}
-              disabled={cargando || cargandoIA}>
-              {cargando ? "Generando..." : "Ver informe"}
-            </button>
-            {/* <button className="ar-btn-primario"
-              style={{ background: "var(--color-verde-olivo)" }}
-              onClick={() => generarInforme(true)}
-              disabled={cargando || cargandoIA}>
-              {cargandoIA ? "Analizando..." : "✦ Ver informe con análisis IA"}
-            </button> */}
-          </div>
-        </div>
-        {error && <p style={{ color: "#dc2626", fontSize: "0.85rem", marginTop: 8 }}>{error}</p>}
-      </GraficoCard>
-
-      {/* Resultados */}
-      {datos && (
+        </GraficoCard>
+      ) : (
         <div id="informe-pdf">
-          {/* Encabezado del informe */}
-          <div style={{ background: PALETA_GENERAL[0], borderRadius: 16, padding: "1.5rem", color: "#fff", marginBottom: 0 }}>
+          <div style={{ background: PALETA_GENERAL[0], borderRadius: 16, padding: "1.5rem", color: "#fff" }}>
             <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", flexWrap: "wrap", gap: "1rem" }}>
               <div>
                 <h2 style={{ color: "#fff", fontFamily: "var(--fuente-titulos)", margin: 0, fontSize: "1.4rem" }}>
@@ -853,7 +1080,12 @@ ${d.evolucionSemanal.map(s => `- Semana del ${s.semana}: ${s.cantidad} reservas,
                 )}
               </div>
               <div className="no-print d-flex gap-2 flex-wrap">
-                {!analisisIA && !cargandoIA && (
+                <button className="ar-btn-primario"
+                  style={{ background: "rgba(255,255,255,0.2)", border: "1.5px solid rgba(255,255,255,0.5)" }}
+                  onClick={reiniciarInforme}>
+                  ← Generar otro informe
+                </button>
+                {!analisisIA && !cargandoIA && datos?.resumenFinanciero?.cantidadReservas > 0 && (
                   <button className="ar-btn-primario"
                     style={{ background: "rgba(255,255,255,0.2)", border: "1.5px solid rgba(255,255,255,0.5)" }}
                     onClick={() => analizarConIA(datos)}>
@@ -870,9 +1102,9 @@ ${d.evolucionSemanal.map(s => `- Semana del ${s.semana}: ${s.cantidad} reservas,
                   style={{ background: "rgba(255,255,255,0.2)", border: "1.5px solid rgba(255,255,255,0.5)" }}
                   onClick={exportarPDF}>
                   <FiDownload style={{ marginRight: 6 }} />
-                  Exportar informe completo PDF
+                  Exportar PDF
                 </button>
-                {analisisIA && (
+                {analisisIA && !analisisIA.startsWith("Error") && (
                   <button className="ar-btn-primario"
                     style={{ display: "flex", alignItems: "center", gap: 6, background: "rgba(255,255,255,0.15)", border: "1.5px solid rgba(255,255,255,0.5)" }}
                     onClick={exportarSoloIA}>
@@ -883,7 +1115,6 @@ ${d.evolucionSemanal.map(s => `- Semana del ${s.semana}: ${s.cantidad} reservas,
               </div>
             </div>
 
-            {/* Análisis IA justo debajo de los botones */}
             {(analisisIA || cargandoIA) && (
               <div style={{ marginTop: "1.2rem", paddingTop: "1.2rem", borderTop: "1px solid rgba(255,255,255,0.25)" }}>
                 {cargandoIA ? (
@@ -893,7 +1124,33 @@ ${d.evolucionSemanal.map(s => `- Semana del ${s.semana}: ${s.cantidad} reservas,
                   </div>
                 ) : (
                   <p style={{ fontSize: "0.9rem", lineHeight: 1.7, color: "rgba(255,255,255,0.92)", whiteSpace: "pre-wrap", margin: 0 }}>
-                    {analisisIA}
+                    {analisisIA && (
+                      <>
+                        <p style={{
+                          fontSize: "0.9rem", lineHeight: 1.7,
+                          color: "rgba(255,255,255,0.92)",
+                          whiteSpace: "pre-wrap", margin: 0
+                        }}>
+                          {verAnalisisCompleto
+                            ? analisisIA
+                            : analisisIA.slice(0, LIMITE_IA) + (analisisIA.length > LIMITE_IA ? "..." : "")
+                          }
+                        </p>
+                        {analisisIA.length > LIMITE_IA && (
+                          <button
+                            onClick={() => setVerAnalisisCompleto(v => !v)}
+                            style={{
+                              marginTop: 8, background: "rgba(255,255,255,0.15)",
+                              border: "1px solid rgba(255,255,255,0.4)",
+                              color: "#fff", borderRadius: 8,
+                              padding: "4px 14px", cursor: "pointer",
+                              fontSize: "0.82rem"
+                            }}>
+                            {verAnalisisCompleto ? "Ver menos ▲" : "Ver más ▼"}
+                          </button>
+                        )}
+                      </>
+                    )}
                   </p>
                 )}
               </div>
@@ -902,7 +1159,6 @@ ${d.evolucionSemanal.map(s => `- Semana del ${s.semana}: ${s.cantidad} reservas,
 
           <br />
 
-          {/* Resumen financiero */}
           <GraficoCard titulo="Resumen financiero" delay={100}>
             <div className="ar-kpi-grid" style={{ gridTemplateColumns: "repeat(auto-fit, minmax(160px, 1fr))" }}>
               {[
@@ -922,8 +1178,9 @@ ${d.evolucionSemanal.map(s => `- Semana del ${s.semana}: ${s.cantidad} reservas,
               ))}
             </div>
           </GraficoCard>
+
           <br />
-          {/* Desglose por estado */}
+
           <GraficoCard titulo="Reservas por estado" delay={150}>
             <ResponsiveContainer width="100%" height={260}>
               <BarChart data={datos.porEstado} layout="vertical" margin={{ left: 10, right: 40 }}>
@@ -939,8 +1196,9 @@ ${d.evolucionSemanal.map(s => `- Semana del ${s.semana}: ${s.cantidad} reservas,
               </BarChart>
             </ResponsiveContainer>
           </GraficoCard>
+
           <br />
-          {/* Evolución semanal */}
+
           {datos.evolucionSemanal.length > 0 && (
             <GraficoCard titulo="Evolución semanal de reservas" delay={200}>
               <ResponsiveContainer width="100%" height={260}>
@@ -965,10 +1223,40 @@ ${d.evolucionSemanal.map(s => `- Semana del ${s.semana}: ${s.cantidad} reservas,
               </ResponsiveContainer>
             </GraficoCard>
           )}
+
           <br />
-          {/* Top productos */}
+
           <GraficoCard titulo="Productos más solicitados en el período" delay={250}>
-            {datos.productosDestacados.length === 0 ? (
+            <div className="d-flex align-items-center gap-3 mb-3">
+              <span style={{ fontSize: "0.85rem", color: "#64748b", fontWeight: 600 }}>Mostrar:</span>
+              {opcionesCantidad.map((n) => (
+                <button key={n}
+                  onClick={() => setCantidadProductos(n)}
+                  style={{
+                    padding: "3px 12px", borderRadius: 20,
+                    border: `1.5px solid ${PALETA_GENERAL[0]}`,
+                    background: cantidadProductos === n ? PALETA_GENERAL[0] : "transparent",
+                    color: cantidadProductos === n ? "#fff" : PALETA_GENERAL[0],
+                    fontSize: "0.82rem", cursor: "pointer", fontWeight: 600,
+                  }}>
+                  Top {n}
+                </button>
+              ))}
+              {(datosCompletos?.productosDestacados.length ?? 0) > 20 && (
+                <button
+                  onClick={() => setCantidadProductos(999)}
+                  style={{
+                    padding: "3px 12px", borderRadius: 20,
+                    border: `1.5px solid ${PALETA_GENERAL[0]}`,
+                    background: cantidadProductos === 999 ? PALETA_GENERAL[0] : "transparent",
+                    color: cantidadProductos === 999 ? "#fff" : PALETA_GENERAL[0],
+                    fontSize: "0.82rem", cursor: "pointer", fontWeight: 600,
+                  }}>
+                  Max. 50
+                </button>
+              )}
+            </div>
+            {productosAMostrar.length === 0 ? (
               <p style={{ color: "#64748b", fontSize: "0.9rem" }}>
                 No hay productos en el período seleccionado
               </p>
@@ -977,14 +1265,14 @@ ${d.evolucionSemanal.map(s => `- Semana del ${s.semana}: ${s.cantidad} reservas,
                 <div className="ar-ranking__header">
                   {["#", "Producto", "Unidades", "Monto"].map((h, i) => (
                     <span key={i} className="ar-ranking__th"
-                      style={{ textAlign: i > 1 ? "right" : "left" }}>{h}</span>
+                      style={{ textAlign: i > 1 ? "right" : "left", marginLeft: "10px", marginRight: "10px" }}>{h}</span>
                   ))}
                 </div>
-                {datos.productosDestacados.map((prod, i) => (
+                {productosAMostrar.map((prod, i) => (
                   <div key={i}
                     className={`ar-ranking__row ${i % 2 === 0 ? "" : "ar-ranking__row--alt"}`}>
-                    <span className="ar-ranking__pos">
-                      {i === 0 ? "🥇" : i === 1 ? "🥈" : i === 2 ? "🥉" : `${i + 1}`}
+                    <span className="ar-ranking__pos" style={{ fontSize: "14px", fontWeight: "600" }}>
+                      {i + 1}
                     </span>
                     <span className="ar-ranking__nombre">{prod.nombreProducto}</span>
                     <span style={{ textAlign: "right", fontWeight: 700, color: PALETA_GENERAL[0] }}>
@@ -998,22 +1286,6 @@ ${d.evolucionSemanal.map(s => `- Semana del ${s.semana}: ${s.cantidad} reservas,
               </div>
             )}
           </GraficoCard>
-
-          {/* Análisis IA */}
-          {/* {(analisisIA || cargandoIA) && (
-            <GraficoCard titulo="Análisis ejecutivo — Asistente IA">
-              {cargandoIA ? (
-                <div className="d-flex align-items-center gap-2" style={{ color: "#64748b" }}>
-                  <div className="ar-ia-dot" /><div className="ar-ia-dot" /><div className="ar-ia-dot" />
-                  <span style={{ fontSize: "0.9rem" }}>Analizando datos...</span>
-                </div>
-              ) : (
-                <p style={{ fontSize: "0.92rem", lineHeight: 1.7, color: "#2d3436", whiteSpace: "pre-wrap", margin: 0 }}>
-                  {analisisIA}
-                </p>
-              )}
-            </GraficoCard>
-          )} */}
         </div>
       )}
     </div>

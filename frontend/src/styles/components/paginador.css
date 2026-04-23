@@ -1,4 +1,3 @@
-/* Estado activo (página actual) */
 .paginador .page-item.active .page-link {
   background-color: transparent !important;
   border: none !important;
@@ -9,7 +8,6 @@
   transition: var(--transicion);
 }
 
-/* Botones normales */
 .paginador .page-link {
   background-color: transparent !important;
   border: none !important;
@@ -19,24 +17,20 @@
   transition: all 0.25s ease-in-out;
 }
 
-/* Efecto hover (flotante) */
 .paginador .page-link:hover {
   color: var(--color-dorado);
   transform: translateY(-1px) scale(1.1);
 }
 
-/* Elimina destellos azules al hacer click */
 .paginador .page-link:focus {
   outline: none !important;
   box-shadow: none !important;
 }
 
-/* Separación entre botones */
 .paginador .page-item {
   margin: 0 4px;
 }
 
-/* 📱 Ajustes responsive: botones más grandes en mobile */
 @media (max-width: 768px) {
   .paginador .page-link {
     font-size: 1.1rem;
@@ -44,7 +38,6 @@
   }
 }
 
-/* ✨ Animación suave de transición */
 .transition-fade {
   opacity: 0;
   transform: translateY(5px);

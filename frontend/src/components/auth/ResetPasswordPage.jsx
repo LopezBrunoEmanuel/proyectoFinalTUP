@@ -1,7 +1,3 @@
-// ResetPasswordPage.jsx
-// Esta pagina se muestra cuando el usuario hace click en el link del mail
-// La URL llega con el token: /reset-password?token=abc123...
-
 import { useState } from "react";
 import { useSearchParams, useNavigate } from "react-router-dom";
 import axios from "axios";
@@ -10,7 +6,6 @@ import { swalCustom } from "../../utils/customSwal";
 import "../../styles/pages/login.css";
 
 const ResetPasswordPage = () => {
-  // useSearchParams nos permite leer el ?token=... de la URL
   const [searchParams] = useSearchParams();
   const token = searchParams.get("token");
   const navigate = useNavigate();
@@ -47,7 +42,6 @@ const ResetPasswordPage = () => {
     }
 
     try {
-      // mandamos el token que vino en la URL y la nueva password
       await axios.post(`${USUARIOS_URL}/reset-password`, {
         token,
         nuevaPassword,
@@ -59,7 +53,6 @@ const ResetPasswordPage = () => {
         text: "Contraseña actualizada. Ya podés iniciar sesión.",
       });
 
-      // redirigimos al login
       navigate("/login");
     } catch (error) {
       const status = error?.response?.status;

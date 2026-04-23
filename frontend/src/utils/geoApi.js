@@ -1,7 +1,5 @@
 const API_BASE_URL = "https://apis.datos.gob.ar/georef/api";
 
-// API de georef argentina
-
 export const fetchProvincias = async () => {
     try {
         const response = await fetch(`${API_BASE_URL}/provincias?campos=id,nombre&max=24`);

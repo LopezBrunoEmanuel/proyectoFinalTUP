@@ -8,6 +8,7 @@ import {
     FiFeather, FiRefreshCw
 } from "react-icons/fi";
 import "../../styles/pages/guia-vivero.css";
+import Visitanos from '../../components/home/Visitanos';
 
 const faqData = [
     {
@@ -353,6 +354,7 @@ const GuiaVivero = () => {
                     </div>
                 </Container>
             </section>
+            <Visitanos />
         </div>
     );
 };

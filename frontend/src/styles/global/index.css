@@ -1,9 +1,6 @@
-/* ===== Tipografías ===== */
 @import url("https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Lato:wght@300;400;700&display=swap");
 
-/* ===== Variables globales ===== */
 :root {
-  /* 🌿 Colores base */
   --color-verde-bosque: #46624a;
   --color-verde-olivo: #7a9e7e;
   --color-beige: #f5ede4;
@@ -12,34 +9,23 @@
   --color-gris-medio: #2d3436;
   --color-gris-suave: #e0e0e0;
   --color-blanco: #ffffff;
-
-  /* 🌸 Colores de acento */
   --color-rosa: #ca1c73;
   --color-rosa-hover: #b21764;
-
-  /* 🧱 Bordes, sombras y transiciones */
   --color-borde: #e4e4e4;
   --sombra-suave: 0 8px 20px rgba(0, 0, 0, 0.08);
   --radio: 8px;
   --radius: 16px;
   --transicion: all 0.25s ease;
   --transicion-rapida: all 0.15s ease;
-
-  /* 🅰️ Tipografía */
   --fuente-base: "Lato", "Inter", "Avenir", "Helvetica", "Arial", sans-serif;
   --fuente-titulos: "Playfair Display", serif;
   --color-texto: var(--color-gris-medio);
-
-  /* 🧭 Espaciados globales */
   --section-py: clamp(56px, 8vw, 96px);
-
-  /* 💬 Colores de estado */
   --color-exito: #4caf50;
   --color-error: #dc3545;
   --color-advertencia: #ffc107;
 }
 
-/* ===== Reset básico ===== */
 * {
   margin: 0;
   padding: 0;
@@ -59,7 +45,6 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
-/* ===== Tipografía general ===== */
 h1,
 h2,
 h3,
@@ -83,7 +68,6 @@ p {
   margin-bottom: 1rem;
 }
 
-/* ===== Enlaces ===== */
 a {
   color: var(--color-verde-olivo);
   text-decoration: none;
@@ -93,7 +77,6 @@ a:hover {
   color: var(--color-dorado);
 }
 
-/* ===== Botones — solo cursor y font, Bootstrap maneja el resto ===== */
 button,
 .btn {
   cursor: pointer;
@@ -106,21 +89,18 @@ button:active,
   transform: translateY(1px);
 }
 
-/* ===== Imágenes responsivas ===== */
 img {
   max-width: 100%;
   height: auto;
   display: block;
 }
 
-/* ===== Foco accesible ===== */
 :focus-visible {
   outline: 3px solid rgba(122, 158, 126, 0.4);
   outline-offset: 2px;
   border-radius: var(--radio);
 }
 
-/* ===== Tarjetas y superficies ===== */
 .card,
 .shadow-sm {
   box-shadow: var(--sombra-suave);
@@ -128,7 +108,6 @@ img {
   border-radius: var(--radius);
 }
 
-/* ===== Helpers reutilizables ===== */
 .u-shadow {
   box-shadow: var(--sombra-suave);
 }
@@ -149,7 +128,6 @@ img {
   padding-block: var(--section-py) !important;
 }
 
-/* ===== Motion preferente ===== */
 @media (prefers-reduced-motion: reduce) {
   * {
     animation-duration: 0.01ms !important;

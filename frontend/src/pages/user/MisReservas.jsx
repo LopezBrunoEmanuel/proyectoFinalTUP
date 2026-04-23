@@ -426,7 +426,6 @@ const MisReservas = () => {
                 ) : (
                     <>
                         <div className="d-flex flex-wrap gap-2 align-items-center mb-3">
-                            {/* <FiFilter size={15} className="text-muted" /> */}
                             <Form.Select
                                 size="sm"
                                 value={filtros.estado}

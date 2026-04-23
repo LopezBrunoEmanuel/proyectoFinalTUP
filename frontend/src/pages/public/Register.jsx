@@ -1,5 +1,5 @@
 import React from "react";
-import RegisterForm from "../../components/auth/RegisterForm"; // no encuentro de donde importar esto
+import RegisterForm from "../../components/auth/RegisterForm";
 
 const Register = () => {
   return <RegisterForm />;

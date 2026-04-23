@@ -1,7 +1,3 @@
-/* ════════════════════════════════════
-   PRODUCTOS DESTACADOS
-════════════════════════════════════ */
-
 .home__destacados {
   background-color: var(--color-beige-claro);
   padding-block: var(--section-py);

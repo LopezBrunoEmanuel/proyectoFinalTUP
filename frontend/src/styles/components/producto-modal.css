@@ -1,7 +1,3 @@
-/* ════════════════════════════════════════════
-   PRODUCTO MODAL
-════════════════════════════════════════════ */
-
 .producto-modal .modal-dialog {
   max-width: 700px;
 }
@@ -19,7 +15,6 @@
   max-height: calc(100vh - 140px);
 }
 
-/* ── Header ── */
 .pm-header {
   border-bottom: none;
   padding: 1rem 1.25rem 0.25rem;
@@ -33,24 +28,15 @@
   color: var(--color-verde-olivo);
 }
 
-/* ── Body ── */
 .pm-body {
   padding: 0.5rem 1.5rem 1.75rem;
 }
-
-/* ════════════════════════════════════════════
-   LAYOUT DE DOS ZONAS
-
-   ZONA TOP (desktop): imagen izquierda | nombre+desc derecha
-   ZONA BOTTOM: precio, stock, chips, cantidad, botón — ancho completo
-════════════════════════════════════════════ */
 
 .pm-layout {
   display: flex;
   flex-direction: column;
 }
 
-/* ── Zona superior ── */
 .pm-zona-top {
   display: flex;
   flex-direction: column;
@@ -63,12 +49,11 @@
 @media (min-width: 576px) {
   .pm-zona-top {
     flex-direction: row;
-    align-items: stretch; /* ambas columnas estiran a la misma altura */
+    align-items: stretch;
     gap: 1.5rem;
   }
 }
 
-/* ── Imagen ── */
 .pm-img-wrapper {
   flex-shrink: 0;
   width: 100%;
@@ -88,7 +73,6 @@
   display: block;
 }
 
-/* ── Nombre + descripción (derecha en desktop) ── */
 .pm-header-info {
   flex: 1;
   min-width: 0;
@@ -113,14 +97,13 @@
   }
 }
 
-/* Descripción: ocupa el espacio restante con scroll interno */
 .pm-desc-wrapper {
   background: rgba(0, 0, 0, 0.03);
   border-radius: 8px;
   padding: 0.6rem 0.75rem;
-  flex: 1; /* ocupa todo el espacio entre nombre y borde */
-  overflow-y: auto; /* scroll si el texto es largo */
-  min-height: 0; /* necesario para que flex+overflow funcione */
+  flex: 1;
+  overflow-y: auto;
+  min-height: 0;
 }
 
 .pm-desc {
@@ -131,14 +114,12 @@
   margin: 0;
 }
 
-/* ── Zona inferior (ancho completo) ── */
 .pm-zona-bottom {
   display: flex;
   flex-direction: column;
   gap: 0;
 }
 
-/* ── Sección variantes: precio + stock + chips ── */
 .pm-seccion-variantes {
   display: flex;
   flex-direction: column;
@@ -228,7 +209,6 @@
   opacity: 0.85;
 }
 
-/* ── Sección acción: cantidad + subtotal + botón ── */
 .pm-seccion-accion {
   display: flex;
   flex-direction: column;
@@ -273,7 +253,6 @@
   color: var(--color-verde-bosque);
 }
 
-/* ── Botón agregar ── */
 .pm-btn-agregar {
   width: 50%;
   margin-right: auto;
@@ -314,7 +293,6 @@
   box-shadow: none;
 }
 
-/* ── Mobile: sheet desde abajo, bordes simétricos ── */
 @media (max-width: 575px) {
   .producto-modal .modal-dialog {
     margin: 0;

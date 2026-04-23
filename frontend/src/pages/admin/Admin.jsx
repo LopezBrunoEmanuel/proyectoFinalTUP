@@ -1,7 +1,6 @@
 import { Routes, Route } from "react-router-dom";
 import ProductoCrudTable from "../../components/productos/ProductoCrudTable";
 
-
 const Admin = () => {
 
     return (

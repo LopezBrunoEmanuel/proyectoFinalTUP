@@ -14,9 +14,11 @@ const AdminReservas = () => {
     const [estados, setEstados] = useState([]);
     const [loading, setLoading] = useState(true);
     const [filtroTexto, setFiltroTexto] = useState("");
-    const [filtroEstado, setFiltroEstado] = useState("todos");
+    const [filtroEstado, setFiltroEstado] = useState("activas");
     const [paginaActual, setPaginaActual] = useState(1);
     const reservasPorPagina = 10;
+
+    const ESTADOS_FINALES = [5, 6];
 
     const cargarDatos = async () => {
         setLoading(true);
@@ -49,8 +51,10 @@ const AdminReservas = () => {
             (r.nombreCliente && r.nombreCliente.toLowerCase().includes(filtroTexto.toLowerCase())) ||
             (r.emailCliente && r.emailCliente.toLowerCase().includes(filtroTexto.toLowerCase()));
 
-        const estadoMatch = filtroEstado === "todos" || (r.idEstado && r.idEstado.toString() === filtroEstado);
-
+        const estadoMatch =
+            filtroEstado === "todos" ||
+            (filtroEstado === "activas" && !ESTADOS_FINALES.includes(r.idEstado)) ||
+            r.idEstado.toString() === filtroEstado;
         return textoMatch && estadoMatch;
     });
 
@@ -70,22 +74,34 @@ const AdminReservas = () => {
     };
 
     const handleCambiarEstado = async (reserva) => {
-        const opcionesEstados = estados.reduce((acc, est) => {
-            acc[est.idEstado] = est.nombreEstado;
-            return acc;
-        }, {});
+        const estadoActual = reserva.idEstado;
+
+        if (estadoActual === 5 || estadoActual === 6) {
+            swalCustom.fire({
+                icon: "info",
+                title: "Sin transiciones disponibles",
+                text: "Esta reserva no puede cambiar de estado.",
+            });
+            return;
+        }
+
+        const opcionesEstados = estados
+            .filter(est => est.idEstado >= estadoActual || est.idEstado === 6)
+            .reduce((acc, est) => {
+                acc[est.idEstado] = est.nombreEstado;
+                return acc;
+            }, {});
 
         const { value: nuevoEstadoId } = await Swal.fire({
             title: "Cambiar estado de reserva",
             input: "select",
             inputOptions: opcionesEstados,
-            inputValue: reserva.idEstado,
             showCancelButton: true,
             confirmButtonText: "Cambiar",
             cancelButtonText: "Cancelar",
         });
 
-        if (!nuevoEstadoId || parseInt(nuevoEstadoId) === reserva.idEstado) return;
+        if (!nuevoEstadoId) return;
 
         try {
             await axios.patch(`/reservas/${reserva.idReserva}/estado`, {
@@ -104,7 +120,7 @@ const AdminReservas = () => {
             swalCustom.fire({
                 icon: "error",
                 title: "Error",
-                text: "No se pudo cambiar el estado",
+                text: error.response?.data?.error || "No se pudo cambiar el estado",
             });
         }
     };
@@ -176,6 +192,7 @@ const AdminReservas = () => {
                 </InputGroup>
 
                 <Form.Select value={filtroEstado} onChange={handleFiltroEstadoChange} style={{ maxWidth: "250px" }}>
+                    <option value="activas">En proceso</option>
                     <option value="todos">Todos los estados</option>
                     {estados.map((est) => (
                         <option key={est.idEstado} value={est.idEstado}>
@@ -265,8 +282,13 @@ const AdminReservas = () => {
 
                     <div className="text-center text-muted mt-2">
                         <small>
-                            Mostrando {indiceInicio + 1} - {Math.min(indiceFin, reservasFiltradas.length)} <br /> de {reservasFiltradas.length} reservas
-                            {reservasFiltradas.length !== reservas.length && ` (${reservas.length} totales)`}
+                            {reservasFiltradas.length === 0
+                                ? "Sin resultados"
+                                : <>
+                                    Mostrando {indiceInicio + 1} - {Math.min(indiceFin, reservasFiltradas.length)} de {reservasFiltradas.length} reservas
+                                    {reservasFiltradas.length !== reservas.length && ` (${reservas.length} totales)`}
+                                </>
+                            }
                         </small>
                     </div>
                 </>

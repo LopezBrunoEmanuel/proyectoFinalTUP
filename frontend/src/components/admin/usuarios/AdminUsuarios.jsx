@@ -12,7 +12,7 @@ const AdminUsuarios = () => {
     const [loading, setLoading] = useState(true);
     const [filtroTexto, setFiltroTexto] = useState("");
     const [filtroRol, setFiltroRol] = useState("todos");
-    const [filtroEstado, setFiltroEstado] = useState("todos");
+    const [filtroEstado, setFiltroEstado] = useState("activo");
     const [paginaActual, setPaginaActual] = useState(1);
     const usuariosPorPagina = 10;
 
@@ -77,25 +77,25 @@ const AdminUsuarios = () => {
 
         if (!result.isConfirmed) return;
 
+        if (usuario.rol === "admin" && !nuevoEstado) {
+            const adminsActivos = usuarios.filter(u => u.rol === "admin" && u.activo);
+            if (adminsActivos.length <= 1) {
+                swalCustom.fire({
+                    icon: "error",
+                    title: "Acción no permitida",
+                    text: "No podés desactivar a este usuario porque es el único administrador activo del sistema.",
+                });
+                return;
+            }
+        }
+
         try {
-            await axios.patch(`/usuarios/${usuario.idUsuario}/estado`, {
-                activo: nuevoEstado,
-            });
-
-            swalCustom.fire({
-                icon: "success",
-                title: "Estado actualizado",
-                timer: 1500,
-            });
-
+            await axios.patch(`/usuarios/${usuario.idUsuario}/estado`, { activo: nuevoEstado });
+            swalCustom.fire({ icon: "success", title: "Estado actualizado", timer: 1500 });
             cargarUsuarios();
         } catch (error) {
             console.error("Error al cambiar estado:", error);
-            swalCustom.fire({
-                icon: "error",
-                title: "Error",
-                text: "No se pudo cambiar el estado",
-            });
+            swalCustom.fire({ icon: "error", title: "Error", text: "No se pudo cambiar el estado" });
         }
     };
 
@@ -116,25 +116,25 @@ const AdminUsuarios = () => {
 
         if (!nuevoRol || nuevoRol === usuario.rol) return;
 
+        if (usuario.rol === "admin" && nuevoRol !== "admin") {
+            const adminsActivos = usuarios.filter(u => u.rol === "admin" && u.activo);
+            if (adminsActivos.length <= 1) {
+                swalCustom.fire({
+                    icon: "error",
+                    title: "Acción no permitida",
+                    text: "No podés cambiar el rol de este usuario porque es el único administrador activo del sistema.",
+                });
+                return;
+            }
+        }
+
         try {
-            await axios.patch(`/usuarios/${usuario.idUsuario}/rol`, {
-                rol: nuevoRol,
-            });
-
-            swalCustom.fire({
-                icon: "success",
-                title: "Rol actualizado",
-                timer: 1500,
-            });
-
+            await axios.patch(`/usuarios/${usuario.idUsuario}/rol`, { rol: nuevoRol });
+            swalCustom.fire({ icon: "success", title: "Rol actualizado", timer: 1500 });
             cargarUsuarios();
         } catch (error) {
             console.error("Error al cambiar rol:", error);
-            swalCustom.fire({
-                icon: "error",
-                title: "Error",
-                text: "No se pudo cambiar el rol",
-            });
+            swalCustom.fire({ icon: "error", title: "Error", text: "No se pudo cambiar el rol" });
         }
     };
 
@@ -232,7 +232,7 @@ const AdminUsuarios = () => {
                                                 </Badge>
                                             </td>
                                             <td>
-                                                <Badge bg={usuario.activo ? "success" : "secondary"}>
+                                                <Badge bg={usuario.activo ? "success" : "danger"}>
                                                     {usuario.activo ? "Activo" : "Inactivo"}
                                                 </Badge>
                                             </td>

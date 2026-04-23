@@ -192,7 +192,6 @@ Gracias por registrarte en nuestro sistema.
 export const enviarEmailReserva = async (email, nombre, idReserva, productos, total, tipoEntrega, metodoPago) => {
   console.log("Intentando enviar mail de reserva a:", email);
 
-  // Generamos las filas de la tabla de productos dinámicamente
   const filasProductos = productos.map(item => `
     <tr>
       <td style="padding:8px; border-bottom:1px solid #eee;">${item.nombreProducto}</td>
@@ -201,7 +200,6 @@ export const enviarEmailReserva = async (email, nombre, idReserva, productos, to
     </tr>
   `).join("");
 
-  // Texto legible para el tipo de entrega
   const entregaTexto = tipoEntrega === "retiro_local" ? "Retiro en local" : "Envío a domicilio";
 
   try {
