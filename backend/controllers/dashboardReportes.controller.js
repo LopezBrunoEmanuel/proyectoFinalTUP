@@ -313,7 +313,7 @@ export const getDashboardActividad = async (req, res) => {
 
 // GET /api/dashboardReportes/informe?fechaDesde=YYYY-MM-DD&fechaHasta=YYYY-MM-DD
 export const getInforme = async (req, res) => {
-  const { fechaDesde, fechaHasta } = req.query;
+  const { fechaDesde, fechaHasta, topProductos } = req.query;
 
   if (!fechaDesde || !fechaHasta) {
     return res.status(400).json({ error: "fechaDesde y fechaHasta son obligatorios" });
@@ -346,7 +346,7 @@ export const getInforme = async (req, res) => {
       SELECT
         e.nombreEstado,
         e.color,
-        COUNT(*)                       AS cantidad,
+        COUNT(*)                         AS cantidad,
         COALESCE(SUM(r.totalReserva), 0) AS monto
       FROM reservas r
       JOIN estados_reserva e ON e.idEstado = r.idEstado
@@ -355,23 +355,21 @@ export const getInforme = async (req, res) => {
       ORDER BY e.ordenVisualizacion ASC
     `, [desde, hasta]);
 
-const { fechaDesde, fechaHasta, topProductos } = req.query;
+    const limite = Math.min(Number(topProductos) || 50, 50);
 
-const limite = Math.min(Number(topProductos) || 50, 50);
-
-const [productosDestacados] = await db.query(`
-  SELECT
-    dr.nombreProducto,
-    SUM(dr.cantidad) AS cantidadVendida,
-    COALESCE(SUM(dr.subtotal), 0) AS montoTotal
-  FROM detalle_reservas dr
-  JOIN reservas r ON r.idReserva = dr.idReserva
-  WHERE r.fechaReserva BETWEEN ? AND ?
-    AND r.idEstado != 6
-  GROUP BY dr.nombreProducto
-  ORDER BY cantidadVendida DESC
-  LIMIT ?
-`, [desde, hasta, limite]);
+    const [productosDestacados] = await db.query(`
+      SELECT
+        dr.nombreProducto,
+        SUM(dr.cantidad)                AS cantidadVendida,
+        COALESCE(SUM(dr.subtotal), 0)   AS montoTotal
+      FROM detalle_reservas dr
+      JOIN reservas r ON r.idReserva = dr.idReserva
+      WHERE r.fechaReserva BETWEEN ? AND ?
+        AND r.idEstado != 6
+      GROUP BY dr.nombreProducto
+      ORDER BY cantidadVendida DESC
+      LIMIT ?
+    `, [desde, hasta, limite]);
 
     const [evolucionSemanal] = await db.query(`
       SELECT
@@ -387,30 +385,29 @@ const [productosDestacados] = await db.query(`
     `, [desde, hasta]);
 
     const [productosCancelados] = await db.query(`
-  SELECT
-    dr.nombreProducto,
-    COUNT(*) AS vecesEnCanceladas
-  FROM detalle_reservas dr
-  JOIN reservas r ON r.idReserva = dr.idReserva
-  WHERE r.fechaReserva BETWEEN ? AND ?
-    AND r.idEstado = 6
-  GROUP BY dr.nombreProducto
-  ORDER BY vecesEnCanceladas DESC
-  LIMIT 50
-`, [desde, hasta]);
+      SELECT
+        dr.nombreProducto,
+        COUNT(*) AS vecesEnCanceladas
+      FROM detalle_reservas dr
+      JOIN reservas r ON r.idReserva = dr.idReserva
+      WHERE r.fechaReserva BETWEEN ? AND ?
+        AND r.idEstado = 6
+      GROUP BY dr.nombreProducto
+      ORDER BY vecesEnCanceladas DESC
+      LIMIT 50
+    `, [desde, hasta]);
 
     res.json({
       periodo: { desde: fechaDesde, hasta: fechaHasta },
       resumenFinanciero: {
-        cantidadReservas:    Number(resumen.cantidadReservas),
-        totalGeneral:        Number(resumen.totalGeneral),
-        totalFacturado:      Number(resumen.totalFacturado),
-        totalEsperado:       Number(resumen.totalEsperado),
-        totalPagado:         Number(resumen.totalPagado),
-        totalSinPagar:       Number(resumen.totalSinPagar),
-        cantidadCanceladas:  Number(resumen.cantidadCanceladas),
+        cantidadReservas:   Number(resumen.cantidadReservas),
+        totalGeneral:       Number(resumen.totalGeneral),
+        totalFacturado:     Number(resumen.totalFacturado),
+        totalEsperado:      Number(resumen.totalEsperado),
+        totalPagado:        Number(resumen.totalPagado),
+        totalSinPagar:      Number(resumen.totalSinPagar),
+        cantidadCanceladas: Number(resumen.cantidadCanceladas),
         tasaCancelacion,
-        productosCancelados,
       },
       porEstado: porEstado.map(e => ({ ...e, monto: Number(e.monto) })),
       productosDestacados: productosDestacados.map(p => ({
@@ -423,6 +420,7 @@ const [productosDestacados] = await db.query(`
         cantidad: Number(s.cantidad),
         monto:    Number(s.monto),
       })),
+      productosCancelados,
     });
 
   } catch (error) {
@@ -444,7 +442,7 @@ export const analizarConIA = async (req, res) => {
     const completion = await groq.chat.completions.create({
       messages: [{ role: "user", content: prompt }],
       model: "llama-3.3-70b-versatile",
-      max_tokens: 1024,
+      max_tokens: 6000,
     });
 
     res.json({ texto: completion.choices[0].message.content });

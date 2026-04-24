@@ -141,9 +141,9 @@ export const generarComprobantePDF = (idReserva, productos, total, tipoEntrega, 
         doc.setFontSize(9);
         doc.setTextColor(...GRIS_TEXTO);
 
-        const nombreCompleto = item.nombreTamanio && item.nombreTamanio !== "Único"
-            ? `${item.nombreProducto} (${item.nombreTamanio})`
-            : item.nombreProducto;
+        const nombreCompleto = item.nombreTamanio && item.nombreTamanio
+            ? `${item.nombreProducto} (${item.dimension})`
+            : item.dimension;
 
         const nombreRecortado = doc.splitTextToSize(nombreCompleto, 83);
         doc.text(nombreRecortado[0], COL.producto + 2, y);

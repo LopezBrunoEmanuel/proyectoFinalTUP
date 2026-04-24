@@ -68,6 +68,7 @@ const ProductoModal = ({ prod, show, onHide, onAgregado }) => {
             {
                 idProducto: prod.idProducto,
                 nombreProducto: prod.nombreProducto,
+                idTamanio: tamanioSeleccionado.idTamanio,
                 nombreTamanio: tamanioSeleccionado.nombreTamanio,
                 dimension: tamanioSeleccionado.dimension,
                 precioUnitario: precioActual,

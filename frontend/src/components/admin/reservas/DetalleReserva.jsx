@@ -227,7 +227,7 @@ const DetalleReserva = () => {
                                         {reserva.productos.map((prod, idx) => (
                                             <tr key={idx}>
                                                 <td>{prod.nombreProducto}</td>
-                                                <td>{prod.nombreTamanio || "-"}</td>
+                                                <td>{prod.dimension || prod.nombreTamanio || "-"}</td>
                                                 <td>{prod.cantidad}</td>
                                                 <td>${prod.precioUnitario}</td>
                                                 <td>

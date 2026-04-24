@@ -63,10 +63,9 @@ const DetalleProductos = ({ productos }) => {
                     >
                         <div className="flex-grow-1">
                             <span className="fw-semibold">{prod.nombreProducto}</span>
-                            {prod.nombreTamanio && prod.nombreTamanio !== "Único" && (
+                            {prod.nombreTamanio && (
                                 <span className="text-muted ms-1">
-                                    ({prod.nombreTamanio}
-                                    {prod.dimension ? ` · ${prod.dimension}` : ""})
+                                    ({prod.dimension ? `${prod.dimension}` : ""})
                                 </span>
                             )}
                             <div className="text-muted" style={{ fontSize: "0.8rem" }}>

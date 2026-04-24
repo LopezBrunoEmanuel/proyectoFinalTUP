@@ -765,7 +765,7 @@ export default AdminReportes;
 
 function TabInformes() {
   const hoy = new Date().toISOString().split("T")[0];
-  const FECHA_LIMITE = "2020-01-01";
+  const FECHA_LIMITE = "2024-01-01";
 
   const [fechaDesde, setFechaDesde] = useState(hoy);
   const [fechaHasta, setFechaHasta] = useState(hoy);
